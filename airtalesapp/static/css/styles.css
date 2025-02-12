@@ -27,7 +27,7 @@ html, body {
 
 
 
-/* Styling for the Login Form */
+/* Styling for the Login Template */
 .card {
     background-color: #EFA8B8;
     border-radius: 15px;
@@ -56,23 +56,23 @@ a.btn-link:hover {
 
 /* Style for the buttons to make them bubble-like */
 .btn-primary.rounded-circle {
-    width: 100%;   /* Make the button full width */
-    height: 60px;  /* Define the height for round buttons */
+    width: 100%;   
+    height: 60px;  
     text-align: center;
-    border-radius: 50px; /* Make the button perfectly round */
+    border-radius: 50px; 
 }
 
 .btn-link.rounded-circle {
-    width: 100%;   /* Make the button full width */
-    height: 60px;  /* Define the height for round buttons */
+    width: 100%;  
+    height: 60px;  
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50px; /* Make the button perfectly round */
+    border-radius: 50px; 
     background-color: #EFA8B8;
     color: white;
 }
 
 .btn-link.rounded-circle:hover {
-    background-color: #e08592; /* Slight hover effect */
+    background-color: #e08592; 
 }
