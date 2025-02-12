@@ -1,14 +1,24 @@
-
-
+html, body {
+    background-color: #035E7B !important;  /* Using !important to force the rule */
+}
 
 .navbar {
     background-color: #3F7CAC;  
 }
 
 .navbar-logo {
-    padding-left: 25px;  /* Adds space inside the container */
+    padding-left: 25px;  
 }
 
-.navbar .nav-link:hover {
-    color: #72E1D1;  
+.navbar .btn {
+    color: white;
+    font-weight: bold;
+    border-radius: 50px !important;      
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; 
+    padding: 10px 20px !important; 
+    background-color: #EFA8B8 !important;
+}
+
+.navbar .btn:hover {
+    background-color: #e08592 !important; 
 }
