@@ -22,3 +22,57 @@ html, body {
 .navbar .btn:hover {
     background-color: #e08592 !important; 
 }
+
+
+
+
+
+/* Styling for the Login Form */
+.card {
+    background-color: #EFA8B8;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #EFA8B8;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #e08592;
+}
+
+a.btn-link {
+    font-size: 14px;
+    text-decoration: none;
+    color: #000000;
+}
+
+a.btn-link:hover {
+    text-decoration: underline;
+}
+
+/* Style for the buttons to make them bubble-like */
+.btn-primary.rounded-circle {
+    width: 100%;   /* Make the button full width */
+    height: 60px;  /* Define the height for round buttons */
+    text-align: center;
+    border-radius: 50px; /* Make the button perfectly round */
+}
+
+.btn-link.rounded-circle {
+    width: 100%;   /* Make the button full width */
+    height: 60px;  /* Define the height for round buttons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px; /* Make the button perfectly round */
+    background-color: #EFA8B8;
+    color: white;
+}
+
+.btn-link.rounded-circle:hover {
+    background-color: #e08592; /* Slight hover effect */
+}
