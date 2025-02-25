@@ -12,11 +12,13 @@
         
     </head>
     <body>
-        {% block content %}
+    
+    {% block content %}
+        
         <br>
         <br>
         <h1>user profile, TESTING</h1>
-        <a href="{% url 'airtalesapp:userjournal.html' %}">VIEW PREVIOUS ENTRIES</a>
+        <a href="{% url 'airtalesapp:userjournal' %}">VIEW PREVIOUS ENTRIES</a>
     
     {% endblock %}
 
