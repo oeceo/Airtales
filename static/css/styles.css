@@ -1,0 +1,78 @@
+html, body {
+    background-color: #035E7B !important;  /* Using !important to force the rule */
+}
+
+.navbar {
+    background-color: #3F7CAC;  
+}
+
+.navbar-logo {
+    padding-left: 25px;  
+}
+
+.navbar .btn {
+    color: white;
+    font-weight: bold;
+    border-radius: 50px !important;      
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; 
+    padding: 10px 20px !important; 
+    background-color: #EFA8B8 !important;
+}
+
+.navbar .btn:hover {
+    background-color: #e08592 !important; 
+}
+
+
+
+
+
+/* Styling for the Login Template */
+.card {
+    background-color: #EFA8B8;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #EFA8B8;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #e08592;
+}
+
+a.btn-link {
+    font-size: 14px;
+    text-decoration: none;
+    color: #000000;
+}
+
+a.btn-link:hover {
+    text-decoration: underline;
+}
+
+/* Style for the buttons to make them bubble-like */
+.btn-primary.rounded-circle {
+    width: 100%;   
+    height: 60px;  
+    text-align: center;
+    border-radius: 50px; 
+}
+
+.btn-link.rounded-circle {
+    width: 100%;  
+    height: 60px;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px; 
+    background-color: #EFA8B8;
+    color: white;
+}
+
+.btn-link.rounded-circle:hover {
+    background-color: #e08592; 
+}
