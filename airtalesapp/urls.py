@@ -1,5 +1,6 @@
 from django.urls import path
 from airtalesapp import views
+from .views import save_entry
 
 app_name = 'airtalesapp'
 
@@ -11,4 +12,8 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
     path('userjournal', views.userjournal, name='userjournal'),
+    path("save_entry/", views.save_entry, name="save_entry"),
+    path("save_entry/", save_entry, name="save_entry"),
+   # path("save_entry/", views.save_entry, name="save_entry"),
+    #path("save_entry/", views.profile, name="profile"),
 ]

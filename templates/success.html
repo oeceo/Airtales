@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block extra_css %}
+        <style>
+            html, body {
+                background-color: #EFA8B8 !important; /* Force override */
+            }
+        </style>
+    {% endblock %}
+
+    
+    {% block content %}
+     <h2>Form Submitted Successfully!</h2>
+     <a href="{% url 'save_entry' %}">Go back</a>
+    {% endblock %}
+  

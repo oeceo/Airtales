@@ -1,7 +1,13 @@
-html, body {
-    background-color: #035E7B !important;  /* Using !important to force the rule */
-}
 
+@import url('https://fonts.googleapis.com/css2?family=Lohit+Devanagari&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Zetta&display=swap');
+
+html, body {
+   background-color: #035E7B !important;  /* Using !important to force the rule */
+}
+.page-custom-bg{
+    background-color: #EFA8B8!important;
+}
 .navbar {
     background-color: #3F7CAC;  
 }
@@ -18,13 +24,55 @@ html, body {
     padding: 10px 20px !important; 
     background-color: #EFA8B8 !important;
 }
-
+.entry-test {
+    background-color: blue !important;
+}
 .navbar .btn:hover {
     background-color: #e08592 !important; 
 }
+/*Profile page styling*/
+.entry{
+    display: block !important;
+    background-color: #72e1d1;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    height: auto !important;
+    width: auto !important;
 
+}
+.journal_entry {
+    background-color: #72e1d1 !important;
+    padding: 30px;
+}
 
+.profile_text{
+    display: block !important;
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 24px !important;
+    color: #ffffff !important;
+}
 
+.p {
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 24px !important;
+    color: #ffffff !important;
+}
+.profile{
+    background-color: #72e1d1;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 24px;
+    color: #3e2a35;
+    width: 100%; 
+    max-width: 100%; 
+    line-height: 1.2;
+    max-height: 80px;
+    overflow: hidden;
+
+}
 
 
 /* Styling for the Login Template */
@@ -34,6 +82,7 @@ html, body {
     padding: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 
 .btn-primary {
     background-color: #EFA8B8;
@@ -76,3 +125,4 @@ a.btn-link:hover {
 .btn-link.rounded-circle:hover {
     background-color: #e08592; 
 }
+
