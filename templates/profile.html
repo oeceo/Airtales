@@ -40,7 +40,8 @@
 
 
 <!-- testing area -->
- {% if not has_entry%}
+{% if not prior_entry%}
+<p>Has entry: {{ prior_entry }}</p>
 <div class="row">
     <div class="col">
         <div class="journal_entry shadow-lg p-4" style="background-color: #72e1d1; max-width: 800px; width: 100%; border-radius: 15px;">
