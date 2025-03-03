@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 # User manager
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def get_or_create_user(self, email, username, password=None):
         if not email:
             raise ValueError("Users must have an email address")
         if not username:
@@ -13,17 +13,27 @@ class UserManager(BaseUserManager):
         if not password:
             raise ValueError("Users must provide a password")
 
-        user = self.model(
-            email=self.normalize_email(email),  # makes the email lowercase
-            username=username,
+        # user = self.model(
+        #     email=self.normalize_email(email),  # makes the email lowercase
+        #     username=username,
+        # )
+        user,created = self.get_or_create(
+            email=self.normalize_email(email),
+            defaults={"username":username}
         )
-        user.set_password(password) # hashes the password before saving
-        user.save(using=self._db)
+        if created:
+            user.set_password(password) # hashes the password before saving
+            user.save(using=self._db)
+        # rofile, created = Profile.objects.get_or_create(userID=user, defaults={"date": now().date()})
+        #profile,created = Profile.objects.get_or_create(userID=user)
+        Profile.objects.get_or_create(userID=user)
         return user
 
     def create_superuser(self, email, username, password):
-        user = self.create_user(email, username, password)
-        user.isAdmin = True
+        user = self.get_or_create_user(email, username, password)
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -59,7 +69,7 @@ class JournalEntry(models.Model):
 # Users profile table
 class Profile(models.Model):
     userID = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-    date = models.DateField()
+    #date = models.DateField()
 
     def __str__(self):
         return f"Profile of {self.userID.username}"

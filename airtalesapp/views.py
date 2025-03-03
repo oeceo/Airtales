@@ -41,9 +41,10 @@ def profile(request):
         prompt_text = prompt.prompt  
     except Prompt.DoesNotExist:
         pass  
-
+    prior_entry = JournalEntry.objects.filter(userID=request.user, date=today).exists()
     context = {
-        'prompt_text': prompt_text,  
+        'prompt_text': prompt_text,
+        'prior_entry':prior_entry  
     }
     return render(request, 'profile.html', context)
 
