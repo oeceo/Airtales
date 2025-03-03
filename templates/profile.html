@@ -7,8 +7,15 @@
         background-color: #EFA8B8 !important; 
     }
 </style>
-  {% endblock %}
+  {% endblock %} -->
+  {%block extra_head%}
+  <style>
+    html, body {
+        background-color: #EFA8B8 !important; 
+    }
+    </style>
 
+    {%endblock%}
   {% block content %}
     <br>
     <br>
@@ -41,7 +48,6 @@
 
 <!-- testing area -->
 {% if not prior_entry%}
-<p>Has entry: {{ prior_entry }}</p>
 <div class="row">
     <div class="col">
         <div class="journal_entry shadow-lg p-4" style="background-color: #72e1d1; max-width: 800px; width: 100%; border-radius: 15px;">
