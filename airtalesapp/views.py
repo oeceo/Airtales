@@ -22,12 +22,22 @@ def login(request):
 def signup(request):
     return render(request, 'signup.html')
 
+def save_entry(request):
+    if request.method == "POST":
+        entry_text= request.POST.get("entry_text")
+        if entry_text: 
+            JournalEntry.objects.create(userID=request.user, date=now().date(), entry=entry_text)
+            # JournalEntry.objects.create(userID=user, date=date, entry=entry_text, isReported=False)
+           # return redirect("success_page")
+        return redirect("/profile/")   
+    return render(request, "profile.html")
+
 def profile(request):
+    #this returns the days prompt to the profile
     today = now().date()  # Get today's date
-    prompt_text = "No prompt available for today."  # Default if no prompt exists
+    prompt_text = "No prompt available for today."  # default if there is no prompt
     try:
-        #prompt = Prompt.objects.get(date=today- timedelta(days=1))
-        prompt = Prompt.objects.get(date=today)
+        prompt = Prompt.objects.get(date=today)#get the prompt for the day
         prompt_text = prompt.prompt  
     except Prompt.DoesNotExist:
         pass  
