@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # User manager
 class UserManager(BaseUserManager):
@@ -28,14 +28,17 @@ class UserManager(BaseUserManager):
         return user
 
 # User table
-class User(models.Model):
+class User(AbstractBaseUser, PermissionsMixin):
     userID = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, unique=True)
     password = models.CharField(max_length=30) 
-
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False) 
+    is_admin = models.BooleanField(default=False)
     objects = UserManager()
-
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
     def __str__(self):
         return self.username
 
@@ -70,13 +73,13 @@ class Prompt(models.Model):
         return f"Prompt for {self.date}"
 
 # Reported table
-class Reported(models.Model):
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
+# class Reported(models.Model):
+#     userID = models.ForeignKey(User, on_delete=models.CASCADE)
+#     date = models.DateField()
 
-    class Meta:
-        unique_together = ('userID', 'date')
-        verbose_name_plural = 'Reported Entries'
+#     class Meta:
+#         unique_together = ('userID', 'date')
+#         verbose_name_plural = 'Reported Entries'
 
-    def __str__(self):
-        return f"Report - {self.userID.username} on {self.date}"
+#     def __str__(self):
+#         return f"Report - {self.userID.username} on {self.date}"
