@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL = 'airtalesapp.User'
 # Application definition
 
 INSTALLED_APPS = [
