@@ -16,7 +16,7 @@
     <br>
 
     <div class="container">
-
+<!-- working area -->
       <div class="row">
         <div class="col">
           <div class="profile shadow-lg " style="width: 800px">                   
@@ -37,6 +37,32 @@
             </div>
         </div>
       </div>
+
+
+<!-- testing area -->
+<div class="row">
+    <div class="col">
+        <div class="journal_entry shadow-lg p-4" style="background-color: #72e1d1; max-width: 800px; width: 100%; border-radius: 15px;">
+            <!-- <form method="POST" action="{% url 'save_entry'}"> -->
+            <form method="POST" action="{% url 'airtalesapp:save_entry' %}">
+              <!-- <form method="POST" action="{% url 'airtalesapp:save_entry' %}"> -->
+                {% csrf_token %}
+                <!-- Text Field -->
+                <div class="mb-3"style="background-color: #72e1d1;font-family: 'Lexend Zetta', sans-serif;">
+                    <label for="exampleFormControlTextarea1" class="form-label">tell us everything...</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name = "entry_text" rows="3" ></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <!-- <button type="submit" class="nav-link btn btn-outline-primary me-2">Submit</button> -->
+
+            </form>
+          </div>
+
+    </div>
+  </div>   
+
+
+
 
     </div>
  
