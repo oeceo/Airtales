@@ -4,7 +4,7 @@
 {% block extra_css %}
 <style>
     html, body {
-        background-color: #EFA8B8 !important; /* Force override */
+        background-color: #EFA8B8 !important; 
     }
 </style>
   {% endblock %}
@@ -19,7 +19,7 @@
 
       <div class="row">
         <div class="col">
-          <div class="profile shadow-lg " style="width: 600px">                   
+          <div class="profile shadow-lg " style="width: 800px">                   
             <p class="text-center"> welcome back {{ request.user.username }} </p>
           </div>            
         </div>
@@ -29,10 +29,11 @@
       <br>
       <div class="row">
         <div class="col">
-          <div class="profile p-4" style="max-width: 400px; width: 100%; border-radius: 15px;">                    
+          <!-- <div class="profile p-4" style="max-width: 400px; width: 100%; border-radius: 15px;">  -->
+          <div class="profile_text">                    
               <p class="profile_text" style="width: 800px; height: 50px; color: #3e2a35; font-family: 'Lexend Zetta', sans-serif;  font-size: 40px; "> start today's prompt:</p>
               <br>
-              <!-- <p class="text-left"style="width: 1000px; height: 100px; color: #ffffff; font-family: 'Lexend Zetta', sans-serif;  font-size: 40px; "><strong>{{ prompt_text }}</strong></p>  -->
+              <p class="text-left"style="width: 1000px; height: 100px; color: #ffffff; font-family: 'Lexend Zetta', sans-serif;  font-size: 40px; "><strong>{{ prompt_text }}</strong></p> 
             </div>
         </div>
       </div>
