@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block extra_css %}
+<!-- {% block extra_css %}
 <style>
     html, body {
         background-color: #EFA8B8 !important; 
@@ -71,12 +71,44 @@
   {%else%}
   <p class="profile_text" style="width: 800px; height: 50px; color: #3e2a35; font-family: 'Lexend Zetta', sans-serif;  font-size: 40px; "> journal entry submitted for today</p>
   {%endif%}
+<div>
 
-
-
-
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <!-- {% for entry in journal_entries %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="d-flex justify-content-center"> -->
+                <!-- <a href="{% url 'airtalesapp:view_entry' entry.id %}" class="bubble text-center">
+                    {{ entry.title }}
+                </a> -->
+            <!-- </div>
+        </div>
+        {% empty %}
+        <div class="carousel-item active">
+            <p class="text-center">No journal entries available.</p>
+        </div>
+        {% endfor %} -->
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
- 
+    <div>
 
+  </div>
   {% endblock %}
 
