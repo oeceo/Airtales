@@ -32,6 +32,16 @@ def save_entry(request):
         return redirect("/profile/")   
     return render(request, "profile.html")
 
+# def journal_entry(request):
+#     if request.method == "POST":
+#         # journal_text= request.POST.get("journa_text")
+#         # if entry_text: 
+#         #     JournalEntry.objects.create(userID=request.user, date=now().date(), entry=entry_text)
+#         #     # JournalEntry.objects.create(userID=user, date=date, entry=entry_text, isReported=False)
+#         #    # return redirect("success_page")
+#         # return redirect("/profile/")   
+#     return render(request, "profile.html")
+
 def profile(request):
     #this returns the days prompt to the profile
     today = now().date()  # Get today's date
@@ -41,12 +51,20 @@ def profile(request):
         prompt_text = prompt.prompt  
     except Prompt.DoesNotExist:
         pass  
+    #this checks if the user has already made a journal entry
     prior_entry = JournalEntry.objects.filter(userID=request.user, date=today).exists()
+
+    #gets the previous journal entries
+    previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')
+
     context = {
         'prompt_text': prompt_text,
-        'prior_entry':prior_entry  
+        'prior_entry':prior_entry,  
+        'journal_entries':previous_entries
     }
     return render(request, 'profile.html', context)
-
+def view_entry(request, entry_id):
+    entry = get_object_or_404(JournalEntry, id=entry_id)
+    return render(request, 'view_entry.html', {'entry': entry})
 def userjournal(request):
     return render(request, 'userjournal.html')
