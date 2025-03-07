@@ -100,3 +100,9 @@ a.btn-link:hover {
 .btn-link.rounded-circle:hover {
     background-color: #e08592; 
 }
+
+
+#map {
+    height: 30rem;
+    margin-top: 10rem;
+}

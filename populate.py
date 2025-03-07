@@ -22,8 +22,18 @@ def populate():
 
     users = []
     for user_data in users_data:
-        user = User.objects.get_or_create_user(email=user_data['email'], username=user_data['username'], password=user_data['password'])
-        #user = User.objects.get_or_create(email=user_data['email'], username=user_data['username'], password=user_data['password'])
+        user, created = User.objects.get_or_create(
+            email=user_data['email'], 
+            defaults={'username': user_data['username']}
+        )
+
+        if created:
+            user.set_password(user_data['password'])
+            user.save()
+        
+        
+        # user = User.objects.get_or_create_user(email=user_data['email'], username=user_data['username'], password=user_data['password'])
+        
         users.append(user)
 
     for user in users:
