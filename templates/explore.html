@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
+{% block extra_head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+{% endblock %}
 
-<html>
-    <head>
-        <meta charset="utf-8">
-    
-        <title>Airtales</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-    </head>
-    <body>
-    
-        <p> this is working! </p>
-    </body>
-</html>
+{% block extra_js %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <script src="{% static 'js/map.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="map"></div>
+{% endblock %}

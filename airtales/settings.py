@@ -55,6 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'airtales.urls'
+LOGIN_URL = '/airtales/login/'
 
 TEMPLATES = [
     {

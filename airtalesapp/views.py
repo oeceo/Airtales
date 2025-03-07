@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.utils.timezone import now
 from django.utils.timezone import timedelta
 from .models import Prompt 
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'index.html')
@@ -42,6 +43,7 @@ def save_entry(request):
 #         # return redirect("/profile/")   
 #     return render(request, "profile.html")
 
+@login_required
 def profile(request):
     #this returns the days prompt to the profile
     today = now().date()  # Get today's date
@@ -62,7 +64,9 @@ def profile(request):
         'prior_entry':prior_entry,  
         'journal_entries':previous_entries
     }
+    
     return render(request, 'profile.html', context)
+
 def view_entry(request, entry_id):
     entry = get_object_or_404(JournalEntry, id=entry_id)
     return render(request, 'view_entry.html', {'entry': entry})

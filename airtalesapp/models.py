@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-# User manager
 class UserManager(BaseUserManager):
     def get_or_create_user(self, email, username, password=None):
         if not email:
@@ -13,20 +12,18 @@ class UserManager(BaseUserManager):
         if not password:
             raise ValueError("Users must provide a password")
 
-        # user = self.model(
-        #     email=self.normalize_email(email),  # makes the email lowercase
-        #     username=username,
-        # )
-        user,created = self.get_or_create(
+        user, created = self.get_or_create(
             email=self.normalize_email(email),
-            defaults={"username":username}
+            defaults={"username": username}
         )
         if created:
-            user.set_password(password) # hashes the password before saving
+            user.set_password(password)  # Hashes the password
             user.save(using=self._db)
-        # rofile, created = Profile.objects.get_or_create(userID=user, defaults={"date": now().date()})
-        #profile,created = Profile.objects.get_or_create(userID=user)
-        Profile.objects.get_or_create(userID=user)
+
+        # Create profile only if a new user was created
+        if created:
+            Profile.objects.get_or_create(userID=user)
+
         return user
 
     def create_superuser(self, email, username, password):
@@ -42,13 +39,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     userID = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, unique=True)
-    password = models.CharField(max_length=30) 
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False) 
+    is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+
     objects = UserManager()
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
+
     def __str__(self):
         return self.username
 
