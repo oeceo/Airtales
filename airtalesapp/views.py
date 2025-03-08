@@ -15,7 +15,11 @@ def about(request):
     return render(request, 'about.html')
 
 def explore(request):
-    return render(request, 'explore.html')
+    # Get all entries that have a location attached
+    entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False)
+    
+    # Pass the entries to the template to load on map
+    return render(request, 'explore.html', {'entries': entries})
 
 def login(request):
     return render(request, 'login.html')
@@ -78,3 +82,8 @@ def view_entry(request, entry_id):
     return render(request, 'view_entry.html', {'entry': entry})
 def userjournal(request):
     return render(request, 'userjournal.html')
+
+# Passes only the entries that have location data to the explore page
+def map_view(request):
+    entries = JournalEntry.objects.all()  # Or filter based on your requirements
+    return render(request, 'explore.html', {'entries': entries})
