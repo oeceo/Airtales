@@ -57,6 +57,9 @@ class JournalEntry(models.Model):
     date = models.DateField()
     entry = models.CharField(max_length=350, null=False)
     isReported = models.BooleanField(default=False)
+    # stores the location of each entry
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
 
     class Meta:
         unique_together = ('userID', 'date')  # Ensures each user can only have one entry per date

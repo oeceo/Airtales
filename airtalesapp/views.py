@@ -26,10 +26,16 @@ def signup(request):
 def save_entry(request):
     if request.method == "POST":
         entry_text= request.POST.get("entry_text")
+        latitude = request.POST.get("latitude")
+        longitude = request.POST.get("longitude")
+        
+        if not latitude or not longitude:
+            return HttpResponse({"error": "Location not provided"}, status=400)
+        
         if entry_text: 
-            JournalEntry.objects.create(userID=request.user, date=now().date(), entry=entry_text)
+            JournalEntry.objects.create(userID=request.user, date=now().date(), entry=entry_text, latitude=latitude, longitude=longitude)
             # JournalEntry.objects.create(userID=user, date=date, entry=entry_text, isReported=False)
-           # return redirect("success_page")
+            # return redirect("success_page")
         return redirect("/profile/")   
     return render(request, "profile.html")
 
