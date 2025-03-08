@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL = 'airtalesapp.User'
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,6 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'airtales.urls'
+LOGIN_URL = '/airtales/login/'
 
 TEMPLATES = [
     {
