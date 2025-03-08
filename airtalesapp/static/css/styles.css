@@ -1,7 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Lohit+Devanagari&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Zetta&display=swap');
+
 html, body {
-    background-color: #035E7B !important;  /* Using !important to force the rule */
+    background-color: #035E7B !important;  /*Using !important to force the rule*/
 }
 
+.profile{
+    background-color: #72e1d1;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 24px;
+    color: #3e2a35;
+    width: 100%; 
+    max-width: 100%; 
+    line-height: 1.2;
+    max-height: 80px;
+    overflow: hidden;
+
+}
+.profile_text{
+    display: block !important;
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 24px !important;
+    color: #ffffff !important;
+}
 .navbar {
     background-color: #3F7CAC;  
 }
@@ -75,4 +99,10 @@ a.btn-link:hover {
 
 .btn-link.rounded-circle:hover {
     background-color: #e08592; 
+}
+
+
+#map {
+    height: 30rem;
+    margin-top: 10rem;
 }

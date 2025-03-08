@@ -82,13 +82,13 @@ class Prompt(models.Model):
         return f"Prompt for {self.date}"
 
 # Reported table
-class Reported(models.Model):
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
+# class Reported(models.Model):
+#     userID = models.ForeignKey(User, on_delete=models.CASCADE)
+#     date = models.DateField()
 
-    class Meta:
-        unique_together = ('userID', 'date')
-        verbose_name_plural = 'Reported Entries'
+#     class Meta:
+#         unique_together = ('userID', 'date')
+#         verbose_name_plural = 'Reported Entries'
 
-    def __str__(self):
-        return f"Report - {self.userID.username} on {self.date}"
+#     def __str__(self):
+#         return f"Report - {self.userID.username} on {self.date}"

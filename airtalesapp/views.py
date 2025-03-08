@@ -59,16 +59,17 @@ def profile(request):
 
     #gets the previous journal entries
     previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')
+
     context = {
         'prompt_text': prompt_text,
         'prior_entry':prior_entry,  
         'journal_entries':previous_entries
     }
+    
     return render(request, 'profile.html', context)
 
 def view_entry(request, entry_id):
     entry = get_object_or_404(JournalEntry, id=entry_id)
     return render(request, 'view_entry.html', {'entry': entry})
-
 def userjournal(request):
     return render(request, 'userjournal.html')
