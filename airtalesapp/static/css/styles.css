@@ -102,7 +102,22 @@ a.btn-link:hover {
 }
 
 
+/* explore page */ 
+#explore-head {
+    text-align: center; 
+    font-size: 3rem; 
+    margin: 20px 0; 
+    color: white;
+    padding-bottom: 0;
+    letter-spacing: 0.5em;
+}
+
 #map {
     height: 30rem;
-    margin-top: 10rem;
+    margin-top: 2.5rem;
+    border: 5px solid #EFA8B1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
+
+
+
