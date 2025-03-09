@@ -113,9 +113,9 @@ a.btn-link:hover {
 }
 
 #map {
-    height: 30rem;
-    margin-top: 2.5rem;
-    border: 5px solid #EFA8B1;
+    height: 40rem;
+    margin-top: 2rem;
+    border: 10px solid #EFA8B1;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 

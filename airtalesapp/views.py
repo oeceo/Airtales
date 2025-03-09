@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
 from .models import JournalEntry
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
 from django.utils.timezone import timedelta
 from .models import Prompt 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 def index(request):
     return render(request, 'index.html')
@@ -84,6 +85,31 @@ def userjournal(request):
     return render(request, 'userjournal.html')
 
 # Passes only the entries that have location data to the explore page
+@ensure_csrf_cookie
 def map_view(request):
     entries = JournalEntry.objects.all()  # Or filter based on your requirements
     return render(request, 'explore.html', {'entries': entries})
+
+
+@login_required
+def toggle_like(request, entry_id):
+    if request.method == 'POST':
+        # Get the JournalEntry object by ID
+        entry = get_object_or_404(JournalEntry, id=entry_id)
+
+        # Toggle the like status
+        if request.user in entry.liked_by.all():
+            entry.liked_by.remove(request.user)  # Unlike the entry
+        else:
+            entry.liked_by.add(request.user)     # Like the entry
+            
+        # Save change to the database
+        entry.save()
+
+        # Return a JSON response with the updated like status and like count
+        return JsonResponse({
+            'is_liked': request.user in entry.liked_by.all(),
+            'likes': entry.liked_by.count()  # Send the updated like count
+        })
+
+    return JsonResponse(status=400)

@@ -20,19 +20,17 @@ function setupMap() {
         console.log("Map has been resized");
     }, 500);
 
-    // Add markers for each entry
+    // Add markers for each entry that has location data
     if (typeof entries !== 'undefined' && entries.length > 0) {
         entries.forEach(entry => {
-            console.log("Processing entry:", entry);
-
             if (entry.latitude && entry.longitude) {
-                console.log("Adding marker at:", entry.latitude, entry.longitude);
                 addMarkerWithPopup(entry.latitude, entry.longitude, `
                     <b>${entry.date}</b><br>
-                    ${entry.entry}
+                    ${entry.entry}<br>
+                    <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
+                    <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like</p>
+                    <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
                 `);
-            } else {
-                console.warn("Invalid coordinates for entry:", entry);
             }
         });
     } else {
@@ -56,3 +54,64 @@ function addMarkerWithPopup(lat, long, text) {
 
 var map = null;
 document.addEventListener("DOMContentLoaded", setupMap);
+
+// for liking and unliking entries on the map
+
+function toggleLike(entryId) {
+    if (entryId === undefined) {
+        console.error("Cannot toggle like for undefined entry ID");
+        return;
+    }
+
+    const csrfToken = Cookies.get("csrftoken");
+    if (!csrfToken) {
+        console.error("Cannot toggle like because the CSRF token cookie not found or inaccessible.");
+        return;
+    }
+
+    // Send the AJAX request to update the like status in the backend
+    $.ajax({
+        url: '/like-entry/' + entryId + "/",  // URL to the Django view
+        method: 'POST',
+        data: {
+            'csrfmiddlewaretoken': csrfToken
+        },
+        success: function(response) {
+            console.log('Like status updated successfully');
+            const entry = entries.find(entry => entry.id === entryId);
+
+            entry.isLiked = response["is_liked"];
+            entry.likes = response["likes"]
+        
+            // Try to get the like elements
+            const likeButton = document.getElementById('like-button-' + entryId);
+            const likeCount = document.getElementById('like-count-' + entryId);
+            
+            // Check if the elements exist before trying to access their properties
+            if (likeButton) {
+                likeButton.textContent = entry.isLiked ? 'Unlike' : 'Like';
+            } else {
+                console.error("Like button not found for entryId:", entryId);
+            }
+
+            if (likeCount) {
+                likeCount.innerText = entry.likes;
+            } else {
+                console.error("Like count not found for entryId:", entryId);
+            }
+
+        },
+        error: function(error) {
+            if (error.status === 403 || error.status === 401) {
+                const loginAlert = document.getElementById("login-alert-" + entryId);
+                if (loginAlert) {
+                    loginAlert.classList.remove("d-none");
+                } else {
+                    console.error("Login alert not found for entryId:", entryId);
+                }
+            } else {
+                console.error('Error updating like status:', error);
+            }
+        }
+    });
+}
