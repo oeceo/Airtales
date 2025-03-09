@@ -8,6 +8,8 @@ from django.utils.timezone import timedelta
 from .models import Prompt 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.shortcuts import get_object_or_404
+
 
 def index(request):
     return render(request, 'index.html')

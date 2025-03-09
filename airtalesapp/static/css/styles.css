@@ -1,31 +1,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Lohit+Devanagari&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Zetta&display=swap');
 
-html, body {
-    background-color: #035E7B !important;  /*Using !important to force the rule*/
+/* Styling for page background - place on line 3 of page with {% block body_class %}home-bg{% endblock %} */
+
+.default-bg {
+    background-color: #035E7B; /* Dark blue */
 }
 
-.profile{
+.dark-blue-bg {
+    background-color: #035E7B !important; /* Dark blue */
+}
+
+.pink-bg {
+    background-color: #EFA8B8 !important; /* Pink */
+}
+
+.turquoise-bg {
+    background-color: #72E1D1 !important; /* Turquoise */
+}
+
+/* Styling for profile class */
+
+.profile {
+    display: block;
     background-color: #72e1d1;
+    max-width: 800px; 
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Lexend Zetta', sans-serif;
+    text-wrap: wrap;
+}
+
+.large-profile-box-text {
+    margin: 10px;
     font-size: 24px;
     color: #3e2a35;
-    width: 100%; 
-    max-width: 100%; 
     line-height: 1.2;
-    max-height: 80px;
-    overflow: hidden;
+    text-align: center;
+}
 
+#journal-entry {
+    display: block;
+    width: 100%;
 }
-.profile_text{
-    display: block !important;
+
+#journal-entry-text {
+    margin: 10px 0px;
+}
+
+#journal-entry-button {
+    margin-top: 10px;
+}
+
+/* Styling for prompt */
+
+.prompt {
     font-family: 'Lexend Zetta', sans-serif;
-    font-size: 24px !important;
-    color: #ffffff !important;
+    font-size: 36px;
+    text-wrap: wrap;
+    text-align: left;
+    max-width: 800px;
 }
+
+#prompt-intro{
+    color: #3e2a35;
+}
+
+#prompt-text {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Styling for navigation */
+
 .navbar {
     background-color: #3F7CAC;  
 }
@@ -47,9 +95,13 @@ html, body {
     background-color: #e08592 !important; 
 }
 
+.navbar-toggler {
+    border-color: rgba(188, 72, 159, 0.5) !important;
+}
 
-
-
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
 
 /* Styling for the Login Template */
 .card {
@@ -111,6 +163,7 @@ a.btn-link:hover {
     padding-bottom: 0;
     letter-spacing: 0.5em;
 }
+
 
 #map {
     height: 40rem;
