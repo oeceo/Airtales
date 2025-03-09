@@ -2,6 +2,7 @@
 {% load static %}
 {% block body_class %}pink-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
+
 {% block content %}
 
     <div class="container">
@@ -28,6 +29,8 @@
 {% if not prior_entry%}
 <div class="row">
     <div class="col">
+
+
       <div class="profile">
         <!-- <form method="POST" action="{% url 'save_entry'}"> -->
         <form method="POST" action="{% url 'airtalesapp:save_entry' %}">
@@ -37,6 +40,7 @@
             <label for="journal-entry-text" class="form-label">tell us everything...</label>
             <textarea class="form-control" id="journal-entry-text" name="entry_text" rows="3" ></textarea>
             <button type="submit" class="btn btn-primary" id="journal-entry-button">Submit</button>
+
           </div>
         </form>
       </div>

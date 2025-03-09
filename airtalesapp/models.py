@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 class UserManager(BaseUserManager):
     def get_or_create_user(self, email, username, password=None):
@@ -57,6 +60,10 @@ class JournalEntry(models.Model):
     date = models.DateField()
     entry = models.CharField(max_length=350, null=False)
     isReported = models.BooleanField(default=False)
+    # stores the location of each entry
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    liked_by = models.ManyToManyField(User, related_name="liked_entries", blank=True)
 
     class Meta:
         unique_together = ('userID', 'date')  # Ensures each user can only have one entry per date
@@ -64,6 +71,7 @@ class JournalEntry(models.Model):
 
     def __str__(self):
         return f"{self.userID.username} - {self.date}"
+
 
 # Users profile table
 class Profile(models.Model):
