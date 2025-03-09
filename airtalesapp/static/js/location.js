@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const saveButton = document.getElementById("saveButton");
+    const saveButton = document.getElementById("journal-entry-button");
     const journalForm = document.getElementById("journalForm");
 
     if (saveButton && journalForm) {

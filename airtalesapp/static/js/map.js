@@ -118,6 +118,7 @@ function toggleLike(entryId) {
     });
 }
 
+// For the button on explore page under the map
 document.addEventListener('DOMContentLoaded', function() {
     
     const loginButton = document.getElementById('login-status-btn');
