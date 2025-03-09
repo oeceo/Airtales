@@ -27,10 +27,11 @@ function setupMap() {
                 addMarkerWithPopup(entry.latitude, entry.longitude, `
                     <b>${entry.date}</b><br>
                     ${entry.entry}<br>
-                    <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
+                    <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
                     <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like</p>
                     <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
                 `);
+                
             }
         });
     } else {
@@ -45,6 +46,7 @@ function addMarkerWithPopup(lat, long, text) {
         iconSize: [32, 32], 
         iconAnchor: [16, 32], 
         popupAnchor: [0, -32], 
+        
     });
 
     // create the marker with the custom icon
@@ -115,3 +117,28 @@ function toggleLike(entryId) {
         }
     });
 }
+
+// For the button on explore page under the map
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const loginButton = document.getElementById('login-status-btn');
+
+    // Ensure the button exists before manipulating it
+    if (loginButton) {
+        // Check the authentication status and update the button text
+        if (authenticated) {
+            loginButton.textContent = 'share your tale today';
+        } else {
+            loginButton.textContent = 'login/signup to share your tale';
+        }
+
+        // If the button is clicked then redirect accordingly
+        loginButton.addEventListener('click', function() {
+            if (!authenticated) {
+                window.location.href = '/login/';  // Redirect to login page if not logged in
+            } else {
+                window.location.href = '/profile/'
+            }
+        });
+    }
+});

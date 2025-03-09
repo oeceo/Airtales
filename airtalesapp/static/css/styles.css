@@ -172,5 +172,53 @@ a.btn-link:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
+#login-status-btn{
+    text-align: center; 
+    font-size: 2rem; 
+    margin: 20px 0; 
+    color: white;
+    padding-bottom: 0;
+    letter-spacing: 0.2em;
+    border-radius: 30px;
+    background-color: #EFA8B8;
+}
+
+/* edit pop up stuff */
+.leaflet-popup {
+    background-color: #3F7CAC !important;
+    border-radius: 20px;
+    border-color: #72e1d1;
+    border: 5px solid #e08592;
+
+}
+
+.leaflet-popup-content {
+    padding: 5px; 
+    margin: 0; 
+    border: none !important; 
+    color: white; 
+    
+}
+
+.leaflet-popup-content-wrapper {
+    border: none !important;
+    background-color: transparent !important; 
+}
+
+.like-button {
+    background-color: #EFA8B1; 
+    color: white; 
+    border: none; 
+    padding: 10px; 
+    margin-top: 10px;
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-weight: bold;
+}
+
+.like-button:hover {
+    background-color: #cb8f97; 
+}
+
 
 

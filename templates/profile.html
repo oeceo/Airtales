@@ -2,6 +2,9 @@
 {% load static %}
 {% block body_class %}pink-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
+{% block extra_js %}
+<script src="{% static 'js/location.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -33,14 +36,15 @@
 
       <div class="profile">
         <!-- <form method="POST" action="{% url 'save_entry'}"> -->
-        <form method="POST" action="{% url 'airtalesapp:save_entry' %}">
+        <form method="POST" action="{% url 'airtalesapp:save_entry' %}" id="journalForm">
         <!-- <form method="POST" action="{% url 'airtalesapp:save_entry' %}"> -->
           {% csrf_token %}
           <div id="journal-entry">
             <label for="journal-entry-text" class="form-label">tell us everything...</label>
             <textarea class="form-control" id="journal-entry-text" name="entry_text" rows="3" ></textarea>
+            <input hidden type=text" name="latitude" id="latitude" value=""/>
+            <input hidden type=text" name="longitude" id="longitude" value=""/>
             <button type="submit" class="btn btn-primary" id="journal-entry-button">Submit</button>
-
           </div>
         </form>
       </div>

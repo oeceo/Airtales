@@ -17,9 +17,10 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 
+@ensure_csrf_cookie
 def explore(request):
-    # Get all entries that have a location attached
-    entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False)
+    # Get all entries from today that have a location attached
+    entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
     
     # Pass the entries to the template to load on map
     return render(request, 'explore.html', {'entries': entries})
@@ -37,7 +38,7 @@ def save_entry(request):
         longitude = request.POST.get("longitude")
         
         if not latitude or not longitude:
-            return HttpResponse({"error": "Location not provided"}, status=400)
+            return HttpResponse("Location not provided", status=400)
         
         if entry_text: 
             JournalEntry.objects.create(userID=request.user, date=now().date(), entry=entry_text, latitude=latitude, longitude=longitude)
@@ -85,12 +86,6 @@ def view_entry(request, entry_id):
     return render(request, 'view_entry.html', {'entry': entry})
 def userjournal(request):
     return render(request, 'userjournal.html')
-
-# Passes only the entries that have location data to the explore page
-@ensure_csrf_cookie
-def map_view(request):
-    entries = JournalEntry.objects.all()  # Or filter based on your requirements
-    return render(request, 'explore.html', {'entries': entries})
 
 
 @login_required
