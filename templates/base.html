@@ -15,13 +15,20 @@
     
     {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}default-bg{% endblock %}">
     <!-- Navbar Section -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-logo" href="{% url 'airtalesapp:index' %}"> 
-                <img src="{% static 'images/logo.png' %}" alt="Logo" width="350" height="80">
+                <img src="{% static 'images/logo.png' %}" alt="Airtales logo" width="350" height="80">
             </a>
+
+            <!-- Hamburger button for condensed navbar -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navbarNav" aria-controls="navbarNav" 
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
     <!-- Navbar buttons -->
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -30,7 +37,7 @@
                 <a class="nav-link btn btn-outline-primary me-2" href="{% url 'airtalesapp:explore' %}">Explore</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link btn btn-primary" href="{% url 'airtalesapp:login' %}">Sign In</a>
+                <a class="nav-link btn btn-primary me-2" href="{% url 'airtalesapp:login' %}">Sign In</a>
             </li>
         </ul>
     </div>
