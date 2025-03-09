@@ -2,7 +2,34 @@
 {% load static %}
 {% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
-        {% block content %}
-            <h1>THIS IS THE HOMEPAGE</h1>
-            <p>This is the main content of the home page.</p>
-        {% endblock %}
+{% block content %}
+
+    <!-- Show today's prompt -->
+    <div class="container">
+        <div class="row my-5">
+            <div class="col">
+              <div class="prompt">                    
+                <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
+                <p class="prompt-text-pink"> {{ current_prompt_text }} </p> 
+                <!-- if current_prompt_text is "no prompt available" then don't show next line -->
+                <p class="prompt-intro-turquoise"> is the word of today.</p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Show yesterday's prompt -->
+    <div class="container">
+        <div class="row my-5">
+            <div class="col">
+              <div class="prompt">                    
+                <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
+                <p class="prompt-text-pink"> {{ yesterdays_prompt_text }} </p> 
+                <!-- if yesterday_prompt_text is "no prompt available" then don't show next line -->
+                <p class="prompt-intro-turquoise"> was the word of yesterday.</p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

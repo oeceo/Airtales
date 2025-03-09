@@ -63,12 +63,21 @@
     max-width: 800px;
 }
 
-#prompt-intro{
+.prompt-intro-brown {
     color: #3e2a35;
 }
 
-#prompt-text {
+.prompt-intro-turquoise {
+    color: #72e1d1;
+}
+
+.prompt-text-white {
     color: #ffffff;
+    font-weight: bold;
+}
+
+.prompt-text-pink {
+    color:#EFA8B8;
     font-weight: bold;
 }
 
