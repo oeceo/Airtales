@@ -172,13 +172,24 @@ a.btn-link:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
+#login-status-btn{
+    text-align: center; 
+    font-size: 2rem; 
+    margin: 20px 0; 
+    color: white;
+    padding-bottom: 0;
+    letter-spacing: 0.2em;
+    border-radius: 30px;
+    background-color: #EFA8B8;
+}
+
 /* edit pop up stuff */
 .leaflet-popup {
     background-color: #3F7CAC !important;
     border-radius: 20px;
     border-color: #72e1d1;
     border: 5px solid #e08592;
-  
+
 }
 
 .leaflet-popup-content {
@@ -209,8 +220,5 @@ a.btn-link:hover {
     background-color: #cb8f97; 
 }
 
-.like-button-container {
-    display: inline-block;
-    margin-right: 10px; /* Optional, space between button and like count */
-}
+
 

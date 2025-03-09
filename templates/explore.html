@@ -43,6 +43,14 @@
     <div>
         <h1 id="explore-head">explore the world in words!</h1> </div>
     <div id="map"></div>
+    <div>
+        <button id="login-status-btn" class="btn">
+            {% if user.is_authenticated %}
+                share your tale today
+            {% else %}
+                login or sign up to share your tale
+            {% endif %}
+        </button> </div>
 
     <!-- CSRF token for JavaScript -->
     <form id="csrf-form">

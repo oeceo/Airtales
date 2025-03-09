@@ -117,3 +117,27 @@ function toggleLike(entryId) {
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const loginButton = document.getElementById('login-status-btn');
+
+    // Ensure the button exists before manipulating it
+    if (loginButton) {
+        // Check the authentication status and update the button text
+        if (authenticated) {
+            loginButton.textContent = 'share your tale today';
+        } else {
+            loginButton.textContent = 'login/signup to share your tale';
+        }
+
+        // If the button is clicked then redirect accordingly
+        loginButton.addEventListener('click', function() {
+            if (!authenticated) {
+                window.location.href = '/login/';  // Redirect to login page if not logged in
+            } else {
+                window.location.href = '/profile/'
+            }
+        });
+    }
+});
