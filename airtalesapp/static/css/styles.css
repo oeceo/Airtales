@@ -80,7 +80,8 @@
 
 .prompt-text-pink {
     color:#EFA8B8;
-    font-weight: bold;
+    font-size: 60px !important;
+    font-family: 'Lohit Devanagari', 'sans-serif' !important;
     max-width: 1200px;
 }
 
@@ -108,7 +109,7 @@
 }
 
 .navbar-toggler {
-    border-color: rgba(188, 72, 159, 0.5) !important;
+    border-color: #ffffff !important;
 }
 
 .navbar-toggler-icon {
@@ -165,7 +166,27 @@ a.btn-link:hover {
     background-color: #e08592; 
 }
 
+/* Styling for map */
+
 #map {
     height: 30rem;
     margin-top: 10rem;
+}
+
+/* Styling for index */
+
+.carousel-content {
+    background-color: #ffffff; 
+    border-color:#72e1d1;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: thick;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 180px;
+    margin: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-wrap: break-word;
+    text-align: center;
 }

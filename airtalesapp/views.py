@@ -17,6 +17,9 @@ def index(request):
     current_prompt_text = get_prompt(today)
     yesterdays_prompt_text = get_prompt(yesterday)
 
+    todays_entries = JournalEntry.objects.filter(date=today)
+    yesterdays_entries = JournalEntry.objects.filter(date=yesterday)
+
     current_post_position1 = 0
     current_post_position2 = 0
     current_post_position3 = 0
@@ -28,6 +31,7 @@ def index(request):
     context = {
         'current_prompt_text': current_prompt_text,
         'yesterdays_prompt_text': yesterdays_prompt_text,
+        'todays_entries': todays_entries,
     }
 
     return render(request, 'index.html', context)
