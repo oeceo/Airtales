@@ -60,25 +60,28 @@
     font-size: 36px;
     text-wrap: wrap;
     text-align: left;
-    max-width: 800px;
 }
 
 .prompt-intro-brown {
     color: #3e2a35;
+    max-width: 800px;
 }
 
 .prompt-intro-turquoise {
     color: #72e1d1;
+    max-width: 1200px;
 }
 
 .prompt-text-white {
     color: #ffffff;
     font-weight: bold;
+    max-width: 800px;
 }
 
 .prompt-text-pink {
     color:#EFA8B8;
     font-weight: bold;
+    max-width: 1200px;
 }
 
 /* Styling for navigation */

@@ -11,25 +11,31 @@
               <div class="prompt">                    
                 <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
                 <p class="prompt-text-pink"> {{ current_prompt_text }} </p> 
-                <!-- if current_prompt_text is "no prompt available" then don't show next line -->
+                {% if current_prompt_text == "no prompt available..." %}
+                <p class="prompt-intro-turquoise"> check back soon!</p>
+                {% else %}
                 <p class="prompt-intro-turquoise"> is the word of today.</p>
+                {% endif %}
               </div>
             </div>
         </div>
     </div>
 
     <!-- Show yesterday's prompt -->
-    <div class="container">
+    <!-- <div class="container">
         <div class="row my-5">
             <div class="col">
               <div class="prompt">                    
                 <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
                 <p class="prompt-text-pink"> {{ yesterdays_prompt_text }} </p> 
-                <!-- if yesterday_prompt_text is "no prompt available" then don't show next line -->
+                {% if current_prompt_text == "no prompt available..." %}
+                <p class="prompt-intro-turquoise"> check back soon!</p>
+                {% else %}
                 <p class="prompt-intro-turquoise"> was the word of yesterday.</p>
+                {% endif %}
               </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 {% endblock %}

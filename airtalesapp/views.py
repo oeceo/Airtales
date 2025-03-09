@@ -103,7 +103,7 @@ def yesterdays_date():
 
 def get_prompt(date):
     #this returns the prompt of the passed date
-    prompt_text = "No prompt available."  # default if there is no prompt
+    prompt_text = "no prompt available..."  # default if there is no prompt
     try:
         prompt = Prompt.objects.get(date=date) #get the prompt for the day
         prompt_text = prompt.prompt  
