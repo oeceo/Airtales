@@ -7,15 +7,53 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
+    
 {% endblock %}
 
 {% block extra_js %}
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js" 
+    integrity="sha256-WCzAhd2P6gRJF9Hv3oOOd+hFJi/QJbv+Azn4CGB8gfY=" 
+    crossorigin=""></script>
+
+    <script>
+        const authenticated = "{{ user.is_authenticated }}" === "True";
+        const entries = [
+        {% for entry in entries %}
+        {
+            "id": {{entry.id}},
+            "date": "{{ entry.date }}",
+            "entry": "{{ entry.entry|escapejs }}",
+            "latitude": {{ entry.latitude }},
+            "longitude": {{ entry.longitude }},
+            "likes": {{ entry.liked_by.count }},
+            "isLiked": {% if user in entry.liked_by.all %} true {% else %} false {% endif %}
+        },
+        {% endfor %}
+    ];
+        console.log("Entries from server:", entries);
+    </script>
     <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
 
 {% block content %}
+    <div>
+        <h1 id="explore-head">explore the world in words!</h1> </div>
     <div id="map"></div>
+    <div>
+        <button id="login-status-btn" class="btn">
+            {% if user.is_authenticated %}
+                share your tale today
+            {% else %}
+                login or sign up to share your tale
+            {% endif %}
+        </button> </div>
+
+    <!-- CSRF token for JavaScript -->
+    <form id="csrf-form">
+    {% csrf_token %}
+    </form>
+
 {% endblock %}
