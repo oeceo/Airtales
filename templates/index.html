@@ -10,8 +10,8 @@
             <div class="col">
               <div class="prompt">                    
                 <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
-                <p class="prompt-text-pink"> {{ current_prompt_text }} </p> 
-                {% if current_prompt_text == "no prompt available..." %}
+                <p class="prompt-text-pink"> {{ prompt_text_0 }} </p> 
+                {% if prompt_text_0 == "no prompt available..." %}
                 <p class="prompt-intro-turquoise"> check back soon!</p>
                 {% else %}
                 <p class="prompt-intro-turquoise"> is the word of today.</p>
@@ -48,17 +48,20 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <div class="carousel-content">
-            <p> {{ todays_entries }} </p>
+            <p class="carousel-prompt"> {{ prompt_text_0 }} </p>
+            <p> {{ top_entry_0 }} </p>
           </div>
         </div>
         <div class="carousel-item">
           <div class="carousel-content">
-            <p> test 2 </p>
+            <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
+            <p> {{ top_entry_1 }} </p>
           </div>
         </div>
         <div class="carousel-item">
           <div class="carousel-content">
-            <p> test 3 </p>
+            <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
+            <p> {{ top_entry_2 }} </p>
           </div>
         </div>
       </div>

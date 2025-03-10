@@ -9,31 +9,30 @@ from .models import Prompt
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
 
 
 def index(request):
     
-    today = todays_date()
-    yesterday = yesterdays_date()
+    today = selected_date(0)
+    yesterday = selected_date(1)
+    day_before = selected_date(2)
 
-    current_prompt_text = get_prompt(today)
-    yesterdays_prompt_text = get_prompt(yesterday)
+    prompt_text_0 = get_prompt(today)
+    prompt_text_1 = get_prompt(yesterday)
+    prompt_text_2 = get_prompt(day_before)
 
-    todays_entries = JournalEntry.objects.filter(date=today)
-    yesterdays_entries = JournalEntry.objects.filter(date=yesterday)
-
-    current_post_position1 = 0
-    current_post_position2 = 0
-    current_post_position3 = 0
-
-    yesterday_post_position1 = 0
-    yesterday_post_position2 = 0
-    yesterday_post_position3 = 0
+    top_entry_0 = top_liked_entry(today)
+    top_entry_1 = top_liked_entry(yesterday)
+    top_entry_2 = top_liked_entry(day_before)
 
     context = {
-        'current_prompt_text': current_prompt_text,
-        'yesterdays_prompt_text': yesterdays_prompt_text,
-        'todays_entries': todays_entries,
+        'prompt_text_0': prompt_text_0,
+        'prompt_text_1': prompt_text_1,
+        'prompt_text_2': prompt_text_2,
+        'top_entry_0': top_entry_0,
+        'top_entry_1': top_entry_1,
+        'top_entry_2': top_entry_2,
     }
 
     return render(request, 'index.html', context)
@@ -84,7 +83,7 @@ def save_entry(request):
 @login_required
 def profile(request):
 
-    today = todays_date()
+    today = selected_date(0)
  
     # this returns the prompt to the profile
     prompt_text = get_prompt(today)
@@ -134,20 +133,26 @@ def toggle_like(request, entry_id):
 
     return JsonResponse(status=400)
 
-def todays_date():
-    date = now().date()
-    return date
-
-def yesterdays_date():
-    date = now().date() - timedelta(days=1)
+def selected_date(no_of_days): # Number of days to go back
+    date = now().date() - timedelta(days=no_of_days)
     return date
 
 def get_prompt(date):
     #this returns the prompt of the passed date
     prompt_text = "no prompt available..."  # default if there is no prompt
     try:
-        prompt = Prompt.objects.get(date=date) #get the prompt for the day
+        prompt = Prompt.objects.get(date=date) # Gets the prompt for the day
         prompt_text = prompt.prompt  
     except Prompt.DoesNotExist:
         pass
     return prompt_text
+
+def top_liked_entry(date):
+    
+    top_entry = (JournalEntry.objects.filter(date=date) # Filter by date based on date param
+                 .annotate(like_count=Count('liked_by')) # Counts likes
+                 .order_by('-like_count')
+                 .first() # Returns null if no entries found
+    )
+
+    return top_entry.entry if top_entry else "no entries available yet"
