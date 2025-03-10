@@ -76,7 +76,7 @@ def profile(request):
     today = selected_date(0)
     yesterday = selected_date(1)
     day_before = selected_date(2)
-    today = selected_date(0)
+    two_days_ago = selected_date(3) 
  
     # this returns the prompt to the profile
     prompt_text = get_prompt(today)
@@ -86,16 +86,29 @@ def profile(request):
 
     #gets the previous journal entries
     previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')
-    prompt_text_0 = get_prompt(today)
     prompt_text_1 = get_prompt(yesterday)
     prompt_text_2 = get_prompt(day_before)
+    prompt_text_3 = get_prompt(day_before)
+    previous_entry_1 = get_prompt(yesterday)
+    previous_entry_2 = get_prompt(day_before)
+    previous_entry_3 = get_prompt(two_days_ago)
+
     context = {
         'prompt_text': prompt_text,
         'prior_entry':prior_entry,  
         'journal_entries':previous_entries,
-        'prompt_text_0': prompt_text_0,
+        # 'prompt_text_0': prompt_text_0,
         'prompt_text_1': prompt_text_1,
         'prompt_text_2': prompt_text_2,
+        'prompt_text_3': prompt_text_3,
+        'previous_entry_1' : previous_entry_1,
+        'previous_entry_2' : previous_entry_2,
+        'previous_entry_3' : previous_entry_3,
+        'today':today,
+        'yesterday':yesterday,
+        'day_before':day_before,
+        'two_days_ago':two_days_ago
+
     }
     
     return render(request, 'profile.html', context)
