@@ -74,25 +74,28 @@ def save_entry(request):
 @login_required
 def profile(request):
     today = selected_date(0)
-    yesterday = selected_date(1)
-    day_before = selected_date(2)
-    two_days_ago = selected_date(3) 
+
  
     # this returns the prompt to the profile
     prompt_text = get_prompt(today)
 
     #this checks if the user has already made a journal entry
     prior_entry = JournalEntry.objects.filter(userID=request.user, date=today).exists()
-
+    todays_entry = JournalEntry.objects.get(userID=request.user, date=today)
+    today_toshow = todays_entry.entry
     #gets the previous journal entries
-    previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')
-    prompt_text_1 = get_prompt(yesterday)
-    prompt_text_2 = get_prompt(day_before)
-    prompt_text_3 = get_prompt(day_before)
-    previous_entry_1 = get_prompt(yesterday)
-    previous_entry_2 = get_prompt(day_before)
-    previous_entry_3 = get_prompt(two_days_ago)
-
+    previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3]
+    # prompt_text_1 = get_prompt(yesterday)
+    prompt_text_1 = get_prompt(previous_entries[0].date)
+    prompt_text_2 = get_prompt(previous_entries[1].date)
+    prompt_text_3 = get_prompt(previous_entries[2].date)
+    # previous_entry_1 = get_entry(userID=request.user, date=yesterday)
+    previous_entry_1 = previous_entries[0].entry
+    previous_entry_2 = previous_entries[1].entry
+    previous_entry_3 = previous_entries[2].entry
+    previous_1 = previous_entries[0].date
+    previous_2 = previous_entries[1].date
+    previous_3 = previous_entries[2].date
     context = {
         'prompt_text': prompt_text,
         'prior_entry':prior_entry,  
@@ -105,9 +108,10 @@ def profile(request):
         'previous_entry_2' : previous_entry_2,
         'previous_entry_3' : previous_entry_3,
         'today':today,
-        'yesterday':yesterday,
-        'day_before':day_before,
-        'two_days_ago':two_days_ago
+        'yesterday':previous_1,
+        'day_before':previous_2,
+        'two_days_ago':previous_3,
+        'todays_entry': today_toshow
 
     }
     
@@ -157,6 +161,21 @@ def get_prompt(date):
     except Prompt.DoesNotExist:
         pass
     return prompt_text
+
+def get_entry(date, userID):
+    #this returns the prompt of the passed date
+    # Filter by date based on date param
+    entry_text = "entry does not exist"
+    #prompt_text = "no prompt available..."  # default if there is no prompt
+    try:
+        entry = JournalEntry.objects.get(userID=userID,date=date)
+        entry_text = entry.entry
+
+        # prompt = Prompt.objects.get(date=date) # Gets the prompt for the day
+        # prompt_text = prompt.prompt  
+    except JournalEntry.DoesNotExist:
+        pass
+    return entry_text
 
 def top_liked_entry(date):
     

@@ -39,12 +39,18 @@
     line-height: 1.2;
     text-align: center;
 }
-
+.journal-entry-hidden {
+    display: none;
+}
 #journal-entry {
     display: block;
     width: 100%;
+    color: #3e2a35;
 }
-
+.journal-entry-submitted {
+    text-align: center;
+    color: #ffffff;
+}
 #journal-entry-text {
     margin: 10px 0px;
 }
@@ -53,10 +59,15 @@
     margin-top: 10px;
 }
 
-
+.greeting {
+    color: #ffffff;
+    font-size: 50px !important;
+    /* font-family: 'Lohit Devanagari', 'sans-serif' !important; */
+    max-width: 1200px;
+}
 .profile-carousel-content {
-    background-color: #3e2a35; 
-    border-color:#72e1d1;
+    background-color: #035E7B;
+    border-color:#3F7CAC;
     border-radius: 15px;
     border-style: solid;
     border-width: thick;
@@ -73,7 +84,9 @@
     text-align: center;
 }
   
-
+.hidden {
+    display: none;
+}
 
 /* Styling for prompt */
 

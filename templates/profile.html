@@ -12,8 +12,8 @@
 <!-- working area -->
       <div class="row my-5">
         <div class="col">
-          <div class="profile">                
-            <p class="large-profile-box-text"> welcome back {{ request.user.username }} </p>
+          <div class="prompt">                
+            <p class="greeting"> welcome back {{ request.user.username }} </p>
           </div>
         </div>
       </div>
@@ -47,16 +47,23 @@
     </div>
   </div> 
   {%else%}
-  <div class="profile">
+  <div class="journal-entry-submitted">
     <p class="large-profile-box-text"> journal entry submitted for today </p>
+    <!-- <p > {{todays_entry}} </p> -->
   </div>
+  <div class="journal-entry-submitted">
+    <p > {{todays_entry}} </p>
+  </div>
+
   {%endif%}
 <div>
-<!-- testing area -->
+<br>
+<br>
+<br>
+    <!-- <div id="entry-yesterday" class="journal-entry hidden">
+        <p class = journal-entry>{{ previous_entry_1 }}</p>
+    </div> -->
 
-<br>
-<br>
-<br>
 <div class="index-carousel">
     <div id="index-car-indicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
@@ -70,13 +77,18 @@
             <div class="profile-carousel-content">
             <p class = "carousel-prompt"> {{ yesterday}} </p>            
             <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
-
+            <p class="carousel-prompt"> {{ previous_entry_1 }} </p>
+            <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-yesterday">view entry</button> -->
           </div>
         </div>
+
+
         <div class="carousel-item">
           <div class="profile-carousel-content">
             <p class = "carousel-prompt"> {{ day_before}} </p>  
             <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
+            <p class="carousel-prompt"> {{ previous_entry_2 }} </p>
+            <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
             <!-- <p> {{ top_entry_1 }} </p> -->
           </div>
         </div>
@@ -84,6 +96,8 @@
           <div class="profile-carousel-content">
             <p class = "carousel-prompt"> {{ two_days_ago}} </p>  
             <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
+            <p class="carousel-prompt"> {{ previous_entry_3 }} </p>
+            <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
             <!-- <p> {{ top_entry_2 }} </p> -->
           </div>
         </div>
@@ -107,8 +121,10 @@
   <br>
   <br>
   <br>
-  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
+  
+  <!-- testing area -->
+  <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner"> -->
         <!-- {% for entry in journal_entries %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
             <div class="d-flex justify-content-center"> -->
@@ -122,7 +138,7 @@
             <p class="text-center">No journal entries available.</p>
         </div>
         {% endfor %} -->
-      </div>
+      <!-- </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -135,4 +151,18 @@
     <div>
 
   </div>
+
+<script>
+  $(document).ready(function() {
+    $(".entry-btn").click(function() {
+        var entryId = $(this).data("entry"); // Get the target entry ID from the button
+        $("#" + entryId).toggleClass("hidden"); // Toggle visibility of the corresponding entry
+    });
+    });
+</script> -->
+
+
   {% endblock %}
+
+
+
