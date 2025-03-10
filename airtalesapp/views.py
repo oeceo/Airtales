@@ -70,19 +70,12 @@ def save_entry(request):
         return redirect("/profile/")   
     return render(request, "profile.html")
 
-# def journal_entry(request):
-#     if request.method == "POST":
-#         # journal_text= request.POST.get("journa_text")
-#         # if entry_text: 
-#         #     JournalEntry.objects.create(userID=request.user, date=now().date(), entry=entry_text)
-#         #     # JournalEntry.objects.create(userID=user, date=date, entry=entry_text, isReported=False)
-#         #    # return redirect("success_page")
-#         # return redirect("/profile/")   
-#     return render(request, "profile.html")
 
 @login_required
 def profile(request):
-
+    today = selected_date(0)
+    yesterday = selected_date(1)
+    day_before = selected_date(2)
     today = selected_date(0)
  
     # this returns the prompt to the profile
@@ -93,11 +86,16 @@ def profile(request):
 
     #gets the previous journal entries
     previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')
-
+    prompt_text_0 = get_prompt(today)
+    prompt_text_1 = get_prompt(yesterday)
+    prompt_text_2 = get_prompt(day_before)
     context = {
         'prompt_text': prompt_text,
         'prior_entry':prior_entry,  
-        'journal_entries':previous_entries
+        'journal_entries':previous_entries,
+        'prompt_text_0': prompt_text_0,
+        'prompt_text_1': prompt_text_1,
+        'prompt_text_2': prompt_text_2,
     }
     
     return render(request, 'profile.html', context)

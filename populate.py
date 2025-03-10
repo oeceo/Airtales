@@ -48,24 +48,24 @@ def populate():
         # user = User.objects.get_or_create_user(email=user_data['email'], username=user_data['username'], password=user_data['password'])
         users.append(user)
 
-    for user in users:
-        for i in range(0,2): 
-            #date = now().date() #- timedelta(days=randint(1, 10))
-            date = now().date()-timedelta(days=i)
-            entry_text = f"Entry from {user.username} on {date}: Today was an amazing day!"
+    # for user in users:
+    #     for i in range(0,2): 
+    #         #date = now().date() #- timedelta(days=randint(1, 10))
+    #         date = now().date()-timedelta(days=i)
+    #         entry_text = f"Entry from {user.username} on {date}: Today was an amazing day!"
             
-            location = random.choice(glasgow_locations)
+    #         location = random.choice(glasgow_locations)
         
-            JournalEntry.objects.get_or_create(
-            userID=user,
-            date=date,
-            entry=entry_text,
-            isReported=False,
-            defaults={
-                'latitude': location['latitude'],
-                'longitude': location['longitude'],
-            }
-        )
+    #         JournalEntry.objects.get_or_create(
+    #         userID=user,
+    #         date=date,
+    #         entry=entry_text,
+    #         isReported=False,
+    #         defaults={
+    #             'latitude': location['latitude'],
+    #             'longitude': location['longitude'],
+    #         }
+    #     )
 
     for prompt_entry in prompt_data:
         date = prompt_entry['date']
@@ -123,7 +123,7 @@ def populate():
             date = prompt_entry['date']
             prompt = Prompt.objects.filter(date=date).first() #first() returns null if no prompt found
             prompt_text = prompt.prompt if prompt else "No entry."
-            
+            location = random.choice(glasgow_locations)
             if prompt_text in journal_responses:
                 entry_index = prompt_data.index(prompt_entry)
                 entry_text = journal_responses[prompt_text][entry_index]
@@ -133,9 +133,31 @@ def populate():
                 userID=user, 
                 date=date, 
                 entry=entry_text, 
-                isReported=False
+                isReported=False,
+                defaults={
+                'latitude': location['latitude'],
+                'longitude': location['longitude'],
+                }
             )
             
+    # for user in users:
+    #     for i in range(0,2): 
+    #         #date = now().date() #- timedelta(days=randint(1, 10))
+    #         date = now().date()-timedelta(days=i)
+    #         entry_text = f"Entry from {user.username} on {date}: Today was an amazing day!"
+            
+    #         location = random.choice(glasgow_locations)
+        
+    #         JournalEntry.objects.get_or_create(
+    #         userID=user,
+    #         date=date,
+    #         entry=entry_text,
+    #         isReported=False,
+    #         defaults={
+    #             'latitude': location['latitude'],
+    #             'longitude': location['longitude'],
+    #         }
+    #     )
     for user in users:
         Profile.objects.get_or_create(userID=user)
 
