@@ -2,7 +2,78 @@
 {% load static %}
 {% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
-        {% block content %}
-            <h1>THIS IS THE HOMEPAGE</h1>
-            <p>This is the main content of the home page.</p>
-        {% endblock %}
+{% block content %}
+
+    <!-- Show today's prompt -->
+    <div class="container">
+        <div class="row my-5">
+            <div class="col">
+              <div class="prompt">                    
+                <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
+                <p class="prompt-text-pink"> {{ prompt_text_0 }} </p> 
+                {% if prompt_text_0 == "no prompt available..." %}
+                <p class="prompt-intro-turquoise"> check back soon!</p>
+                {% else %}
+                <p class="prompt-intro-turquoise"> is the word of today.</p>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Show yesterday's prompt -->
+    <!-- <div class="container">
+        <div class="row my-5">
+            <div class="col">
+              <div class="prompt">                    
+                <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
+                <p class="prompt-text-pink"> {{ yesterdays_prompt_text }} </p> 
+                {% if current_prompt_text == "no prompt available..." %}
+                <p class="prompt-intro-turquoise"> check back soon!</p>
+                {% else %}
+                <p class="prompt-intro-turquoise"> was the word of yesterday.</p>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+    </div> -->
+
+  <div class="index-carousel">
+    <div id="index-car-indicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#index-car-indicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#index-car-indicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#index-car-indicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="carousel-content">
+            <p class="carousel-prompt"> {{ prompt_text_0 }} </p>
+            <p> {{ top_entry_0 }} </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="carousel-content">
+            <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
+            <p> {{ top_entry_1 }} </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="carousel-content">
+            <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
+            <p> {{ top_entry_2 }} </p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#index-car-indicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+{% endblock %}
