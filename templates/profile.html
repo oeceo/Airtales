@@ -22,9 +22,12 @@
         <div class="col">
           <div class="prompt">                    
             <p class="prompt-intro-brown"> start today's prompt:</p>
-            <p class="prompt-text-white">{{ prompt_text }}</p> 
+            <p class="prompt-text-white">{{ prompt_text }}</p>             
           </div>
         </div>
+        <!-- <div class="col">
+            <p class="prompt-text-white">{{ prompt_text }}</p>
+        </div> -->
       </div>
 
 {% if not prior_entry%}
@@ -47,13 +50,16 @@
     </div>
   </div> 
   {%else%}
-  <div class="journal-entry-submitted">
-    <p class="large-profile-box-text"> journal entry submitted for today </p>
+  
+ 
+  <div class="profile_journal_submitted">
     <!-- <p > {{todays_entry}} </p> -->
+     <p class="profile-already-submitted"> entry submitted for today </p>     
+     <p class="journal-entry-submitted" > {{todays_entry}} </p>
   </div>
-  <div class="journal-entry-submitted">
-    <p > {{todays_entry}} </p>
-  </div>
+  <!-- <div class="journal-entry-submitted">
+    
+  </div> -->
 
   {%endif%}
 <div>
@@ -75,9 +81,9 @@
         <div class="carousel-item active">
           <!-- <div class="carousel-content"> -->
             <div class="profile-carousel-content">
-            <p class = "carousel-prompt"> {{ yesterday}} </p>            
-            <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
-            <p class="carousel-prompt"> {{ previous_entry_1 }} </p>
+            <p class = "carousel-prompt"> {{ yesterday}}:   {{ prompt_text_1 }}</p>            
+            <!-- <p class="carousel-prompt"> {{ prompt_text_1 }} </p> -->
+            <p class="carousel-entry"> {{ previous_entry_1 }} </p>
             <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-yesterday">view entry</button> -->
           </div>
         </div>
@@ -85,18 +91,18 @@
 
         <div class="carousel-item">
           <div class="profile-carousel-content">
-            <p class = "carousel-prompt"> {{ day_before}} </p>  
-            <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
-            <p class="carousel-prompt"> {{ previous_entry_2 }} </p>
+            <p class = "carousel-prompt"> {{ day_before}}:  {{ prompt_text_2 }}</p>  
+            <!-- <p class="carousel-prompt"> {{ prompt_text_2 }} </p> -->
+            <p class="carousel-entry"> {{ previous_entry_2 }} </p>
             <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
             <!-- <p> {{ top_entry_1 }} </p> -->
           </div>
         </div>
         <div class="carousel-item">
           <div class="profile-carousel-content">
-            <p class = "carousel-prompt"> {{ two_days_ago}} </p>  
-            <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
-            <p class="carousel-prompt"> {{ previous_entry_3 }} </p>
+            <p class = "carousel-prompt"> {{ two_days_ago}}:    {{ prompt_text_3 }} </p>  
+            <!-- <p class="carousel-prompt"> {{ prompt_text_3 }} </p> -->
+            <p class="carousel-entry"> {{ previous_entry_3 }} </p>
             <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
             <!-- <p> {{ top_entry_2 }} </p> -->
           </div>

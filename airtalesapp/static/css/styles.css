@@ -50,6 +50,12 @@
 .journal-entry-submitted {
     text-align: center;
     color: #ffffff;
+    font-size: 50px !important;
+}
+.profile-already-submitted{
+    text-align: left;
+    color: #035E7B;
+    font-size: 20px !important;
 }
 #journal-entry-text {
     margin: 10px 0px;
@@ -65,14 +71,41 @@
     /* font-family: 'Lohit Devanagari', 'sans-serif' !important; */
     max-width: 1200px;
 }
-.profile-carousel-content {
-    background-color: #035E7B;
-    border-color:#3F7CAC;
+.profile_journal_submitted{
+    /* font-family: 'Lexend Zetta', sans-serif;
+    font-size: 36px;
+    text-wrap: wrap;
+    text-align: center; */
+    background-color: #EFA8B8;
+    border-color:#EFA8B8;
     border-radius: 15px;
     border-style: solid;
     border-width: thick;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-height: 50px;
+    max-width: 800px; /* Set a max width */
+    padding: 30px;
+    /* margin: 40px 60px; */
+    margin: 20px auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    color: #3e2a35;
+    word-wrap: break-word;
+    /* text-align: center; */
+}
+.profile-carousel-content {
+    background-color: #035E7B;
+    /* border-color:#3F7CAC; */
+    border-color:#035E7B;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: thick;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 50px;
+    max-height: 200px;
     padding: 30px;
     margin: 40px 60px;
     display: flex;
@@ -82,10 +115,17 @@
     color: #3e2a35;
     word-wrap: break-word;
     text-align: center;
+    /* max-width: 800px; */
 }
   
 .hidden {
     display: none;
+}
+.central-prompt{
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 36px;
+    text-wrap: wrap;
+    text-align: center;
 }
 
 /* Styling for prompt */
@@ -110,7 +150,10 @@
 .prompt-text-white {
     color: #ffffff;
     font-weight: bold;
+    font-size: 70px !important;
     max-width: 800px;
+    text-align: left;
+    font-family: 'Lohit Devanagari', 'sans-serif' !important;
 }
 
 .prompt-text-pink {
@@ -277,7 +320,7 @@ a.btn-link:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-height: 180px;
     padding: 30px;
-    margin: 50px 75px;
+    margin: 20px 55px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -292,7 +335,12 @@ a.btn-link:hover {
     font-size: 30px;
     font-weight: bold;
 }
-
+.carousel-entry {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Lohit Devanagari', 'sans-serif' !important;
+}
 .carousel-control-prev {
 left: -35px;
 }
