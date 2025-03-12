@@ -10,7 +10,14 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
+from airtalesapp.forms import UserForm, ProfileForm
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
+from django.urls import reverse
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 def index(request):
     
@@ -48,11 +55,54 @@ def explore(request):
     # Pass the entries to the template to load on map
     return render(request, 'explore.html', {'entries': entries})
 
-def login(request):
+def user_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        User = get_user_model()        
+        user = authenticate(username=email, password=password)
+        # try:
+        #     user = User.objects.get(email=email)
+        # except User.DoesNotExist:
+        #     return HttpResponse("Invalid login details.")
+        if user is not None:
+            # if user.is_active:
+                login(request, user)
+                return redirect('airtalesapp:profile')
+            # else:
+                # return HttpResponse("Invalid Login.")
+        else:
+            # print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
     return render(request, 'login.html')
+    # return render(request, 'login.html')
 
 def signup(request):
-    return render(request, 'signup.html')
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        profile_form = ProfileForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile.userID = user 
+            profile.save()
+            registered = True
+            return redirect('airtalesapp:login')
+        else:
+            print(user_form.errors, profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = ProfileForm()
+
+    return render(request,'signup.html', {
+                'user_form': user_form,
+                'profile_form': profile_form,
+                'registered': registered
+                })
+
 
 def save_entry(request):
     if request.method == "POST":
@@ -81,21 +131,38 @@ def profile(request):
 
     #this checks if the user has already made a journal entry
     prior_entry = JournalEntry.objects.filter(userID=request.user, date=today).exists()
-    todays_entry = JournalEntry.objects.get(userID=request.user, date=today)
-    today_toshow = todays_entry.entry
+    todays_entry = JournalEntry.objects.filter(userID=request.user, date=today)
+    today_toshow = todays_entry.entry if todays_entry else "No entry yet."
     #gets the previous journal entries
-    previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3]
+    previous_entries = list(JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3])
     # prompt_text_1 = get_prompt(yesterday)
-    prompt_text_1 = get_prompt(previous_entries[0].date)
-    prompt_text_2 = get_prompt(previous_entries[1].date)
-    prompt_text_3 = get_prompt(previous_entries[2].date)
-    # previous_entry_1 = get_entry(userID=request.user, date=yesterday)
-    previous_entry_1 = previous_entries[0].entry
-    previous_entry_2 = previous_entries[1].entry
-    previous_entry_3 = previous_entries[2].entry
-    previous_1 = previous_entries[0].date
-    previous_2 = previous_entries[1].date
-    previous_3 = previous_entries[2].date
+    previous_entry_1, previous_entry_2, previous_entry_3 = "No previous entry.", "No previous entry.", "No previous entry."
+    prompt_text_1, prompt_text_2, prompt_text_3 = "No prompt available.", "No prompt available.", "No prompt available."
+    previous_1, previous_2, previous_3 = None, None, None
+
+    # prompt_text_1 = get_prompt(previous_entries[0].date)
+    # prompt_text_2 = get_prompt(previous_entries[1].date)
+    # prompt_text_3 = get_prompt(previous_entries[2].date)
+    # previous_entry_1 = previous_entries[0].entry
+    # previous_entry_2 = previous_entries[1].entry
+    # previous_entry_3 = previous_entries[2].entry
+    # previous_1 = previous_entries[0].date
+    # previous_2 = previous_entries[1].date
+    # previous_3 = previous_entries[2].date
+
+    if len(previous_entries) > 0:
+        previous_entry_1 = previous_entries[0].entry
+        prompt_text_1 = get_prompt(previous_entries[0].date)
+        previous_1 = previous_entries[0].date
+    if len(previous_entries) > 1:
+        previous_entry_2 = previous_entries[1].entry
+        prompt_text_2 = get_prompt(previous_entries[1].date)
+        previous_2 = previous_entries[1].date
+    if len(previous_entries) > 2:
+        previous_entry_3 = previous_entries[2].entry
+        prompt_text_3 = get_prompt(previous_entries[2].date)
+        previous_3 = previous_entries[2].date
+
     context = {
         'prompt_text': prompt_text,
         'prior_entry':prior_entry,  
@@ -186,3 +253,56 @@ def top_liked_entry(date):
     )
 
     return top_entry.entry if top_entry else "no entries available yet"
+
+
+
+
+# def register(request):
+#     registered = False
+#     if request.method == 'POST':
+#         user_form = UserForm(request.POST)
+#         profile_form = ProfileForm(request.POST)
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user = user_form.save(commit=False)
+#             user.set_password(user.password)
+#             user.save()
+#             profile = profile_form.save(commit=False)
+#             profile.user = user
+#             profile.save()
+#             registered = True
+#         else:
+#             print(user_form.errors, profile_form.errors)
+#     else:
+#         user_form = UserForm()
+#         profile_form = ProfileForm()
+
+#     return render(request,
+#                 'signup.html',
+#                 context = {'user_form': user_form,
+#                 'profile_form': profile_form,
+#                 'registered': registered
+#                 })
+
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(username=username, password=password)
+#         if user:
+#             if user.is_active:
+#                 login(request, user)
+#                 return redirect(reverse('airtalesapp:index'))
+#             else:
+#                 return HttpResponse("Your account is disabled.")
+#         else:
+#             print(f"Invalid login details: {username}, {password}")
+#             return HttpResponse("Invalid login details supplied.")
+#     else:
+#         return render(request, 'airtalesapp/login.html')
+    
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect("airtalesapp:login")  # Redirect to login page
+
+
