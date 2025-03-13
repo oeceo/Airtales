@@ -11,7 +11,7 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
-    path('userjournal', views.userjournal, name='userjournal'),
+    path('userjournal/', views.journal_entries, name='userjournal'),
     path("save_entry/", views.save_entry, name="save_entry"),
     path('entry/<int:entry_id>/', views.view_entry, name='view_entry'),
     

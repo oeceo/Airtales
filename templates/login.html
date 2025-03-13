@@ -8,9 +8,17 @@
 
     <h2 class="text-center mb-3">Login to share</h2>
 
+    {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <!-- Login box -->
     <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%; border-radius: 15px;">
-        <form method="POST">
+        <form method="POST" action="{% url 'airtalesapp:login' %}">
             {% csrf_token %}
             <!-- Email field -->
             <div class="mb-3">
@@ -23,6 +31,9 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <div class="d-grid gap-2 mt-3">
+                <button type="submit" class="btn btn-primary rounded-pill p-2">Login</button>
+            </div>
         </form>
 
         <!-- Sign Up link inside the box -->
@@ -32,9 +43,6 @@
     </div>
 
     <!-- Buttons BELOW the white box -->
-    <div class="d-grid gap-2 mt-3" style="max-width: 400px; width: 100%;">
-        <!-- Log In Button -->
-        <button type="submit" class="btn btn-primary rounded-pill p-2">Login</button>
         <!-- Forgot Password Button -->
         <a href="#" class="btn btn-outline-secondary rounded-pill p-2">Forgot Password?</a>
     </div>
