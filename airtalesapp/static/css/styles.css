@@ -265,3 +265,24 @@ left: -35px;
 .carousel-control-next {
 right: -35px;
 } 
+.go-back-button {
+    position: fixed; 
+    top: 12%; 
+    left: 20px; 
+    z-index: 1000; 
+}
+
+.go-back-button a {
+    display: inline-block; 
+    padding: 10px 20px; 
+    border: 0px none #000000; 
+    font-size: 1.2rem;
+    background: #72e1d1;
+    color: black;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.go-back-button a:hover {
+    background-color:#57ab9e ; 
+    color: white; 
+}
