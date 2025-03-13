@@ -277,12 +277,18 @@ right: -35px;
     padding: 10px 20px; 
     border: 0px none #000000; 
     font-size: 1.2rem;
-    background: #72e1d1;
+    background: #ffffff;
     color: black;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .go-back-button a:hover {
-    background-color:#57ab9e ; 
+    background-color:#035E7B ; 
     color: white; 
+}
+
+#no-entry {
+    color: black;
+    font-size: 5em;
+    
 }

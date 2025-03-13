@@ -26,19 +26,23 @@
         </div>
     </form>
 
-    <!-- Journal Entries List -->
-    <div class="list-group">
-        {% if journal_entries %}
-            {% for entry in journal_entries %}
-                <div class="list-group-item">
-                    <h5>{{ entry.date|date:"F j, Y" }}</h5>
-                    <p>{{ entry.entry }}</p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No entries found for this month.</p>
-        {% endif %}
-    </div>
-</div>
 
+
+
+<!-- Journal Entries List -->
+<div class="list-group">
+    {% if journal_entries %}
+        {% for entry in journal_entries %}
+            <div class="list-group-item">
+                <h5>
+                    {{ entry.date|date:"F j, Y" }} 
+                    - <span class="text-muted">{{ entry.prompt_text }}</span>
+                </h5>
+                <p>{{ entry.entry }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p id="no-entry">No entries found for this month.</p>
+    {% endif %}
+</div>
 {% endblock %}

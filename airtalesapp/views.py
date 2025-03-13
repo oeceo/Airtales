@@ -190,10 +190,20 @@ def journal_entries(request):
     # Get the current year and month from the request parameters or use default values
     year = request.GET.get('year', 2025)  # Default to 2025
     month = request.GET.get('month', 3)   # Default to March
+    
     print(f"Retrieving journal entries for user {request.user} and {year} {month}")
     
     # Filter the journal entries by the given year and month
     entries = JournalEntry.objects.filter(date__year=year, date__month=month, userID=request.user)
+
+    # Create a list of prompts matching the entry dates
+    prompts = Prompt.objects.filter(date__in=[entry.date for entry in entries])
+    prompts_dict = {prompt.date: prompt.prompt for prompt in prompts}
+
+    # Fetch the respective prompt for each entry
+    for entry in entries:
+        entry.prompt_text = prompts_dict.get(entry.date, "No prompt assigned")
+    
 
     # Get available years and months
     available_years = JournalEntry.objects.filter(userID=request.user).values('date__year').distinct().order_by('date__year')
@@ -202,7 +212,7 @@ def journal_entries(request):
     # Prepare the context
     context = {
         'journal_entries': entries,
-        'available_years': [entry['date__year'] for entry in available_years],  # Extract years
+        'available_years': [entry['date__year'] for entry in available_years], 
         'available_months': available_months,
         'selected_year': year,
         'selected_month': month

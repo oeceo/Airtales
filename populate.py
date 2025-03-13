@@ -108,6 +108,7 @@ def populate():
             isReported=False,
             latitude=location['latitude'],
             longitude=location['longitude'],
+            prompt=random_prompt,
         )
 
     print("Database populated successfully.")
