@@ -32,7 +32,7 @@
             "isLiked": {% if user in entry.liked_by.all %} true {% else %} false {% endif %}
         },
         {% endfor %}
-    ];
+        ];
         console.log("Entries from server:", entries);
     </script>
     <script src="{% static 'js/map.js' %}"></script>
@@ -40,16 +40,19 @@
 
 {% block content %}
     <div>
-        <h1 id="explore-head">explore the world in words!</h1> </div>
-    <div id="map"></div>
-    <div>
-        <button id="login-status-btn" class="btn">
-            {% if user.is_authenticated %}
+        <h1 id="explore-head">Explore the world in words!</h1> </div>
+    <div class="container centred-container">
+        <div id="map"></div>
+        <div>
+            <button class="btn btn-primary px-4"> 
+                {% if user.is_authenticated %}
                 share your tale today
-            {% else %}
+                {% else %}
                 login or sign up to share your tale
-            {% endif %}
-        </button> </div>
+                {% endif %}
+            </button>
+        </div>
+    </div>
 
     <!-- CSRF token for JavaScript -->
     <form id="csrf-form">
