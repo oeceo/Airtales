@@ -51,10 +51,10 @@
 
     <nav class="navbar fixed-bottom navbar-dark" id="nav-bottom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" id="nav-prompt">Today's prompt: {{ prompt_text_0 }} </a>
+            <a class="navbar-brand" href="#" id="nav-prompt">Today's prompt: {{ prompt_text_0 }}</a>
             <div class="nav-links">
-                <a class="bottom-nav-link" href="#">About</a>
-                <a class="bottom-nav-link" href="#">T&Cs</a>
+                <a class="bottom-nav-link" href="{% url 'airtalesapp:about' %}">About</a>
+                <a class="bottom-nav-link" href="{% url 'airtalesapp:terms' %}">T&Cs</a>
             </div>
         </div>
     </nav>

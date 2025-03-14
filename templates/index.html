@@ -7,12 +7,12 @@
     <!-- Show today's prompt -->
     <div class="container">
       <div class="prompt">                    
-        <h1 class="prompt-text-pink"> one word, one thought, everyday... </h1>
-        <h2 class="prompt-text-white"> {{ prompt_text_0 }} </h2> 
+        <h1 class="display-6 pink-text"> one word, one thought, everyday... </h1>
+        <h2 class="prompt-text"> {{ prompt_text_0 }} </h2> 
         {% if prompt_text_0 == "no prompt available..." %}
-        <h3 class="prompt-text-pink"> check back soon!</h3>
+        <h3 class="pink-text"> check back soon!</h3>
         {% else %}
-        <h2 class="prompt-text-pink"> is the word of today.</h2>
+        <h2 class="pink-text"> is the word of today.</h2>
         {% endif %}
       </div>
     </div>

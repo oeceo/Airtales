@@ -14,12 +14,12 @@
     <h3 class="welcome-textbox"> welcome back {{ request.user.username }} </h3>
   </div>
   <div class="prompt">                    
-    <h2 class="prompt-text-pink"> start today's prompt:</h2>
-    <h3 class="prompt-text-white">{{ prompt_text }}</h3> 
+    <h2 class="pink-text"> start today's prompt:</h2>
+    <h3 class="prompt-text">{{ prompt_text }}</h3> 
   </div>
 
   {% if not prior_entry%}
-    <div class="container profile">
+    <div class="blue-rounded-container profile">
       <!-- <form method="POST" action="{% url 'save_entry'}"> -->
       <form method="POST" action="{% url 'airtalesapp:save_entry' %}" id="journalForm">
       <!-- <form method="POST" action="{% url 'airtalesapp:save_entry' %}"> -->
@@ -34,7 +34,7 @@
       </form>
     </div> 
   {%else%}
-    <div class="profile">
+    <div class="blue-rounded-container profile">
       <p class="large-profile-box-text"> journal entry submitted for today </p>
     </div>
   {%endif%}

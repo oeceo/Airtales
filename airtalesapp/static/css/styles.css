@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lohit+Devanagari&display=swap'); /* Normal text font */
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Zetta&display=swap'); /* Widest heading font */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Zetta&display=swap'); /* Logo font */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Peta&display=swap'); /* Widest heading font */
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Giga&display=swap'); /* Medium heading font */
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Exa&display=swap'); /* Narrowest heading font */
 
@@ -18,33 +19,58 @@
     background-color: #EFA8B8; /* Pink */
 }
 
-/* Styling for headings */
+/* Styling for headings and font color */
 
 h1 {
-    font-family: 'Lexend Zetta', sans-serif;
-    font-size: 36px;
+    font-family: 'Lexend Peta', sans-serif;
     padding: 20px 0px;
 }
 
 h2 {
     font-family: 'Lexend Giga', sans-serif;
-    font-size: 32px;
     padding: 15px 0px;
 }
 
 h3 {
     font-family: 'Lexend Exa', sans-serif;
-    font-size: 26px;
     padding: 10px 0px;
 }
 
-/* Centred container */
+h4, h5, h6 {
+    font-family: 'Lexend Exa', sans-serif;
+}
+
+.pink-text {
+    color:#EFA8B8
+}
+
+.blue-text {
+    color: #035E7B;
+}
+
+.white-text {
+    color: #ffffff;
+}
+
+.plum-text {
+    color: #3E2A35;
+}
+
+/* Containers */
 
 .centred-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.blue-rounded-container {
+    background-color: #077498;
+    width: 80%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-wrap: wrap;
 }
 
 /* Styling for navigation */
@@ -75,6 +101,8 @@ h3 {
 
 #nav-prompt {
     font-family: 'Lexend Exa', sans-serif;
+    font-size: medium;
+
 }
 
 .nav-links {
@@ -173,11 +201,7 @@ h3 {
     margin: 40px;
 }
 
-.prompt-text-pink {
-    color: #EFA8B8;
-}
-
-.prompt-text-white {
+.prompt-text {
     color: #ffffff;
     font-weight: bold;
 }
@@ -185,17 +209,11 @@ h3 {
 /* Styling for Profile */
 
 .profile {
-    background-color: #077498;
-    min-width: 200px;
-    max-width: 800px; 
-    border-radius: 30px;
-
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Lexend Exa', sans-serif;
-    text-wrap: wrap;
+    width: 90%;
 }
 
 .welcome-textbox {
+    font-family: 'Lexend Exa', sans-serif;
     color: #ffffff;
     margin: 5px;
     text-align: center;
@@ -336,3 +354,19 @@ left: -35px;
 .carousel-control-next {
 right: -35px;
 } 
+
+/* Styling for About and T&Cs */
+
+.about-terms {
+    color: white;
+    width: 90%;
+    padding: 0px 20px;
+}
+
+.about-terms-text {
+    padding: 25px 20px;
+}
+
+#privacy {
+    margin-top: 30px;
+}
