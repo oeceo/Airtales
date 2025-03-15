@@ -33,12 +33,21 @@
 <div class="list-group">
     {% if journal_entries %}
         {% for entry in journal_entries %}
-            <div class="list-group-item">
-                <h5>
-                    {{ entry.date|date:"F j, Y" }} 
-                    - <span class="text-muted">{{ entry.prompt_text }}</span>
-                </h5>
-                <p>{{ entry.entry }}</p>
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <h5>
+                        {{ entry.date|date:"F j, Y" }} 
+                        - <span class="text-muted">{{ entry.prompt_text }}</span>
+                    </h5>
+                    <p>{{ entry.entry }}</p>
+                    <form method="POST" action="{% url 'airtalesapp:delete_entry' entry.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</button>
+                    </form>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="me-2 text-muted">❤️ {{ entry.liked_by.count }}</span> 
+                </div>
             </div>
         {% endfor %}
     {% else %}
