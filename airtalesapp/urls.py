@@ -15,6 +15,7 @@ urlpatterns = [
     path("save_entry/", views.save_entry, name="save_entry"),
     path('entry/<int:entry_id>/', views.view_entry, name='view_entry'),
     path('like-entry/<int:entry_id>/', views.toggle_like, name='like_entry'),
+    path('report-entry/<int:entry_id>/', views.report_entry, name='report_entry'),
 
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),

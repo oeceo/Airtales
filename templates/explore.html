@@ -35,6 +35,9 @@
     ];
         console.log("Entries from server:", entries);
     </script>
+    <script>
+        const authenticatedUserId = "{{ user.id }}";  
+    </script>
     <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
 

@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
 from django.utils.timezone import timedelta
+from django.views.decorators.csrf import csrf_exempt
 from .models import Prompt 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -281,6 +282,29 @@ def get_entry(date, userID):
     except JournalEntry.DoesNotExist:
         pass
     return entry_text
+
+
+@csrf_exempt
+@login_required
+def report_entry(request, entry_id):
+    try:
+        entry = JournalEntry.objects.get(id=entry_id)
+
+        # Ensure the signed-in user is not the one who created the entry 
+        if entry.userID == request.user:
+            return JsonResponse({"error": "You cannot report your own entry."}, status=403)
+
+        # Toggle the 'isReported' field to True
+        entry.isReported = True
+        entry.save()
+
+        return JsonResponse({
+            "success": True,
+            "is_reported": entry.isReported
+        })
+
+    except JournalEntry.DoesNotExist:
+        return JsonResponse({"error": "Entry not found."}, status=404)
 
 def top_liked_entry(date):
     top_entry = (JournalEntry.objects.filter(date=date) # Filter by date based on date param
