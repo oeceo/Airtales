@@ -202,7 +202,7 @@ h4, h5, h6 {
     color: #ffffff;
 
     font-weight: bold;
-    font-size: 70px !important;
+    font-size: 35px !important;
     max-width: 800px;
     text-align: left;
     font-family: 'Lohit Devanagari', 'sans-serif' !important;
@@ -300,8 +300,13 @@ h4, h5, h6 {
 
 .prompt-text {
     color: #ffffff;
+    font-size: 5rem;
+    padding-left: 4rem; /* #visualimpact lol */
     font-weight: bold;
+    letter-spacing: 0.2em; 
+    font-family: 'Lugrasimo', cursive;
 }
+
 
 /* Styling for Profile */
 
@@ -378,6 +383,7 @@ a.btn-link:hover {
     max-width: 1600px;
     width: 90%;
     margin-bottom: 20px;
+    margin: 0 auto 20px;
     border: 2px solid #077498;
     border-radius: 30px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
@@ -418,6 +424,52 @@ a.btn-link:hover {
 
 .like-button:hover {
     background-color: #cb8f97; 
+}
+
+.report-button {
+    background-color: #f0f0f0;
+    color: #888;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.report-button:hover {
+    opacity: 1;
+}
+
+.report-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    justify-content: center; 
+    text-align: center;      
+}
+
+#login-status-btn {
+    margin-bottom: 10px; 
+}
+
+#daily-prompt h2{
+    margin: 0; 
+}
+
+.prompt-explore {
+    color: #e08592; 
+}
+
+.prompt-text-container {
+    display: flex;
+    justify-content: center;
 }
 
 /* Styling for Index */
