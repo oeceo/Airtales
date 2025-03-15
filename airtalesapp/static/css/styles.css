@@ -1,197 +1,289 @@
-@import url('https://fonts.googleapis.com/css2?family=Lohit+Devanagari&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Zetta&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lohit+Devanagari&display=swap'); /* Normal text font */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Zetta&display=swap'); /* Logo font */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Peta&display=swap'); /* Widest heading font */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Giga&display=swap'); /* Medium heading font */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Exa&display=swap'); /* Narrowest heading font */
 
 /* Styling for page background - place on line 3 of page with {% block body_class %}home-bg{% endblock %} */
 
 .default-bg {
     background-color: #035E7B; /* Dark blue */
 }
-
+.blue-bg {
+    background-color: #3F7CAC; /* Lighter blue */
+}
 .dark-blue-bg {
-    background-color: #035E7B !important; /* Dark blue */
+    background-color: #035E7B; /* Dark blue */
 }
-
 .pink-bg {
-    background-color: #EFA8B8 !important; /* Pink */
+    background-color: #EFA8B8; /* Pink */
 }
 
-.turquoise-bg {
-    background-color: #72E1D1 !important; /* Turquoise */
+/* Styling for headings and font color */
+
+h1 {
+    font-family: 'Lexend Peta', sans-serif;
+    padding: 20px 0px;
 }
 
-/* Styling for profile class */
-
-.profile {
-    display: block;
-    background-color: #72e1d1;
-    max-width: 800px; 
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Lexend Zetta', sans-serif;
-    text-wrap: wrap;
+h2 {
+    font-family: 'Lexend Giga', sans-serif;
+    padding: 15px 0px;
 }
 
-.large-profile-box-text {
-    margin: 10px;
-    font-size: 24px;
-    color: #3e2a35;
-    line-height: 1.2;
-    text-align: center;
+h3 {
+    font-family: 'Lexend Exa', sans-serif;
+    padding: 10px 0px;
 }
 
-#journal-entry {
-    display: block;
-    width: 100%;
+h4, h5, h6 {
+    font-family: 'Lexend Exa', sans-serif;
 }
 
-#journal-entry-text {
-    margin: 10px 0px;
+.pink-text {
+    color:#EFA8B8
 }
 
-#journal-entry-button {
-    margin-top: 10px;
+.blue-text {
+    color: #035E7B;
 }
 
-/* Styling for prompt */
-
-.prompt {
-    font-family: 'Lexend Zetta', sans-serif;
-    font-size: 36px;
-    text-wrap: wrap;
-    text-align: left;
-}
-
-.prompt-intro-brown {
-    color: #3e2a35;
-    max-width: 800px;
-}
-
-.prompt-intro-turquoise {
-    color: #72e1d1;
-    max-width: 1200px;
-}
-
-.prompt-text-white {
+.white-text {
     color: #ffffff;
-    font-weight: bold;
-    max-width: 800px;
 }
 
-.prompt-text-pink {
-    color:#EFA8B8;
-    font-size: 60px !important;
-    font-family: 'Lohit Devanagari', 'sans-serif' !important;
-    max-width: 1200px;
+.plum-text {
+    color: #3E2A35;
+}
+
+/* Containers */
+
+.centred-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.blue-rounded-container {
+    background-color: #077498;
+    width: 80%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-wrap: wrap;
 }
 
 /* Styling for navigation */
 
 .navbar {
-    background-color: #3F7CAC;  
+    background-color: #077498; 
+}
+
+#nav-top {
+    margin-bottom: 40px;
+}
+
+#nav-bottom {
+    margin-top: 40px;
 }
 
 .navbar-logo {
     padding-left: 25px;  
 }
 
-.navbar .btn {
-    color: white;
-    font-weight: bold;
-    border-radius: 50px !important;      
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; 
-    padding: 10px 20px !important; 
-    background-color: #EFA8B8 !important;
-}
-
-.navbar .btn:hover {
-    background-color: #e08592 !important; 
-}
-
 .navbar-toggler {
-    border-color: #ffffff !important;
+    border-color: #ffffff;
 }
 
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-/* Styling for the Login Template */
+#nav-prompt {
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: medium;
+
+}
+
+.nav-links {
+    float: right;
+}
+
+.bottom-nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0px 10px;
+}
+
+.bottom-nav-link:hover {
+    color: #EFA8B8;
+}
+
+/* Styling for buttons */
+
+.btn {
+    font-family: 'Lexend Exa', sans-serif;
+}
+
+.btn.btn-primary {
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 50px;  
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 10px 20px;
+    background-color: #EFA8B8;
+    border-color: #EFA8B8;
+}
+
+.btn.btn-secondary {
+    color: #EFA8B8;
+    background-color: #035E7B;
+    font-weight: bold;
+    border-radius: 50px;  
+    border-color: #EFA8B8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 10px 20px;
+}
+
+.btn.btn-primary:hover {
+    background-color: #e08592;
+    border-color: #e08592;
+}
+
+.btn.btn-primary:active {
+    background-color: #e08592;
+    border-color: #e08592;
+}
+
+.btn.btn-secondary:hover {
+    color: #ffffff;
+    background-color: #e08592;
+    border-color: #e08592;
+}
+
+.btn.btn-secondary:active {
+    color: #ffffff;
+    background-color: #e08592;
+    border-color: #e08592;
+}
+
+@media (max-width: 991px) {
+
+    .btn.btn-primary.nav-bar {
+        box-shadow: none;
+        background-color: #077498;
+        width: 100%;
+        border: none;
+    }
+
+    .btn.btn-primary.nav-bar:hover {
+        color: #EFA8B8;
+    }
+
+    .btn.btn-primary.nav-bar:active {
+        background-color: #366c95;
+    }
+}
+
+.custom-link {
+    color: #035E7B;
+}
+
+.custom-link:hover {
+    color: #366c95;
+}
+
+/* Styling for Prompt */
+
+.prompt {
+    text-wrap: wrap;
+    text-align: left;
+    margin: 40px;
+}
+
+.prompt-text {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Styling for Profile */
+
+.profile {
+    width: 90%;
+}
+
+.welcome-textbox {
+    font-family: 'Lexend Exa', sans-serif;
+    color: #ffffff;
+    margin: 5px;
+    text-align: center;
+}
+
+#tell-us {
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: 26px;
+    padding-bottom: 10px;
+}
+
+#welcome {
+    background-color: #EFA8B8;
+    border-radius: 50px;
+    padding: 5px;
+}
+
+#journal-entry {
+    padding: 20px;
+    display: block;
+    width: 100%;
+    color: #EFA8B8;
+}
+
+#journal-entry-button {
+    margin-top: 15px;
+}
+
+/* Styling for Login */
+
+.login {
+    color: white;
+}
+
 .card {
     background-color: #EFA8B8;
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.btn-primary {
-    background-color: #EFA8B8;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #e08592;
+    max-width: 400px; 
+    width: 100%; 
+    border-radius: 15px;
 }
 
 a.btn-link {
     font-size: 14px;
     text-decoration: none;
-    color: #000000;
+    color: #ffffff;
+    padding: 10px 20px; 
 }
 
 a.btn-link:hover {
     text-decoration: underline;
 }
 
-/* Style for the buttons to make them bubble-like */
-.btn-primary.rounded-circle {
-    width: 100%;   
-    height: 60px;  
-    text-align: center;
-    border-radius: 50px; 
-}
-
-.btn-link.rounded-circle {
-    width: 100%;  
-    height: 60px;  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50px; 
-    background-color: #EFA8B8;
-    color: white;
-}
-
-.btn-link.rounded-circle:hover {
-    background-color: #e08592; 
-}
-
-/* explore page */ 
+/* Styling for Explore */ 
 #explore-head {
     text-align: center; 
-    font-size: 3rem; 
-    margin: 20px 0; 
     color: white;
-    padding-bottom: 0;
-    letter-spacing: 0.5em;
 }
 
 #map {
-    height: 40rem;
-    margin-top: 2rem;
-    border: 10px solid #EFA8B1;
+    height: 25rem;
+    min-width: 200px;
+    max-width: 800px;
+    width: 90%;
+    margin-bottom: 20px;
+    border: 2px solid #077498;
+    border-radius: 30px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
-}
-
-#login-status-btn{
-    text-align: center; 
-    font-size: 2rem; 
-    margin: 20px 0; 
-    color: white;
-    padding-bottom: 0;
-    letter-spacing: 0.2em;
-    border-radius: 30px;
-    background-color: #EFA8B8;
 }
 
 /* edit pop up stuff */
@@ -231,14 +323,11 @@ a.btn-link:hover {
     background-color: #cb8f97; 
 }
 
-/* Styling for index */
+/* Styling for Index */
 
 .carousel-content {
-    background-color: #ffffff; 
-    border-color:#72e1d1;
-    border-radius: 15px;
-    border-style: solid;
-    border-width: thick;
+    background-color: #EFA8B8; 
+    border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-height: 180px;
     padding: 30px;
@@ -247,13 +336,13 @@ a.btn-link:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #3e2a35;
+    color: #035E7B;
     word-wrap: break-word;
     text-align: center;
 }
   
 .carousel-prompt {
-    color: #EFA8B1;
+    color: #ffffff;
     font-size: 30px;
     font-weight: bold;
 }
@@ -265,6 +354,7 @@ left: -35px;
 .carousel-control-next {
 right: -35px;
 } 
+
 .go-back-button {
     position: fixed; 
     top: 12%; 
@@ -290,5 +380,20 @@ right: -35px;
 #no-entry {
     color: black;
     font-size: 5em;
-    
+}
+
+/* Styling for About and T&Cs */
+
+.about-terms {
+    color: white;
+    width: 90%;
+    padding: 0px 20px;
+}
+
+.about-terms-text {
+    padding: 25px 20px;
+}
+
+#privacy {
+    margin-top: 30px;
 }

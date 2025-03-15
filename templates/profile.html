@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body_class %}pink-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
+{% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
 {% block extra_js %}
 <script src="{% static 'js/location.js' %}"></script>
@@ -8,54 +8,37 @@
 
 {% block content %}
 
-    <div class="container">
+<div class="container centred-container">
 <!-- working area -->
-      <div class="row my-5">
-        <div class="col">
-          <div class="profile">                
-            <p class="large-profile-box-text"> welcome back {{ request.user.username }} </p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row my-5">
-        <div class="col">
-          <div class="prompt">                    
-            <p class="prompt-intro-brown"> start today's prompt:</p>
-            <p class="prompt-text-white">{{ prompt_text }}</p> 
-          </div>
-        </div>
-      </div>
-
-
-<!-- testing area -->
-{% if not prior_entry%}
-<div class="row">
-    <div class="col">
-
-
-      <div class="profile">
-        <!-- <form method="POST" action="{% url 'save_entry'}"> -->
-        <form method="POST" action="{% url 'airtalesapp:save_entry' %}" id="journalForm">
-        <!-- <form method="POST" action="{% url 'airtalesapp:save_entry' %}"> -->
-          {% csrf_token %}
-          <div id="journal-entry">
-            <label for="journal-entry-text" class="form-label">tell us everything...</label>
-            <textarea class="form-control" id="journal-entry-text" name="entry_text" rows="3" ></textarea>
-            <input hidden type=text" name="latitude" id="latitude" value=""/>
-            <input hidden type=text" name="longitude" id="longitude" value=""/>
-            <button type="submit" class="btn btn-primary" id="journal-entry-button">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div> 
-  {%else%}
-  <div class="profile">
-    <p class="large-profile-box-text"> journal entry submitted for today </p>
+  <div class="container profile" id="welcome">                
+    <h3 class="welcome-textbox"> welcome back {{ request.user.username }} </h3>
   </div>
+  <div class="prompt">                    
+    <h2 class="pink-text"> start today's prompt:</h2>
+    <h3 class="prompt-text">{{ prompt_text }}</h3> 
+  </div>
+
+  {% if not prior_entry%}
+    <div class="blue-rounded-container profile">
+      <!-- <form method="POST" action="{% url 'save_entry'}"> -->
+      <form method="POST" action="{% url 'airtalesapp:save_entry' %}" id="journalForm">
+      <!-- <form method="POST" action="{% url 'airtalesapp:save_entry' %}"> -->
+        {% csrf_token %}
+        <div id="journal-entry">
+          <label for="journal-entry-text" class="form-label" id="tell-us">tell us everything...</label>
+          <textarea class="form-control" id="journal-entry-text" name="entry_text" rows="3" ></textarea>
+          <input hidden type="text" name="latitude" id="latitude" value=""/>
+          <input hidden type="text" name="longitude" id="longitude" value=""/>
+          <button type="submit" class="btn btn-primary" id="journal-entry-button">Submit</button>
+        </div>
+      </form>
+    </div> 
+  {%else%}
+    <div class="blue-rounded-container profile">
+      <p class="large-profile-box-text"> journal entry submitted for today </p>
+    </div>
   {%endif%}
-<div>
+  </div>
 
   <br>
   <br>
