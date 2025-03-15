@@ -16,6 +16,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.contrib import messages
+from datetime import datetime
+from django.contrib.auth import authenticate, login
+
 
 User = get_user_model()
 
@@ -50,10 +54,17 @@ def about(request):
 @ensure_csrf_cookie
 def explore(request):
     # Get all entries from today that have a location attached
+    today = selected_date(0)
+    prompt_text = get_prompt(today)
     entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
     
+    context = {
+        'prompt_text': prompt_text,
+        'entries': entries
+    }
+    
     # Pass the entries to the template to load on map
-    return render(request, 'explore.html', {'entries': entries})
+    return render(request, 'explore.html', context)
 
 def user_login(request):
     if request.method == 'POST':
@@ -76,6 +87,9 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     return render(request, 'login.html')
     # return render(request, 'login.html')
+
+def terms(request):
+    return render(request, 'terms.html')
 
 def signup(request):
     registered = False
@@ -191,6 +205,28 @@ def view_entry(request, entry_id):
 def userjournal(request):
     return render(request, 'userjournal.html')
 
+# login page
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            print("User authenticated:", user)
+            login(request, user)
+            messages.success(request, "You have successfully logged in!")
+            return redirect('airtalesapp:profile')  # Redirect to users homepage
+        else:
+            print("User NOT authenticated:", user)
+            messages.error(request, "Invalid email or password. Please try again.")
+
+    return render(request, 'login.html')
+
+
+
 
 @login_required
 def toggle_like(request, entry_id):
@@ -245,15 +281,13 @@ def get_entry(date, userID):
     return entry_text
 
 def top_liked_entry(date):
-    
     top_entry = (JournalEntry.objects.filter(date=date) # Filter by date based on date param
-                 .annotate(like_count=Count('liked_by')) # Counts likes
-                 .order_by('-like_count')
-                 .first() # Returns null if no entries found
+                .annotate(like_count=Count('liked_by')) # Counts likes
+                .order_by('-like_count')
+                .first() # Returns null if no entries found
     )
 
     return top_entry.entry if top_entry else "no entries available yet"
-
 
 
 
@@ -306,3 +340,49 @@ def user_logout(request):
     return redirect("airtalesapp:login")  # Redirect to login page
 
 
+# JOURNAL ENTRY PAGE
+
+@login_required
+def journal_entries(request):
+    # Get the current year and month from the request parameters or use default values
+    year = request.GET.get('year', 2025)  # Default to 2025
+    month = request.GET.get('month', 3)   # Default to March
+    
+    print(f"Retrieving journal entries for user {request.user} and {year} {month}")
+    
+    # Filter the journal entries by the given year and month
+    entries = JournalEntry.objects.filter(date__year=year, date__month=month, userID=request.user)
+
+    # Create a list of prompts matching the entry dates
+    prompts = Prompt.objects.filter(date__in=[entry.date for entry in entries])
+    prompts_dict = {prompt.date: prompt.prompt for prompt in prompts}
+
+    # Fetch the respective prompt for each entry
+    for entry in entries:
+        entry.prompt_text = prompts_dict.get(entry.date, "No prompt assigned")
+    
+
+    # Get available years and months
+    available_years = JournalEntry.objects.filter(userID=request.user).values('date__year').distinct().order_by('date__year')
+    available_months = range(1, 13)  # Months 1 to 12
+    
+    # Prepare the context
+    context = {
+        'journal_entries': entries,
+        'available_years': [entry['date__year'] for entry in available_years], 
+        'available_months': available_months,
+        'selected_year': year,
+        'selected_month': month
+    }
+    
+    return render(request, 'userjournal.html', context)
+
+
+@login_required
+def delete_entry(request, entry_id):
+    entry = get_object_or_404(JournalEntry, id=entry_id, userID=request.user) 
+
+    if request.method == "POST":
+        entry.delete()
+    
+    return redirect('airtalesapp:userjournal')  

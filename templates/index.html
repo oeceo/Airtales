@@ -6,19 +6,15 @@
 
     <!-- Show today's prompt -->
     <div class="container">
-        <div class="row my-5">
-            <div class="col">
-              <div class="prompt">                    
-                <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
-                <p class="prompt-text-pink"> {{ prompt_text_0 }} </p> 
-                {% if prompt_text_0 == "no prompt available..." %}
-                <p class="prompt-intro-turquoise"> check back soon!</p>
-                {% else %}
-                <p class="prompt-intro-turquoise"> is the word of today.</p>
-                {% endif %}
-              </div>
-            </div>
-        </div>
+      <div class="prompt">                    
+        <h1 class="display-6 pink-text"> one word, one thought, everyday... </h1>
+        <h2 class="prompt-text"> {{ prompt_text_0 }} </h2> 
+        {% if prompt_text_0 == "no prompt available..." %}
+        <h3 class="pink-text"> check back soon!</h3>
+        {% else %}
+        <h2 class="pink-text"> is the word of today.</h2>
+        {% endif %}
+      </div>
     </div>
 
     <!-- Show yesterday's prompt -->
