@@ -51,6 +51,9 @@ def explore(request):
 def login(request):
     return render(request, 'login.html')
 
+def terms(request):
+    return render(request, 'terms.html')
+
 def signup(request):
     return render(request, 'signup.html')
 
