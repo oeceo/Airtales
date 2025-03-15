@@ -202,7 +202,7 @@ h4, h5, h6 {
     color: #ffffff;
 
     font-weight: bold;
-    font-size: 70px !important;
+    font-size: 35px !important;
     max-width: 800px;
     text-align: left;
     font-family: 'Lohit Devanagari', 'sans-serif' !important;
@@ -300,8 +300,13 @@ h4, h5, h6 {
 
 .prompt-text {
     color: #ffffff;
+    font-size: 5rem;
+    padding-left: 4rem; /* #visualimpact lol */
     font-weight: bold;
+    letter-spacing: 0.2em; 
+    font-family: 'Lugrasimo', cursive;
 }
+
 
 /* Styling for Profile */
 
