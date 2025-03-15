@@ -383,6 +383,7 @@ a.btn-link:hover {
     max-width: 1600px;
     width: 90%;
     margin-bottom: 20px;
+    margin: 0 auto 20px;
     border: 2px solid #077498;
     border-radius: 30px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
@@ -444,6 +445,31 @@ a.btn-link:hover {
 .report-button:disabled {
     cursor: not-allowed;
     opacity: 0.4;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    justify-content: center; 
+    text-align: center;      
+}
+
+#login-status-btn {
+    margin-bottom: 10px; 
+}
+
+#daily-prompt h2{
+    margin: 0; 
+}
+
+.prompt-explore {
+    color: #e08592; 
+}
+
+.prompt-text-container {
+    display: flex;
+    justify-content: center;
 }
 
 /* Styling for Index */

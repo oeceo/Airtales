@@ -45,7 +45,7 @@
     <div>
         <h1 id="explore-head">explore the world in words!</h1> </div>
     <div id="map"></div>
-    <div class="inline-container">
+    <div class="login-container">
         <button id="login-status-btn" class="btn btn btn-primary px-4">
             {% if user.is_authenticated %}
                 share your tale today
@@ -53,9 +53,9 @@
                 login or sign up to share your tale
             {% endif %}
         </button>
+    
         <div id="daily-prompt">
-            <h2>Today's word is:</h2>
-            <p class="prompt-text-pink">{{ prompt_text }}</p>
+            <h2>Today's word is: <span class="prompt-explore">{{ prompt_text }}</span></h2>
         </div>
     </div>
 
