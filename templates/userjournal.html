@@ -1,9 +1,48 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
+{% block body_class %}pink-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
 {% block content %}
+<div class="go-back-button">
+    <a href="{% url 'airtalesapp:profile' %}" class="btn btn-secondary">Go Back to Profile</a>
+</div>
+<div class="container mt-4">
+    <h2 class="text-center">Your Journal Entries</h2>
 
-    <h1>USERS CAN VIEW JOURNAL CONTENT HERE</h1>
+    <!-- Filter Form -->
+    <form method="GET" class="mb-4">
+        <div class="d-flex justify-content-center">
+            <select name="year" class="form-select w-auto mx-2">
+                {% for year in available_years %}
+                    <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+            </select>
+            <select name="month" class="form-select w-auto mx-2">
+                {% for month in available_months %}
+                    <option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>{{ month }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">search</button>
+        </div>
+    </form>
 
+
+
+
+<!-- Journal Entries List -->
+<div class="list-group">
+    {% if journal_entries %}
+        {% for entry in journal_entries %}
+            <div class="list-group-item">
+                <h5>
+                    {{ entry.date|date:"F j, Y" }} 
+                    - <span class="text-muted">{{ entry.prompt_text }}</span>
+                </h5>
+                <p>{{ entry.entry }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p id="no-entry">No entries found for this month.</p>
+    {% endif %}
+</div>
 {% endblock %}

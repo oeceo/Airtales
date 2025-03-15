@@ -54,25 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-# JournalEntry table
-class JournalEntry(models.Model):
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
-    entry = models.CharField(max_length=350, null=False)
-    isReported = models.BooleanField(default=False)
-    # stores the location of each entry
-    latitude = models.FloatField(null=True, blank=True)
-    longitude = models.FloatField(null=True, blank=True)
-    liked_by = models.ManyToManyField(User, related_name="liked_entries", blank=True)
-
-    class Meta:
-        unique_together = ('userID', 'date')  # Ensures each user can only have one entry per date
-        verbose_name_plural = 'Entries'
-
-    def __str__(self):
-        return f"{self.userID.username} - {self.date}"
-
-
 # Users profile table
 class Profile(models.Model):
     userID = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
@@ -88,6 +69,27 @@ class Prompt(models.Model):
 
     def __str__(self):
         return f"Prompt for {self.date}"
+    
+    
+# JournalEntry table
+class JournalEntry(models.Model):
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    entry = models.CharField(max_length=350, null=False)
+    isReported = models.BooleanField(default=False)
+    prompt = models.ForeignKey(Prompt, on_delete=models.SET_NULL, null=True, blank=True)
+    # stores the location of each entry
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    liked_by = models.ManyToManyField(User, related_name="liked_entries", blank=True)
+
+    class Meta:
+        unique_together = ('userID', 'date')  # Ensures each user can only have one entry per date
+        verbose_name_plural = 'Entries'
+
+    def __str__(self):
+        return f"{self.userID.username} - {self.date}"
+
 
 # Reported table
 # class Reported(models.Model):

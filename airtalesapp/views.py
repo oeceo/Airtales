@@ -10,6 +10,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
+from django.contrib import messages
+from datetime import datetime
+from django.contrib.auth import authenticate, login
+
 
 
 def index(request):
@@ -112,6 +116,28 @@ def view_entry(request, entry_id):
 def userjournal(request):
     return render(request, 'userjournal.html')
 
+# login page
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            print("User authenticated:", user)
+            login(request, user)
+            messages.success(request, "You have successfully logged in!")
+            return redirect('airtalesapp:profile')  # Redirect to users homepage
+        else:
+            print("User NOT authenticated:", user)
+            messages.error(request, "Invalid email or password. Please try again.")
+
+    return render(request, 'login.html')
+
+
+
 
 @login_required
 def toggle_like(request, entry_id):
@@ -151,11 +177,48 @@ def get_prompt(date):
     return prompt_text
 
 def top_liked_entry(date):
-    
     top_entry = (JournalEntry.objects.filter(date=date) # Filter by date based on date param
-                 .annotate(like_count=Count('liked_by')) # Counts likes
-                 .order_by('-like_count')
-                 .first() # Returns null if no entries found
+                .annotate(like_count=Count('liked_by')) # Counts likes
+                .order_by('-like_count')
+                .first() # Returns null if no entries found
     )
 
     return top_entry.entry if top_entry else "no entries available yet"
+
+
+# JOURNAL ENTRY PAGE
+
+@login_required
+def journal_entries(request):
+    # Get the current year and month from the request parameters or use default values
+    year = request.GET.get('year', 2025)  # Default to 2025
+    month = request.GET.get('month', 3)   # Default to March
+    
+    print(f"Retrieving journal entries for user {request.user} and {year} {month}")
+    
+    # Filter the journal entries by the given year and month
+    entries = JournalEntry.objects.filter(date__year=year, date__month=month, userID=request.user)
+
+    # Create a list of prompts matching the entry dates
+    prompts = Prompt.objects.filter(date__in=[entry.date for entry in entries])
+    prompts_dict = {prompt.date: prompt.prompt for prompt in prompts}
+
+    # Fetch the respective prompt for each entry
+    for entry in entries:
+        entry.prompt_text = prompts_dict.get(entry.date, "No prompt assigned")
+    
+
+    # Get available years and months
+    available_years = JournalEntry.objects.filter(userID=request.user).values('date__year').distinct().order_by('date__year')
+    available_months = range(1, 13)  # Months 1 to 12
+    
+    # Prepare the context
+    context = {
+        'journal_entries': entries,
+        'available_years': [entry['date__year'] for entry in available_years], 
+        'available_months': available_months,
+        'selected_year': year,
+        'selected_month': month
+    }
+    
+    return render(request, 'userjournal.html', context)
