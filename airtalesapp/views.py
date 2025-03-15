@@ -145,8 +145,10 @@ def profile(request):
 
     #this checks if the user has already made a journal entry
     prior_entry = JournalEntry.objects.filter(userID=request.user, date=today).exists()
-    todays_entry = JournalEntry.objects.filter(userID=request.user, date=today)
-    today_toshow = todays_entry.entry if todays_entry else "No entry yet."
+    if prior_entry: 
+        todays_entry = JournalEntry.objects.get(userID=request.user, date=today).entry
+    else:
+        todays_entry = "No entry yet."
     #gets the previous journal entries
     previous_entries = list(JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3])
     # prompt_text_1 = get_prompt(yesterday)
@@ -192,7 +194,7 @@ def profile(request):
         'yesterday':previous_1,
         'day_before':previous_2,
         'two_days_ago':previous_3,
-        'todays_entry': today_toshow
+        'todays_entry': todays_entry
 
     }
     
