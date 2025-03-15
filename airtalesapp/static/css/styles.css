@@ -276,9 +276,9 @@ a.btn-link:hover {
 }
 
 #map {
-    height: 25rem;
+    height: 35rem;
     min-width: 200px;
-    max-width: 800px;
+    max-width: 1600px;
     width: 90%;
     margin-bottom: 20px;
     border: 2px solid #077498;

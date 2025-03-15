@@ -47,10 +47,17 @@ def about(request):
 @ensure_csrf_cookie
 def explore(request):
     # Get all entries from today that have a location attached
+    today = selected_date(0)
+    prompt_text = get_prompt(today)
     entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
     
+    context = {
+        'prompt_text': prompt_text,
+        'entries': entries
+    }
+    
     # Pass the entries to the template to load on map
-    return render(request, 'explore.html', {'entries': entries})
+    return render(request, 'explore.html', context)
 
 def login(request):
     return render(request, 'login.html')
