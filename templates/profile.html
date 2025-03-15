@@ -10,6 +10,7 @@
 
 <div class="container centred-container">
 <!-- working area -->
+
   <div class="container profile" id="welcome">                
     <h3 class="welcome-textbox"> welcome back {{ request.user.username }} </h3>
   </div>
@@ -40,6 +41,35 @@
   {%endif%}
   </div>
 
+        <div class="carousel-item">
+          <div class="profile-carousel-content">
+            <p class = "carousel-prompt"> {{ day_before}}:  {{ prompt_text_2 }}</p>  
+            <!-- <p class="carousel-prompt"> {{ prompt_text_2 }} </p> -->
+            <p class="carousel-entry"> {{ previous_entry_2 }} </p>
+            <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
+            <!-- <p> {{ top_entry_1 }} </p> -->
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="profile-carousel-content">
+            <p class = "carousel-prompt"> {{ two_days_ago}}:    {{ prompt_text_3 }} </p>  
+            <!-- <p class="carousel-prompt"> {{ prompt_text_3 }} </p> -->
+            <p class="carousel-entry"> {{ previous_entry_3 }} </p>
+            <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
+            <!-- <p> {{ top_entry_2 }} </p> -->
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#index-car-indicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
   <br>
   <br>
   <br>
@@ -49,8 +79,10 @@
   <br>
   <br>
   <br>
-  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
+  
+  <!-- testing area -->
+  <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner"> -->
         <!-- {% for entry in journal_entries %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
             <div class="d-flex justify-content-center"> -->
@@ -64,7 +96,7 @@
             <p class="text-center">No journal entries available.</p>
         </div>
         {% endfor %} -->
-      </div>
+      <!-- </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -74,8 +106,28 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+
+    <div>
+
+  </div>
+
+<script>
+  $(document).ready(function() {
+    $(".entry-btn").click(function() {
+        var entryId = $(this).data("entry"); // Get the target entry ID from the button
+        $("#" + entryId).toggleClass("hidden"); // Toggle visibility of the corresponding entry
+    });
+    });
+</script> -->
+
+
+  {% endblock %}
+
+
+
   
 <div class="d-flex justify-content-center mt-4">
     <a href="{% url 'airtalesapp:userjournal' %}" class="btn btn-primary btn-lg">View All Entries</a>
 </div>
   {% endblock %}
+

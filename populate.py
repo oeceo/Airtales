@@ -113,4 +113,5 @@ def populate():
 
     print("Database populated successfully.")
 
+
 populate()

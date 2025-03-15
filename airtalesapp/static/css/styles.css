@@ -79,21 +79,110 @@ h4, h5, h6 {
     background-color: #077498; 
 }
 
+.journal-entry-hidden {
+    display: none;
+}
+#journal-entry {
+    display: block;
+    width: 100%;
+    color: #3e2a35;
+}
+.journal-entry-submitted {
+    text-align: center;
+    color: #ffffff;
+    font-size: 50px !important;
+}
+.profile-already-submitted{
+    text-align: left;
+    color: #035E7B;
+    font-size: 20px !important;
+}
+#journal-entry-text {
+    margin: 10px 0px;
+
+
 #nav-top {
     margin-bottom: 40px;
 }
 
 #nav-bottom {
     margin-top: 40px;
+
 }
 
 .navbar-logo {
     padding-left: 25px;  
 }
 
+.greeting {
+    color: #ffffff;
+    font-size: 50px !important;
+    /* font-family: 'Lohit Devanagari', 'sans-serif' !important; */
+    max-width: 1200px;
+}
+.profile_journal_submitted{
+    /* font-family: 'Lexend Zetta', sans-serif;
+    font-size: 36px;
+    text-wrap: wrap;
+    text-align: center; */
+    background-color: #EFA8B8;
+    border-color:#EFA8B8;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: thick;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 50px;
+    max-width: 800px; /* Set a max width */
+    padding: 30px;
+    /* margin: 40px 60px; */
+    margin: 20px auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    color: #3e2a35;
+    word-wrap: break-word;
+    /* text-align: center; */
+}
+.profile-carousel-content {
+    background-color: #035E7B;
+    /* border-color:#3F7CAC; */
+    border-color:#035E7B;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: thick;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 50px;
+    max-height: 200px;
+    padding: 30px;
+    margin: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #3e2a35;
+    word-wrap: break-word;
+    text-align: center;
+    /* max-width: 800px; */
+}
+  
+.hidden {
+    display: none;
+}
+.central-prompt{
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 36px;
+    text-wrap: wrap;
+    text-align: center;
+}
+
+/* Styling for prompt */
+
 .navbar-toggler {
     border-color: #ffffff;
 }
+
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
@@ -111,8 +200,16 @@ h4, h5, h6 {
 
 .bottom-nav-link {
     color: #ffffff;
+
+    font-weight: bold;
+    font-size: 70px !important;
+    max-width: 800px;
+    text-align: left;
+    font-family: 'Lohit Devanagari', 'sans-serif' !important;
+
     text-decoration: none;
     margin: 0px 10px;
+
 }
 
 .bottom-nav-link:hover {
@@ -331,7 +428,7 @@ a.btn-link:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-height: 180px;
     padding: 30px;
-    margin: 50px 75px;
+    margin: 20px 55px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -346,7 +443,12 @@ a.btn-link:hover {
     font-size: 30px;
     font-weight: bold;
 }
-
+.carousel-entry {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Lohit Devanagari', 'sans-serif' !important;
+}
 .carousel-control-prev {
 left: -35px;
 }
