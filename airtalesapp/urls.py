@@ -19,5 +19,6 @@ urlpatterns = [
     
     path('', include('django.contrib.auth.urls')),
     path('logout/', auth_views.LogoutView.as_view(next_page='airtalesapp:index'), name='logout'),
+    path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
     
 ]

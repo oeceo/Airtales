@@ -229,3 +229,13 @@ def journal_entries(request):
     }
     
     return render(request, 'userjournal.html', context)
+
+
+@login_required
+def delete_entry(request, entry_id):
+    entry = get_object_or_404(JournalEntry, id=entry_id, userID=request.user) 
+
+    if request.method == "POST":
+        entry.delete()
+    
+    return redirect('airtalesapp:userjournal')  
