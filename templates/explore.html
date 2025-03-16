@@ -17,27 +17,6 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js" 
     integrity="sha256-WCzAhd2P6gRJF9Hv3oOOd+hFJi/QJbv+Azn4CGB8gfY=" 
     crossorigin=""></script>
-
-    <script>
-        const authenticated = "{{ user.is_authenticated }}" === "True";
-        const entries = [
-        {% for entry in entries %}
-        {
-            "id": {{entry.id}},
-            "date": "{{ entry.date }}",
-            "entry": "{{ entry.entry|escapejs }}",
-            "latitude": {{ entry.latitude }},
-            "longitude": {{ entry.longitude }},
-            "likes": {{ entry.liked_by.count }},
-            "isLiked": {% if user in entry.liked_by.all %} true {% else %} false {% endif %}
-        },
-        {% endfor %}
-    ];
-        console.log("Entries from server:", entries);
-    </script>
-    <script>
-        const authenticatedUserId = "{{ user.id }}";  
-    </script>
     <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
 
@@ -53,7 +32,7 @@
             {% else %}
                 login or sign up to share your tale
             {% endif %}
-        </button>
+        </a>
         <h2 class="white-text">Today's word is: <span class="pink-text">{{ prompt_text }}</span></h2>
     </div>
 
@@ -61,5 +40,6 @@
     <form id="csrf-form">
     {% csrf_token %}
     </form>
+    <span class="d-none" id="current-user">{{ user_id }}</span>
 
 {% endblock %}

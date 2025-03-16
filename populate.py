@@ -1,6 +1,5 @@
 import os
 import random
-
 from django.conf import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 'airtales.settings')
@@ -8,110 +7,132 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 from airtalesapp.models import User, JournalEntry, Profile, Prompt
-from django.utils.timezone import now
-from django.utils.timezone import timedelta
-from random import randint
+from django.utils.timezone import timedelta, now
 
+# 20 sample users
+users_data = [
+    {'email': f'user{i}@example.com', 'username': f'User{i}', 'password': 'password123'}
+    for i in range(1, 21)  # Creates User1, User2, ..., User20
+]
 
-def populate():
-    users_data = [
-        {'email': 'alice@example.com', 'username': 'Alice', 'password': 'password123'},
-        {'email': 'bob@example.com', 'username': 'Bob', 'password': 'password123'},
-        {'email': 'charlie@example.com', 'username': 'Charlie', 'password': 'password123'},
-        {'email': 'felix@example.com', 'username': 'Felix', 'password': 'password123'},
-        {'email': 'lily@example.com', 'username': 'Lily', 'password': 'password123'},
-    ]
-    
-    # Load prompts from prompts.txt
+# Global capital city coordinates 
+capital_cities = {
+    "Washington, D.C.": (38.9072, -77.0369),
+    "London": (51.5074, -0.1278),
+    "Tokyo": (35.6762, 139.6503),
+    "Paris": (48.8566, 2.3522),
+    "Berlin": (52.5200, 13.4050),
+    "Madrid": (40.4168, -3.7038),
+    "Rome": (41.9028, 12.4964),
+    "Ottawa": (45.4215, -75.6992),
+    "Canberra": (-35.2809, 149.1300),
+    "Beijing": (39.9042, 116.4074),
+    "New Delhi": (28.6139, 77.2090),
+    "Moscow": (55.7558, 37.6173),
+    "Brasília": (-15.7801, -47.9292),
+    "Buenos Aires": (-34.6037, -58.3816),
+    "Cairo": (30.0444, 31.2357),
+    "Seoul": (37.5665, 126.9780),
+    "Mexico City": (19.4326, -99.1332),
+    "Amsterdam": (52.3676, 4.9041),
+    "Prague": (50.0755, 14.4378),
+    "Athens": (37.9838, 23.7275),
+    "Bangkok": (13.7563, 100.5018),
+    "Stockholm": (59.3293, 18.0686),
+    "Helsinki": (60.1692, 24.9402),
+    "Oslo": (59.9139, 10.7522),
+    "Vienna": (48.2082, 16.3738),
+    "Warsaw": (52.2298, 21.0118),
+    "Copenhagen": (55.6761, 12.5683),
+    "Bern": (46.9481, 7.4474),
+    "Riyadh": (24.7136, 46.6753),
+    "Dubai": (25.276987, 55.296249),
+    "Singapore": (1.3521, 103.8198)
+}
+
+def read_prompts_from_file():
     prompts = []
     prompts_file_path = os.path.join(settings.BASE_DIR, 'airtalesapp', 'static', 'data', 'prompts.txt')
-    
-    if os.path.exists(prompts_file_path):
-        with open(prompts_file_path, 'r') as file:
-            prompts = [line.strip() for line in file.readlines() if line.strip()]
-    else:
-        print(f"Error: The file {prompts_file_path} was not found.")
-        return
+    with open(prompts_file_path, 'r') as file:
+        prompts = file.readlines()
+    # Strip newline characters and return prompts
+    return [prompt.strip() for prompt in prompts]
 
-    # Example Glasgow locations for populating entries to show on map
-    glasgow_locations = [
-        {"name": "Glasgow Cathedral", "latitude": 55.8656, "longitude": -4.2378},
-        {"name": "George Square", "latitude": 55.8611, "longitude": -4.2505},
-        {"name": "The University of Glasgow", "latitude": 55.8721, "longitude": -4.2886},
-        {"name": "The Riverside Museum", "latitude": 55.8655, "longitude": -4.3068},
-        {"name": "Hampden Park", "latitude": 55.8259, "longitude": -4.2514},
-        {"name": "Pollok Country Park", "latitude": 55.8231, "longitude": -4.3164},
-    ]
 
-    # Prepare the users
+def populate_users():
+    # Create users
     users = []
     for user_data in users_data:
         user, created = User.objects.get_or_create(
             email=user_data['email'],
             defaults={'username': user_data['username']}
         )
-
         if created:
             user.set_password(user_data['password'])
             user.save()
-
         users.append(user)
 
-    # Start from today, create and save prompts
-    day = now().date() - timedelta(days=3)
-        
-    for i in range(len(prompts)):
-        # Calculate the date for this prompt (starting today and moving forward)
-        prompt_date = day + timedelta(days=i)
-
-        # Make sure not to add the prompt again if it already exists for that date
-        if not Prompt.objects.filter(date=prompt_date).exists():
-            # Pick a random prompt from the list and assign it to the current date
-            prompt_text = prompts[randint(0, len(prompts) - 1)]
-
-            # Create the prompt in the database
-            Prompt.objects.get_or_create(
-                date=prompt_date,
-                prompt=prompt_text
-            )
-
-            print(f"Assigned prompt '{prompt_text}' for {prompt_date}.")
-    
-    # Create Profile for each user if not exists
+    # Create profiles for users
     for user in users:
         Profile.objects.get_or_create(userID=user)
+        
+    print(f"Successfully populated {len(users)} users.")
+            
+            
+def populate_prompts():
+    prompts = read_prompts_from_file()
+    if not prompts:
+        print("Error: No prompts found in the file.")
+        return
     
-    # Create sample journal entries for each user
+    # Add each prompt for the next 89 days
+    for i, prompt_text in enumerate(prompts):
+        prompt_date = now() + timedelta(days=i)
+        prompt_text = prompt_text.strip()  # Clean up any extra whitespace or newline
+
+        # Creates a new Prompt entry in the database
+        Prompt.objects.create(date=prompt_date, prompt=prompt_text)
+    
+    print(f"Successfully populated {len(prompts)} prompts.")
+            
+            
+def populate_entries():
+    users = User.objects.all()
+    prompts = Prompt.objects.all()
+
     for user in users:
-        journal_responses = {
-            'Adventure': ["Today was such an adventure, I walked to the Boyd Orr building.", "Using django has been the greatest adventure of my life"],  # Add responses as needed
-            'Reflect': ["I love reflecting on how much I have learned using django", "Django is so awesome omgggggggg"],
-            # Add more responses for other prompts
-        }
+        for prompt in prompts:  # Generate an entry for each prompt
+            # Check if an entry already exists for this user on the given date
+            if not JournalEntry.objects.filter(userID=user, date=prompt.date).exists():
+                # Choose a random city to assign
+                _, (lat, lon) = random.choice(list(capital_cities.items()))
 
-        prompts = Prompt.objects.all()
-        random_prompt = prompts[random.randint(0, len(prompts) - 1)]
-        prompt_text = random_prompt.prompt
-        if prompt_text in journal_responses:
-            entry_text = random.choice(journal_responses[prompt_text])
-        else:
-            entry_text = "No specific response."
+                # Define location using lat and lon
+                location = {"latitude": lat, "longitude": lon}
 
-        # Pick a random location
-        location = random.choice(glasgow_locations)
+                # Define liked_users
+                num_likes = min(random.randint(0, 50), len(users))  # Ensure it’s not greater than the number of users
+                liked_users = random.sample(list(users), num_likes)  # Pick random users who liked the entry
 
-        # Create the journal entry
-        JournalEntry.objects.get_or_create(
-            userID=user,
-            date=prompt_date,
-            entry=entry_text,
-            isReported=False,
-            latitude=location['latitude'],
-            longitude=location['longitude'],
-            prompt=random_prompt,
-        )
+                # Create the journal entry
+                journal_entry = JournalEntry.objects.create(
+                    userID=user,
+                    date=prompt.date,
+                    entry=f"I have such amazing insightful thoughts on '{prompt.prompt}'.",
+                    isReported=False,
+                    latitude=location["latitude"],
+                    longitude=location["longitude"],
+                    prompt=prompt,
+                )
 
-    print("Database populated successfully.")
+                # Add liked users to the entry (many-to-many relationship)
+                journal_entry.liked_by.set(liked_users)
 
-
-populate()
+                # Save the entry to commit changes to the database
+                journal_entry.save()
+                
+    print(f"Successfully added journal entries for {len(users)} users and {len(prompts)} prompts.")
+            
+populate_users()
+populate_prompts()
+populate_entries()

@@ -1,3 +1,6 @@
+var map = null;
+var entries = [];
+
 function setupMap() {
     if (typeof L === 'undefined') {
         console.error("Leaflet library did not load.");
@@ -20,27 +23,49 @@ function setupMap() {
         console.log("Map has been resized");
     }, 500);
 
-   // Add markers for each entry that has location data
-if (typeof entries !== 'undefined' && entries.length > 0) {
-    entries.forEach(entry => {
-        const showReportButton = entry.userID !== authenticatedUserId;  // Only show report button if it's not the signed-in user's entry
-    
-        if (entry.latitude && entry.longitude) {
-            console.log('Adding marker for entry:', entry);
-            addMarkerWithPopup(entry.latitude, entry.longitude, `
-                <b>${entry.date}</b><br>
-                ${entry.entry}<br>
-                <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
-                <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like</p>
-                <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
-                ${showReportButton ? `<button onclick="reportEntry(${entry.id})" class="report-button" id="report-button-${entry.id}">Report</button>` : ''}
-            `);
+    loadEntriesFromServer();
+}
+
+function loadEntriesFromServer() {
+    // Make an AJAX GET request to get all entries
+    $.ajax({    
+        url: '/entries/',  // URL to the Django view
+        method: 'GET',
+        success: function(response) {
+            console.log('Entries loaded from server successfully');  
+            entries = $.parseJSON(response.entries);      
+
+            let user = document.getElementById("current-user")?.innerText;
+            if (!user) {
+                console.error("Failed to find user");
+            } else {
+                user = Number(user)
+            }
+            authenticated = isAuthenticated();
+
+            entries.forEach(entry => {
+                const isSameUser = entry.fields.userID === user;  // Only show report button if it's not the signed-in user's entry
+                const liked = entry.fields.liked_by.includes(user);
+                const likes = entry.fields.liked_by.length;
+                if (entry.fields.latitude && entry.fields.longitude) {
+                    addMarkerWithPopup(entry.fields.latitude, entry.fields.longitude, `
+                        <b>${entry.fields.date}</b><br>
+                        ${entry.fields.entry}<br>
+                        <button onclick="toggleLike(${entry.pk})" id="like-button-${entry.pk}" class="like-button ${authenticated ? "" : "d-none"}">${liked ? "Unlike" : "Like"}</button>
+                        <p id="login-alert-${entry.pk}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like or report entries</p>
+                        <p>Likes: <span id="like-count-${entry.pk}">${likes}</span></p>
+                        <p><span id="report-status-${entry.pk}">${entry.fields.isReported ? "This entry has been reported" : ""}</span></p>
+                        ${!isSameUser && authenticated && !entry.fields.isReported ? `<button onclick="reportEntry(${entry.pk})" class="report-button" id="report-button-${entry.pk}">Report</button>` : ''}
+                    `);
+                }
+            });
+        },
+        error: function(error) {
+            console.error("Failed to load entries from server:", error.responseJSON);
         }
     });
-} else {
-    console.warn("Entries array is empty.");
 }
-}
+
 
 function addMarkerWithPopup(lat, long, text) {
     // create a custom icon for the map pins
@@ -57,21 +82,16 @@ function addMarkerWithPopup(lat, long, text) {
     marker.bindPopup(text);
 }
 
-var map = null;
-document.addEventListener("DOMContentLoaded", setupMap);
-
 // for liking and unliking entries on the map
-
 function toggleLike(entryId) {
     if (entryId === undefined) {
         console.error("Cannot toggle like for undefined entry ID");
         return;
     }
 
-    const csrfToken = Cookies.get("csrftoken");
+    const csrfToken = getCsrfToken()
     if (!csrfToken) {
         console.error("Cannot toggle like because the CSRF token cookie not found or inaccessible.");
-        return;
     }
 
     // Send the AJAX request to update the like status in the backend
@@ -83,7 +103,7 @@ function toggleLike(entryId) {
         },
         success: function(response) {
             console.log('Like status updated successfully');
-            const entry = entries.find(entry => entry.id === entryId);
+            const entry = entries.find(entry => entry.pk === entryId);
 
             entry.isLiked = response["is_liked"];
             entry.likes = response["likes"]
@@ -115,33 +135,85 @@ function toggleLike(entryId) {
                     console.error("Login alert not found for entryId:", entryId);
                 }
             } else {
-                console.error('Error updating like status:', error);
+                console.error('Error updating like status:', error.responseJSON);
             }
         }
     });
 }
 
+function reportEntry(entryId) {
+    const csrfToken = getCsrfToken()
+    if (!csrfToken) {
+        console.error("Cannot report entry because the CSRF token cookie not found or inaccessible.");
+    }
+
+    // Make an AJAX POST request to report the entry
+    $.ajax({
+        url: '/report-entry/' + entryId + "/",  // URL to the Django view
+        method: 'POST',
+        data: {
+            'csrfmiddlewaretoken': csrfToken
+        },
+        success: function(response) {
+            console.log('Entry reported successfully');
+            const entry = entries.find(entry => entry.pk === entryId);
+
+            entry.isReported = true;
+        
+            // Try to get the report elements
+            const reportButton = document.getElementById(`report-button-${entryId}`);
+            const reportStatus = document.getElementById(`report-status-${entryId}`);
+            
+            // Check if the element exists before trying to access its properties
+            if (reportButton) {
+                reportButton.style.display = 'none';
+            } else {
+                console.error("Report entry button not found for entryId:", entryId);
+            }
+
+            if (reportStatus) {
+                reportStatus.innerText = "This entry has been reported";
+            } else {
+                console.error("Failed to find report status element for entry ID ", entryId);
+            }
+        },
+        error: function(error) {
+            const reportStatus = document.getElementById(`report-status-${entryId}`);
+
+            if (error.status === 403 || error.status === 401) {
+                const loginAlert = document.getElementById("login-alert-" + entryId);
+                if (loginAlert) {
+                    loginAlert.classList.remove("d-none");
+                } else {
+                    console.error("Login alert not found for entryId:", entryId);
+                }
+            } else {
+                console.error('Error reporting entry:', error.responseJSON);
+                if (reportStatus) {
+                    reportStatus.innerText = "Failed to report entry";
+                } else {
+                    console.error("Failed to find report status element for entry ID ", entryId);
+                }
+            }
+        }
+    });
+}
+
+function getCsrfToken() {
+    const csrfToken = Cookies.get("csrftoken");
+
+    return csrfToken;
+}
+
+function isAuthenticated() {
+    const user = document.getElementById("current-user")?.innerText;
+    if (!user) {
+        console.error("Failed to find user");
+    }
+    return user !== null;
+}
+
 // For the button on explore page under the map
 document.addEventListener('DOMContentLoaded', function() {
-    
-    const loginButton = document.getElementById('login-status-btn');
-
-    // Ensure the button exists before manipulating it
-    if (loginButton) {
-        // Check the authentication status and update the button text
-        if (authenticated) {
-            loginButton.textContent = 'share your tale today';
-        } else {
-            loginButton.textContent = 'login/signup to share your tale';
-        }
-
-        // If the button is clicked then redirect accordingly
-        loginButton.addEventListener('click', function() {
-            if (!authenticated) {
-                window.location.href = '/login/';  // Redirect to login page if not logged in
-            } else {
-                window.location.href = '/profile/'
-            }
-        });
-    }
+    setupMap();
 });

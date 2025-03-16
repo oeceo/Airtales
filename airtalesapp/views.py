@@ -1,6 +1,8 @@
+import json
+from django.forms import BooleanField
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
-from .models import JournalEntry
+from .models import JournalEntry, Reported
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
@@ -10,7 +12,7 @@ from .models import Prompt
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
-from django.db.models import Count
+from django.db.models import Count, Q, ExpressionWrapper
 from airtalesapp.forms import UserForm, ProfileForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -20,6 +22,8 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth import authenticate, login
+from django.core import serializers
+
 
 User = get_user_model()
 
@@ -36,9 +40,17 @@ def topposts(request):
 
 @ensure_csrf_cookie
 def explore(request):
+    # Get all entries from today that have a location attached
     prompt_text = get_current_prompt()
-    entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
-    return render(request, 'explore.html', {'entires': entries, 'prompt_text': prompt_text})
+    current_user = User.objects.filter(username=request.user).first()
+    
+    context = {
+        'prompt_text': prompt_text,
+        'user_id': 0 if current_user == None else current_user.pk
+    }
+    
+    # Pass the entries to the template to load on map
+    return render(request, 'explore.html', context)
 
 def user_login(request):
     if request.method == 'POST':
@@ -220,27 +232,38 @@ def get_entry(date, userID):
         pass
     return entry_text
 
-@csrf_exempt
-@login_required
+@login_required  # Ensure the user is authenticated
 def report_entry(request, entry_id):
-    try:
-        entry = JournalEntry.objects.get(id=entry_id)
+    if request.method == 'POST':
+        try:
+            # Ensure entry exists and the user is not reporting their own entry
+            entry = JournalEntry.objects.get(id=entry_id)
+            if entry.userID == request.user:
+                return JsonResponse({"message": "You cannot report your own entry."}, status=400)
 
-        # Ensure the signed-in user is not the one who created the entry 
-        if entry.userID == request.user:
-            return JsonResponse({"error": "You cannot report your own entry."}, status=403)
+            # Create the report and mark the entry as reported
+            Reported.objects.create(userID=request.user, entryID=entry, date=entry.date)
+            entry.isReported = True
+            entry.save()
+            return JsonResponse({"message": "Entry reported successfully."})
 
-        # Toggle the 'isReported' field to True
-        entry.isReported = True
-        entry.save()
+        except JournalEntry.DoesNotExist:
+            return JsonResponse({"message": "Entry not found."}, status=404)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
 
-        return JsonResponse({
-            "success": True,
-            "is_reported": entry.isReported
-        })
+    return JsonResponse({"message": "Invalid request method."}, status=400)
 
-    except JournalEntry.DoesNotExist:
-        return JsonResponse({"error": "Entry not found."}, status=404)
+def all_entries(request):
+    if request.method == "GET":
+        # Get all entries from today that have a location attached
+        entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date()).annotate()
+        
+        context = {
+            'entries': serializers.serialize('json', entries)
+        }
+        return JsonResponse(context)
+    return JsonResponse({"message": "Invalid request method."}, status=400)
 
 def get_current_prompt():
     prompt_text = get_prompt(now().date())
