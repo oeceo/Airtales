@@ -1,4 +1,5 @@
 import json
+from django.forms import BooleanField
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
 from .models import JournalEntry, Reported
@@ -11,7 +12,7 @@ from .models import Prompt
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
-from django.db.models import Count
+from django.db.models import Count, Q, ExpressionWrapper
 from airtalesapp.forms import UserForm, ProfileForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -21,6 +22,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth import authenticate, login
+from django.core import serializers
 
 
 User = get_user_model()
@@ -58,11 +60,9 @@ def explore(request):
     # Get all entries from today that have a location attached
     today = selected_date(0)
     prompt_text = get_prompt(today)
-    entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
     
     context = {
         'prompt_text': prompt_text,
-        'entries': entries
     }
     
     # Pass the entries to the template to load on map
@@ -304,6 +304,18 @@ def report_entry(request, entry_id):
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
 
+    return JsonResponse({"message": "Invalid request method."}, status=400)
+
+@login_required
+def all_entries(request):
+    if request.method == "GET":
+        # Get all entries from today that have a location attached
+        entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
+        
+        context = {
+            'entries': serializers.serialize('json', entries)
+        }
+        return JsonResponse(context)
     return JsonResponse({"message": "Invalid request method."}, status=400)
 
 def top_liked_entry(date):

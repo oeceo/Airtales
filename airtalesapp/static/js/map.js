@@ -1,3 +1,6 @@
+var map = null;
+var authenticated = false;
+
 function setupMap() {
     if (typeof L === 'undefined') {
         console.error("Leaflet library did not load.");
@@ -20,28 +23,48 @@ function setupMap() {
         console.log("Map has been resized");
     }, 500);
 
-    // Add markers for each entry that has location data
-    if (typeof entries !== 'undefined' && entries.length > 0) {
-        entries.forEach(entry => {
-            const isSameUser = entry.userID === authenticatedUserId;  // Only show report button if it's not the signed-in user's entry
-            if (entry.latitude && entry.longitude) {
-                console.log('Adding marker for entry:', entry);
-                addMarkerWithPopup(entry.latitude, entry.longitude, `
-                    <b>${entry.date}</b><br>
-                    ${entry.entry}<br>
-                    <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
-                    <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like or report entries</p>
-                    <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
-                    <p><span id="report-status-${entry.id}">${entry.isReported ? "This entry has been reported" : ""}</span></p>
-                    ${!isSameUser && authenticated && !entry.isReported ? `<button onclick="reportEntry(${entry.id})" class="report-button" id="report-button-${entry.id}">Report</button>` : ''}
-                `);
-            }
-        });
-    } else {
-        console.warn("Entries array is empty.");
-    }
+    const entries = loadEntriesFromServer();
 }
 
+function loadEntriesFromServer() {
+    // Make an AJAX GET request to get all entries
+    $.ajax({    
+        url: '/entries/',  // URL to the Django view
+        method: 'GET',
+        success: function(response) {
+            console.log('Entries loaded from server successfully');  
+            const entries = $.parseJSON(response.entries);      
+
+            const user = document.getElementById("current-user")?.innerText;
+            if (user) {
+                console.log("Found user", user);
+            } else {
+                console.error("Failed to find user");
+            }
+            authenticated = user !== null;
+
+            entries.forEach(entry => {
+                const isSameUser = entry.fields.userID === user;  // Only show report button if it's not the signed-in user's entry
+                const liked = entry.fields.liked_by.includes(user);
+                const likes = entry.fields.liked_by.length;
+                if (entry.fields.latitude && entry.fields.longitude) {
+                    addMarkerWithPopup(entry.fields.latitude, entry.fields.longitude, `
+                        <b>${entry.fields.date}</b><br>
+                        ${entry.fields.entry}<br>
+                        <button onclick="toggleLike(${entry.fields.id})" id="like-button-${entry.fields.id}" class="like-button ${authenticated ? "" : "d-none"}">${liked ? "Unlike" : "Like"}</button>
+                        <p id="login-alert-${entry.fields.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like or report entries</p>
+                        <p>Likes: <span id="like-count-${entry.fields.id}">${likes}</span></p>
+                        <p><span id="report-status-${entry.fields.id}">${entry.fields.isReported ? "This entry has been reported" : ""}</span></p>
+                        ${!isSameUser && authenticated && !entry.fields.isReported ? `<button onclick="reportEntry(${entry.fields.id})" class="report-button" id="report-button-${entry.fields.id}">Report</button>` : ''}
+                    `);
+                }
+            });
+        },
+        error: function(error) {
+            console.error("Failed to load entries from server:", error.responseJSON);
+        }
+    });
+}
 
 
 function addMarkerWithPopup(lat, long, text) {
@@ -59,11 +82,7 @@ function addMarkerWithPopup(lat, long, text) {
     marker.bindPopup(text);
 }
 
-var map = null;
-document.addEventListener("DOMContentLoaded", setupMap);
-
 // for liking and unliking entries on the map
-
 function toggleLike(entryId) {
     if (entryId === undefined) {
         console.error("Cannot toggle like for undefined entry ID");
@@ -189,6 +208,7 @@ function getCsrfToken() {
 
 // For the button on explore page under the map
 document.addEventListener('DOMContentLoaded', function() {
+    setupMap();
     
     const loginButton = document.getElementById('login-status-btn');
 
