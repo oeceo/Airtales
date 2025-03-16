@@ -58,11 +58,11 @@ def populate():
         users.append(user)
 
     # Start from today, create and save prompts
-    today = now().date()
+    day = now().date() - timedelta(days=3)
         
     for i in range(len(prompts)):
         # Calculate the date for this prompt (starting today and moving forward)
-        prompt_date = today + timedelta(days=i)
+        prompt_date = day + timedelta(days=i)
 
         # Make sure not to add the prompt again if it already exists for that date
         if not Prompt.objects.filter(date=prompt_date).exists():
