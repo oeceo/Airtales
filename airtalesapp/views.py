@@ -129,7 +129,7 @@ def profile(request):
     if prior_entry: 
         todays_entry = JournalEntry.objects.get(userID=request.user, date=today).entry
     else:
-        todays_entry = "No entry yet."
+        todays_entry = "No entry yet"
     #gets the previous journal entries
     previous_entries = list(JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3])
     previous_entry_1, previous_entry_2, previous_entry_3 = "No previous entry.", "No previous entry.", "No previous entry."
@@ -164,7 +164,6 @@ def profile(request):
         'day_before':previous_2,
         'two_days_ago':previous_3,
         'todays_entry': todays_entry 
-
     }
     
     return render(request, 'profile.html', context)
@@ -224,16 +223,11 @@ def get_prompt(set_date): # Returns prompt based on date param
     return prompt_text
 
 def get_entry(date, userID):
-    #this returns the prompt of the passed date
-    # Filter by date based on date param
     entry_text = "entry does not exist"
-    #prompt_text = "no prompt available..."  # default if there is no prompt
     try:
         entry = JournalEntry.objects.get(userID=userID,date=date)
         entry_text = entry.entry
 
-        # prompt = Prompt.objects.get(date=date) # Gets the prompt for the day
-        # prompt_text = prompt.prompt  
     except JournalEntry.DoesNotExist:
         pass
     return entry_text
@@ -284,7 +278,7 @@ def get_top_entry(set_date): # Returns entry with most likes based on date param
     
     if top_entry:
         return {
-            "entry_text": top_entry.entry_text,
+            "entry_text": top_entry.entry,
             "entry_likes": top_entry.like_count,
             "total_entries": get_total_entries(set_date),
         }
@@ -293,13 +287,16 @@ def get_top_entry(set_date): # Returns entry with most likes based on date param
 
 def get_total_entries(set_date):
     return JournalEntry.objects.filter(date=set_date).count()
-    
+
 def top_entry(request):
     try:
         offset_str = request.GET.get('offset', '0') # Get the offset number as a string
         offset = int(offset_str) if offset_str.isdigit() else 0 # Cast as an int for use in the methods
         set_date = selected_date(offset)
         entry_data = get_top_entry(set_date)
+
+        if not entry_data:
+            return JsonResponse({"error": "No entry found"}, status=404)
 
         if not isinstance(entry_data, dict):
             return JsonResponse({"error": f"Unexpected return type {type(entry_data)} from get_top_entry_data"}, status=500)
@@ -311,50 +308,7 @@ def top_entry(request):
             "total_entries": entry_data.get("total_entries", 0),
         })
     except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
-
-# def register(request):
-#     registered = False
-#     if request.method == 'POST':
-#         user_form = UserForm(request.POST)
-#         profile_form = ProfileForm(request.POST)
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user = user_form.save(commit=False)
-#             user.set_password(user.password)
-#             user.save()
-#             profile = profile_form.save(commit=False)
-#             profile.user = user
-#             profile.save()
-#             registered = True
-#         else:
-#             print(user_form.errors, profile_form.errors)
-#     else:
-#         user_form = UserForm()
-#         profile_form = ProfileForm()
-
-#     return render(request,
-#                 'signup.html',
-#                 context = {'user_form': user_form,
-#                 'profile_form': profile_form,
-#                 'registered': registered
-#                 })
-
-# def user_login(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(username=username, password=password)
-#         if user:
-#             if user.is_active:
-#                 login(request, user)
-#                 return redirect(reverse('airtalesapp:index'))
-#             else:
-#                 return HttpResponse("Your account is disabled.")
-#         else:
-#             print(f"Invalid login details: {username}, {password}")
-#             return HttpResponse("Invalid login details supplied.")
-#     else:
-#         return render(request, 'airtalesapp/login.html')
+        return JsonResponse({"error": "Something went wrong"}, status=500)
     
 @login_required
 def user_logout(request):
@@ -380,7 +334,6 @@ def journal_entries(request):
     for entry in entries:
         entry.prompt_text = prompts_dict.get(entry.date, "No prompt assigned")
     
-
     # Get available years and months
     available_years = JournalEntry.objects.filter(userID=request.user).values('date__year').distinct().order_by('date__year')
     available_months = range(1, 13)  # Months 1 to 12

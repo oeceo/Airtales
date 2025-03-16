@@ -493,8 +493,9 @@ a.btn-link:hover {
     margin: 0;
 }
 
-#map-prompt{
-    min-height: 220px;
+.lower-page-container {
+    min-height: 150px;
+    margin: 30px;
 }
 
 /* Styling for Index */

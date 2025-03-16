@@ -13,9 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function getTopEntry() {
-        const url = '/top-entry/?offset=${encodeURIComponent(dayOffset)}';
+        console.log("Before fetch, dayOffset =", dayOffset);
+        const url = `/top-entry/?offset=${encodeURIComponent(dayOffset)}`;
         console.log(`Fetching: ${url}`);
-
+    
         fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     previousArrow.addEventListener("click", function () {
-        if (dayOffset > 0) {
+        if (dayOffset >= 0) {
             dayOffset -= 1; // Move forward one day (closer to today)
             console.log(`Next button clicked! New offset: ${dayOffset}`);
             getTopEntry();
@@ -42,9 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     nextArrow.addEventListener("click", function () {
-        dayOffset += 1; // Go back one day
-        console.log(`Previous button clicked! New offset: ${dayOffset}`);
-        getTopEntry();
+        if (dayOffset < 7){
+            dayOffset += 1; // Go back one day
+            console.log(`Previous button clicked! New offset: ${dayOffset}`);
+            getTopEntry();
+        }
+    
     });
 
     function updateCarouselIndicator() {
