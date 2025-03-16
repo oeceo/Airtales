@@ -1,5 +1,6 @@
 var map = null;
 var authenticated = false;
+var entries = [];
 
 function setupMap() {
     if (typeof L === 'undefined') {
@@ -33,13 +34,13 @@ function loadEntriesFromServer() {
         method: 'GET',
         success: function(response) {
             console.log('Entries loaded from server successfully');  
-            const entries = $.parseJSON(response.entries);      
+            entries = $.parseJSON(response.entries);      
 
-            const user = document.getElementById("current-user")?.innerText;
-            if (user) {
-                console.log("Found user", user);
-            } else {
+            let user = document.getElementById("current-user")?.innerText;
+            if (!user) {
                 console.error("Failed to find user");
+            } else {
+                user = Number(user)
             }
             authenticated = user !== null;
 
@@ -51,11 +52,11 @@ function loadEntriesFromServer() {
                     addMarkerWithPopup(entry.fields.latitude, entry.fields.longitude, `
                         <b>${entry.fields.date}</b><br>
                         ${entry.fields.entry}<br>
-                        <button onclick="toggleLike(${entry.fields.id})" id="like-button-${entry.fields.id}" class="like-button ${authenticated ? "" : "d-none"}">${liked ? "Unlike" : "Like"}</button>
-                        <p id="login-alert-${entry.fields.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like or report entries</p>
-                        <p>Likes: <span id="like-count-${entry.fields.id}">${likes}</span></p>
-                        <p><span id="report-status-${entry.fields.id}">${entry.fields.isReported ? "This entry has been reported" : ""}</span></p>
-                        ${!isSameUser && authenticated && !entry.fields.isReported ? `<button onclick="reportEntry(${entry.fields.id})" class="report-button" id="report-button-${entry.fields.id}">Report</button>` : ''}
+                        <button onclick="toggleLike(${entry.pk})" id="like-button-${entry.pk}" class="like-button ${authenticated ? "" : "d-none"}">${liked ? "Unlike" : "Like"}</button>
+                        <p id="login-alert-${entry.pk}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like or report entries</p>
+                        <p>Likes: <span id="like-count-${entry.pk}">${likes}</span></p>
+                        <p><span id="report-status-${entry.pk}">${entry.fields.isReported ? "This entry has been reported" : ""}</span></p>
+                        ${!isSameUser && authenticated && !entry.fields.isReported ? `<button onclick="reportEntry(${entry.pk})" class="report-button" id="report-button-${entry.pk}">Report</button>` : ''}
                     `);
                 }
             });
@@ -103,7 +104,7 @@ function toggleLike(entryId) {
         },
         success: function(response) {
             console.log('Like status updated successfully');
-            const entry = entries.find(entry => entry.id === entryId);
+            const entry = entries.find(entry => entry.pk === entryId);
 
             entry.isLiked = response["is_liked"];
             entry.likes = response["likes"]
@@ -156,7 +157,7 @@ function reportEntry(entryId) {
         },
         success: function(response) {
             console.log('Entry reported successfully');
-            const entry = entries.find(entry => entry.id === entryId);
+            const entry = entries.find(entry => entry.pk === entryId);
 
             entry.isLiked = response["is_liked"];
             entry.likes = response["likes"]
