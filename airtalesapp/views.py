@@ -20,8 +20,8 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 
-def pastprompts(request):
-    return render(request, 'pastprompts.html')
+def topposts(request):
+    return render(request, 'topposts.html')
 
 @ensure_csrf_cookie
 def explore(request):
