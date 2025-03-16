@@ -42,9 +42,11 @@ def topposts(request):
 def explore(request):
     # Get all entries from today that have a location attached
     prompt_text = get_current_prompt()
+    current_user = User.objects.filter(username=request.user).first()
     
     context = {
         'prompt_text': prompt_text,
+        'user_id': 0 if current_user == None else current_user.pk
     }
     
     # Pass the entries to the template to load on map
@@ -258,11 +260,10 @@ def report_entry(request, entry_id):
 
     return JsonResponse({"message": "Invalid request method."}, status=400)
 
-@login_required
 def all_entries(request):
     if request.method == "GET":
         # Get all entries from today that have a location attached
-        entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
+        entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date()).annotate()
         
         context = {
             'entries': serializers.serialize('json', entries)
