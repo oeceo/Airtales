@@ -1,6 +1,7 @@
+import json
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
-from .models import JournalEntry
+from .models import JournalEntry, Reported
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
@@ -283,28 +284,27 @@ def get_entry(date, userID):
         pass
     return entry_text
 
-
-@csrf_exempt
-@login_required
+@login_required  # Ensure the user is authenticated
 def report_entry(request, entry_id):
-    try:
-        entry = JournalEntry.objects.get(id=entry_id)
+    if request.method == 'POST':
+        try:
+            # Ensure entry exists and the user is not reporting their own entry
+            entry = JournalEntry.objects.get(id=entry_id)
+            if entry.userID == request.user:
+                return JsonResponse({"message": "You cannot report your own entry."}, status=400)
 
-        # Ensure the signed-in user is not the one who created the entry 
-        if entry.userID == request.user:
-            return JsonResponse({"error": "You cannot report your own entry."}, status=403)
+            # Create the report and mark the entry as reported
+            Reported.objects.create(userID=request.user, entryID=entry, date=entry.date)
+            entry.isReported = True
+            entry.save()
+            return JsonResponse({"message": "Entry reported successfully."})
 
-        # Toggle the 'isReported' field to True
-        entry.isReported = True
-        entry.save()
+        except JournalEntry.DoesNotExist:
+            return JsonResponse({"message": "Entry not found."}, status=404)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
 
-        return JsonResponse({
-            "success": True,
-            "is_reported": entry.isReported
-        })
-
-    except JournalEntry.DoesNotExist:
-        return JsonResponse({"error": "Entry not found."}, status=404)
+    return JsonResponse({"message": "Invalid request method."}, status=400)
 
 def top_liked_entry(date):
     top_entry = (JournalEntry.objects.filter(date=date) # Filter by date based on date param

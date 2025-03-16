@@ -91,14 +91,15 @@ class JournalEntry(models.Model):
         return f"{self.userID.username} - {self.date}"
 
 
-# Reported table
-# class Reported(models.Model):
-#     userID = models.ForeignKey(User, on_delete=models.CASCADE)
-#     date = models.DateField()
+#Reported table
+class Reported(models.Model):
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    entryID = models.ForeignKey(JournalEntry, on_delete=models.CASCADE)
+    date = models.DateField()
 
-#     class Meta:
-#         unique_together = ('userID', 'date')
-#         verbose_name_plural = 'Reported Entries'
+    class Meta:
+        unique_together = ('userID', 'entryID')
+        verbose_name_plural = 'Reported Entries'
 
-#     def __str__(self):
-#         return f"Report - {self.userID.username} on {self.date}"
+    def __str__(self):
+        return f"Report of entry {self.entryID} by {self.userID.username} on {self.date}"

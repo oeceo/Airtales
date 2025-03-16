@@ -23,8 +23,7 @@ function setupMap() {
    // Add markers for each entry that has location data
 if (typeof entries !== 'undefined' && entries.length > 0) {
     entries.forEach(entry => {
-        const showReportButton = entry.userID !== authenticatedUserId;  // Only show report button if it's not the signed-in user's entry
-    
+        const isSameUser = entry.userID !== authenticatedUserId;  // Only show report button if it's not the signed-in user's entry
         if (entry.latitude && entry.longitude) {
             console.log('Adding marker for entry:', entry);
             addMarkerWithPopup(entry.latitude, entry.longitude, `
@@ -33,7 +32,8 @@ if (typeof entries !== 'undefined' && entries.length > 0) {
                 <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
                 <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like</p>
                 <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
-                ${showReportButton ? `<button onclick="reportEntry(${entry.id})" class="report-button" id="report-button-${entry.id}">Report</button>` : ''}
+                <p><span id="report-status-${entry.id}">${entry.isReported ? "This entry has been reported" : ""}</span></p>
+                ${isSameUser && !entry.isReported ? `<button onclick="reportEntry(${entry.id})" class="report-button" id="report-button-${entry.id}">Report</button>` : ''}
             `);
         }
     });
@@ -41,6 +41,8 @@ if (typeof entries !== 'undefined' && entries.length > 0) {
     console.warn("Entries array is empty.");
 }
 }
+
+
 
 function addMarkerWithPopup(lat, long, text) {
     // create a custom icon for the map pins
@@ -68,10 +70,9 @@ function toggleLike(entryId) {
         return;
     }
 
-    const csrfToken = Cookies.get("csrftoken");
+    const csrfToken = getCsrfToken()
     if (!csrfToken) {
         console.error("Cannot toggle like because the CSRF token cookie not found or inaccessible.");
-        return;
     }
 
     // Send the AJAX request to update the like status in the backend
@@ -115,10 +116,66 @@ function toggleLike(entryId) {
                     console.error("Login alert not found for entryId:", entryId);
                 }
             } else {
-                console.error('Error updating like status:', error);
+                console.error('Error updating like status:', error.responseJSON);
             }
         }
     });
+}
+
+function reportEntry(entryId) {
+    const csrfToken = getCsrfToken()
+    if (!csrfToken) {
+        console.error("Cannot report entry because the CSRF token cookie not found or inaccessible.");
+    }
+
+    // Make an AJAX POST request to report the entry
+    $.ajax({
+        url: '/report-entry/' + entryId + "/",  // URL to the Django view
+        method: 'POST',
+        data: {
+            'csrfmiddlewaretoken': csrfToken
+        },
+        success: function(response) {
+            console.log('Entry reported successfully');
+            const entry = entries.find(entry => entry.id === entryId);
+
+            entry.isLiked = response["is_liked"];
+            entry.likes = response["likes"]
+        
+            // Try to get the report element
+            const reportButton = document.getElementById(`report-button-${entryId}`);
+            
+            // Check if the element exists before trying to access its properties
+            if (reportButton) {
+                reportButton.style.display = 'none';
+            } else {
+                console.error("Report entry button not found for entryId:", entryId);
+            }
+        },
+        error: function(error) {
+            const reportStatus = document.getElementById(`report-status-${entryId}`);
+
+            if (error.status === 403 || error.status === 401) {
+                const loginAlert = document.getElementById("login-alert-" + entryId);
+                if (loginAlert) {
+                    loginAlert.classList.remove("d-none");
+                } else {
+                    console.error("Login alert not found for entryId:", entryId);
+                }
+            } else {
+                console.error('Error reporting entry:', error.responseJSON);
+                if (reportStatus) {
+                    reportStatus.innerText = "Failed to report entry";
+                }
+            }
+        }
+    });
+}
+
+function getCsrfToken() {
+    const csrfToken = Cookies.get("csrftoken");
+
+    return csrfToken;
 }
 
 // For the button on explore page under the map

@@ -29,6 +29,8 @@
             "latitude": {{ entry.latitude }},
             "longitude": {{ entry.longitude }},
             "likes": {{ entry.liked_by.count }},
+            "isReported": "{{ entry.isReported }}" === "True",
+            "userID": "{{ entry.userID }}",
             "isLiked": {% if user in entry.liked_by.all %} true {% else %} false {% endif %}
         },
         {% endfor %}
@@ -36,7 +38,7 @@
         console.log("Entries from server:", entries);
     </script>
     <script>
-        const authenticatedUserId = "{{ user.id }}";  
+        const authenticatedUserId = "{{ user }}";  
     </script>
     <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
