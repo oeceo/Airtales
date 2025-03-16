@@ -260,7 +260,6 @@ def report_entry(request, entry_id):
 
     return JsonResponse({"message": "Invalid request method."}, status=400)
 
-@login_required
 def all_entries(request):
     if request.method == "GET":
         # Get all entries from today that have a location attached

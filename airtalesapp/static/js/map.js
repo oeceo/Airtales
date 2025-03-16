@@ -215,13 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ensure the button exists before manipulating it
     if (loginButton) {
-        // Check the authentication status and update the button text
-        if (authenticated) {
-            loginButton.textContent = 'share your tale today';
-        } else {
-            loginButton.textContent = 'login/signup to share your tale';
-        }
-
         // If the button is clicked then redirect accordingly
         loginButton.addEventListener('click', function() {
             if (!authenticated) {

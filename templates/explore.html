@@ -26,12 +26,8 @@
     </div>
     <div id="map"></div>
     <div class="centred-container explore-alignment" id="map-prompt">
-        <p>
-            {{ user.is_authenticated }}
-            {{ user_id }}
-        </p>
         <button id="login-status-btn" class="btn btn btn-primary px-4">
-            {% if user_id %}
+            {% if user.is_authenticated %}
                 share your tale today
             {% else %}
                 login or sign up to share your tale
