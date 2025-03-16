@@ -1,5 +1,4 @@
 var map = null;
-var authenticated = false;
 var entries = [];
 
 function setupMap() {
@@ -24,7 +23,7 @@ function setupMap() {
         console.log("Map has been resized");
     }, 500);
 
-    const entries = loadEntriesFromServer();
+    loadEntriesFromServer();
 }
 
 function loadEntriesFromServer() {
@@ -42,7 +41,7 @@ function loadEntriesFromServer() {
             } else {
                 user = Number(user)
             }
-            authenticated = user !== null;
+            authenticated = isAuthenticated();
 
             entries.forEach(entry => {
                 const isSameUser = entry.fields.userID === user;  // Only show report button if it's not the signed-in user's entry
@@ -159,8 +158,7 @@ function reportEntry(entryId) {
             console.log('Entry reported successfully');
             const entry = entries.find(entry => entry.pk === entryId);
 
-            entry.isLiked = response["is_liked"];
-            entry.likes = response["likes"]
+            entry.isReported = true;
         
             // Try to get the report elements
             const reportButton = document.getElementById(`report-button-${entryId}`);
@@ -207,21 +205,15 @@ function getCsrfToken() {
     return csrfToken;
 }
 
+function isAuthenticated() {
+    const user = document.getElementById("current-user")?.innerText;
+    if (!user) {
+        console.error("Failed to find user");
+    }
+    return user !== null;
+}
+
 // For the button on explore page under the map
 document.addEventListener('DOMContentLoaded', function() {
     setupMap();
-    
-    const loginButton = document.getElementById('login-status-btn');
-
-    // Ensure the button exists before manipulating it
-    if (loginButton) {
-        // If the button is clicked then redirect accordingly
-        loginButton.addEventListener('click', function() {
-            if (!authenticated) {
-                window.location.href = '/login/';  // Redirect to login page if not logged in
-            } else {
-                window.location.href = '/profile/'
-            }
-        });
-    }
 });
