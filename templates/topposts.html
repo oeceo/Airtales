@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
+
+{% block content %}
+    <div class="centred-container white-text centered-text">
+        <h1>This past week on Airtales</h1> 
+        <h3 class="pink-text">Look back on the most-liked responses from the past week</h3>
+    </div>
+
+    <div class="index-carousel">
+
+    <div id="index-car-indicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        {% for i in "0123456" %}
+          <button type="button"
+            data-bs-target="#index-car-indicators" 
+            data-bs-slide-to="{{ forloop.counter0 }}" 
+            class="{% if forloop.first %} active {% endif %}" 
+            aria-label="Slide {{ forloop.counter }}">
+          </button>
+        {% endfor %}
+      </div>
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="carousel-content" id="carousel-content-index">
+            <h4 class="pink-text" id="carousel_prompt"> {{ prompt_text }} </h4>
+            <p id="top_entry"></p>
+            <p>1 of <span id="total_entries"></span> entries</p>
+            <p><span id="entry_likes"></span> likes</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" id="prev-day-btn">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" id="next-day-btn">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  <script src="{% static 'js/topentry.js' %}"></script>
+
+{% endblock %}

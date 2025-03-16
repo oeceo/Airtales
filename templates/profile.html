@@ -11,10 +11,10 @@
       <div class="container centred-container">
       <!-- working area -->
 
-      <div class="container profile" id="welcome">                
-        <h3 class="welcome-textbox"> welcome back {{ request.user.username }} </h3>
+      <div class="container profile welcome-textbox">                
+        <h3 class="text-white"> welcome back {{ request.user.username }} </h3>
       </div>
-      <div class="prompt">                    
+      <div class="prompt">                  
         <h2 class="pink-text"> start today's prompt:</h2>
         <h3 class="prompt-text">{{ prompt_text }}</h3> 
       </div>
@@ -36,9 +36,9 @@
         </div> 
       {%else%}
         <div class="blue-rounded-container profile">
-          <p class="large-profile-box-text"> journal entry submitted for today </p>
-          <div class="container profile" id="welcome">                
-            <h3 class="welcome-textbox">{{ todays_entry }} </h3>
+          <div class="container profile white-text">             
+            <p>{{ todays_entry }}</p>
+            <h5> journal entry submitted for today </h5>  
           </div>
         </div>
       {%endif%}
@@ -73,59 +73,8 @@
           </button>
         </div>
       </div>
-      <div class="d-flex justify-content-center mt-4">
+  
+    <div class="d-flex justify-content-center mt-4">
         <a href="{% url 'airtalesapp:userjournal' %}" class="btn btn-primary btn-lg">View All Entries</a>
     </div>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-
-      <!-- testing area -->
-      <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner"> -->
-            <!-- {% for entry in journal_entries %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <div class="d-flex justify-content-center"> -->
-                    <!-- <a href="{% url 'airtalesapp:view_entry' entry.id %}" class="bubble text-center">
-                        {{ entry.title }}
-                    </a> -->
-                <!-- </div>
-            </div>
-            {% empty %}
-            <div class="carousel-item active">
-                <p class="text-center">No journal entries available.</p>
-            </div>
-            {% endfor %} -->
-          <!-- </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-
-        <div>
-
-      </div>
-
-      <script>
-      $(document).ready(function() {
-        $(".entry-btn").click(function() {
-            var entryId = $(this).data("entry"); // Get the target entry ID from the button
-            $("#" + entryId).toggleClass("hidden"); // Toggle visibility of the corresponding entry
-        });
-        });
-      </script> -->
-
-  
-  {% endblock %}
-
+{% endblock %}

@@ -5,71 +5,21 @@
 {% block content %}
 
     <!-- Show today's prompt -->
-    <div class="container">
-      <div class="prompt">                    
-        <h1 class="display-6 pink-text"> one word, one thought, everyday... </h1>
-        <h2 class="prompt-text"> {{ prompt_text_0 }} </h2> 
-        {% if prompt_text_0 == "no prompt available..." %}
-        <h3 class="pink-text"> check back soon!</h3>
-        {% else %}
-        <h2 class="pink-text"> is the word of today.</h2>
-        {% endif %}
-      </div>
+
+    <div class="container prompt">
+      <h2 class="main-prompt"> {{ prompt_text }} </h2> 
+      {% if prompt_text_0 == "no prompt yet..." %}
+      <h6 class="pink-text"> check back soon!</h6>
+      {% else %}
+      <h3 class="pink-text"> is the word of today</h3>
+      {% endif %}
+      <p class="pink-text" id="index-introduction">
+        Practice journalling with a short post inspired by the daily prompt and explore the anonymous musings of global community.
+      </p>
+      <a class="btn btn-primary my-2" id="index-signup" href="{% url 'airtalesapp:signup' %}">Sign up to get started</a>
     </div>
 
-    <!-- Show yesterday's prompt -->
-    <!-- <div class="container">
-        <div class="row my-5">
-            <div class="col">
-              <div class="prompt">                    
-                <p class="prompt-intro-turquoise"> one word, one thought, everyday... </p>
-                <p class="prompt-text-pink"> {{ yesterdays_prompt_text }} </p> 
-                {% if current_prompt_text == "no prompt available..." %}
-                <p class="prompt-intro-turquoise"> check back soon!</p>
-                {% else %}
-                <p class="prompt-intro-turquoise"> was the word of yesterday.</p>
-                {% endif %}
-              </div>
-            </div>
-        </div>
-    </div> -->
-
-  <div class="index-carousel">
-    <div id="index-car-indicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#index-car-indicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#index-car-indicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#index-car-indicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_0 }} </p>
-            <p> {{ top_entry_0 }} </p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
-            <p> {{ top_entry_1 }} </p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
-            <p> {{ top_entry_2 }} </p>
-          </div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#index-car-indicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
+  <div class="container left-container">
+    <h3 class="blue-text" id="index-tagline">one word, one thought, everyday... </h3>
   </div>
-
 {% endblock %}

@@ -8,7 +8,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
     path('explore/', views.explore, name='explore'),
-    # path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
     path('userjournal/', views.journal_entries, name='userjournal'),
@@ -21,9 +20,9 @@ urlpatterns = [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path('terms/', views.terms, name='terms'),
-    
+    path('top-entry/', views.top_entry, name='top-entry'),
+    path('topposts/', views.topposts, name='topposts'),
     path('', include('django.contrib.auth.urls')),
     path('logout/', auth_views.LogoutView.as_view(next_page='airtalesapp:index'), name='logout'),
     path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
-    
 ]
