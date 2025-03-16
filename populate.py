@@ -1,123 +1,5 @@
-# import os
-# import random
-
-# from django.conf import settings
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-# 'airtales.settings')
-
-# import django
-# django.setup()
-# from airtalesapp.models import User, JournalEntry, Profile, Prompt
-# from django.utils.timezone import now
-# from django.utils.timezone import timedelta
-# from random import randint
-
-
-# def populate():
-#     users_data = [
-#         {'email': 'alice@example.com', 'username': 'Alice', 'password': 'password123'},
-#         {'email': 'bob@example.com', 'username': 'Bob', 'password': 'password123'},
-#         {'email': 'charlie@example.com', 'username': 'Charlie', 'password': 'password123'},
-#         {'email': 'felix@example.com', 'username': 'Felix', 'password': 'password123'},
-#         {'email': 'lily@example.com', 'username': 'Lily', 'password': 'password123'},
-#     ]
-    
-#     # Load prompts from prompts.txt
-#     prompts = []
-#     prompts_file_path = os.path.join(settings.BASE_DIR, 'airtalesapp', 'static', 'data', 'prompts.txt')
-    
-#     if os.path.exists(prompts_file_path):
-#         with open(prompts_file_path, 'r') as file:
-#             prompts = [line.strip() for line in file.readlines() if line.strip()]
-#     else:
-#         print(f"Error: The file {prompts_file_path} was not found.")
-#         return
-
-#     # Example Glasgow locations for populating entries to show on map
-#     glasgow_locations = [
-#         {"name": "Glasgow Cathedral", "latitude": 55.8656, "longitude": -4.2378},
-#         {"name": "George Square", "latitude": 55.8611, "longitude": -4.2505},
-#         {"name": "The University of Glasgow", "latitude": 55.8721, "longitude": -4.2886},
-#         {"name": "The Riverside Museum", "latitude": 55.8655, "longitude": -4.3068},
-#         {"name": "Hampden Park", "latitude": 55.8259, "longitude": -4.2514},
-#         {"name": "Pollok Country Park", "latitude": 55.8231, "longitude": -4.3164},
-#     ]
-
-#     # Prepare the users
-#     users = []
-#     for user_data in users_data:
-#         user, created = User.objects.get_or_create(
-#             email=user_data['email'],
-#             defaults={'username': user_data['username']}
-#         )
-
-#         if created:
-#             user.set_password(user_data['password'])
-#             user.save()
-
-#         users.append(user)
-
-#     # Start from today, create and save prompts
-#     today = now().date()
-        
-#     for i in range(len(prompts)):
-#         # Calculate the date for this prompt (starting today and moving forward)
-#         prompt_date = today + timedelta(days=i)
-
-#         # Make sure not to add the prompt again if it already exists for that date
-#         if not Prompt.objects.filter(date=prompt_date).exists():
-#             # Pick a random prompt from the list and assign it to the current date
-#             prompt_text = prompts[randint(0, len(prompts) - 1)]
-
-#             # Create the prompt in the database
-#             Prompt.objects.get_or_create(
-#                 date=prompt_date,
-#                 prompt=prompt_text
-#             )
-
-#             print(f"Assigned prompt '{prompt_text}' for {prompt_date}.")
-    
-#     # Create Profile for each user if not exists
-#     for user in users:
-#         Profile.objects.get_or_create(userID=user)
-    
-#     # Create sample journal entries for each user
-#     for user in users:
-#         journal_responses = {
-#             'Adventure': ["Today was such an adventure, I walked to the Boyd Orr building.", "Using django has been the greatest adventure of my life"],  # Add responses as needed
-#             'Reflect': ["I love reflecting on how much I have learned using django", "Django is so awesome omgggggggg"],
-#             # Add more responses for other prompts
-#         }
-
-#         prompts = Prompt.objects.all()
-#         random_prompt = prompts[random.randint(0, len(prompts) - 1)]
-#         prompt_text = random_prompt.prompt
-#         if prompt_text in journal_responses:
-#             entry_text = random.choice(journal_responses[prompt_text])
-#         else:
-#             entry_text = "No specific response."
-
-#         # Pick a random location
-#         location = random.choice(glasgow_locations)
-
-#         # Create the journal entry
-#         JournalEntry.objects.get_or_create(
-#             userID=user,
-#             date=prompt_date,
-#             entry=entry_text,
-#             isReported=False,
-#             latitude=location['latitude'],
-#             longitude=location['longitude'],
-#             prompt=random_prompt,
-#         )
-
-#     print("Database populated successfully.")
-
-# populate()
-
 import os
 import random
-
 from django.conf import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 'airtales.settings')
@@ -125,9 +7,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 from airtalesapp.models import User, JournalEntry, Profile, Prompt
-from django.utils.timezone import now
-from django.utils.timezone import timedelta
-from random import randint
+from django.utils.timezone import timedelta, now
 
 # 20 sample users
 users_data = [
@@ -136,28 +16,39 @@ users_data = [
 ]
 
 # Global capital city coordinates 
-capital_cities = [
-    {"name": "London", "latitude": 51.5074, "longitude": -0.1278},
-    {"name": "Paris", "latitude": 48.8566, "longitude": 2.3522},
-    {"name": "Tokyo", "latitude": 35.6895, "longitude": 139.6917},
-    {"name": "Cairo", "latitude": 30.0444, "longitude": 31.2357},
-    {"name": "Rio de Janeiro", "latitude": -22.9068, "longitude": -43.1729},
-    {"name": "Nairobi", "latitude": -1.2864, "longitude": 36.8172},
-    {"name": "Sydney", "latitude": -33.8688, "longitude": 151.2093},
-    {"name": "New York", "latitude": 40.7128, "longitude": -74.0060},
-    {"name": "Beijing", "latitude": 39.9042, "longitude": 116.4074},
-    {"name": "Mexico City", "latitude": 19.4326, "longitude": -99.1332},
-    {"name": "Moscow", "latitude": 55.7558, "longitude": 37.6173},
-    {"name": "Dubai", "latitude": 25.276987, "longitude": 55.296249},
-    {"name": "Bangkok", "latitude": 13.7563, "longitude": 100.5018},
-    {"name": "Buenos Aires", "latitude": -34.6037, "longitude": -58.3816},
-    {"name": "Berlin", "latitude": 52.5200, "longitude": 13.4050},
-    {"name": "Seoul", "latitude": 37.5665, "longitude": 126.9780},
-    {"name": "Lagos", "latitude": 6.5244, "longitude": 3.3792},
-    {"name": "Jakarta", "latitude": -6.2088, "longitude": 106.8456},
-    {"name": "Toronto", "latitude": 43.65107, "longitude": -79.347015},
-    {"name": "Delhi", "latitude": 28.6139, "longitude": 77.2090}
-]
+capital_cities = {
+    "Washington, D.C.": (38.9072, -77.0369),
+    "London": (51.5074, -0.1278),
+    "Tokyo": (35.6762, 139.6503),
+    "Paris": (48.8566, 2.3522),
+    "Berlin": (52.5200, 13.4050),
+    "Madrid": (40.4168, -3.7038),
+    "Rome": (41.9028, 12.4964),
+    "Ottawa": (45.4215, -75.6992),
+    "Canberra": (-35.2809, 149.1300),
+    "Beijing": (39.9042, 116.4074),
+    "New Delhi": (28.6139, 77.2090),
+    "Moscow": (55.7558, 37.6173),
+    "Brasília": (-15.7801, -47.9292),
+    "Buenos Aires": (-34.6037, -58.3816),
+    "Cairo": (30.0444, 31.2357),
+    "Seoul": (37.5665, 126.9780),
+    "Mexico City": (19.4326, -99.1332),
+    "Amsterdam": (52.3676, 4.9041),
+    "Prague": (50.0755, 14.4378),
+    "Athens": (37.9838, 23.7275),
+    "Bangkok": (13.7563, 100.5018),
+    "Stockholm": (59.3293, 18.0686),
+    "Helsinki": (60.1692, 24.9402),
+    "Oslo": (59.9139, 10.7522),
+    "Vienna": (48.2082, 16.3738),
+    "Warsaw": (52.2298, 21.0118),
+    "Copenhagen": (55.6761, 12.5683),
+    "Bern": (46.9481, 7.4474),
+    "Riyadh": (24.7136, 46.6753),
+    "Dubai": (25.276987, 55.296249),
+    "Singapore": (1.3521, 103.8198)
+}
 
 def read_prompts_from_file():
     prompts = []
@@ -167,7 +58,8 @@ def read_prompts_from_file():
     # Strip newline characters and return prompts
     return [prompt.strip() for prompt in prompts]
 
-def populate():
+
+def populate_users():
     # Create users
     users = []
     for user_data in users_data:
@@ -183,50 +75,64 @@ def populate():
     # Create profiles for users
     for user in users:
         Profile.objects.get_or_create(userID=user)
-
-    # Get all prompts
-    prompts = Prompt.objects.all()
-    if not prompts.exists():
-        print("Error: No prompts found. Ensure the database is seeded correctly.")
+        
+    print(f"Successfully populated {len(users)} users.")
+            
+            
+def populate_prompts():
+    prompts = read_prompts_from_file()
+    if not prompts:
+        print("Error: No prompts found in the file.")
         return
     
-    today = now().date()
+    # Add each prompt for the next 89 days
+    for i, prompt_text in enumerate(prompts):
+        prompt_date = now() + timedelta(days=i)
+        prompt_text = prompt_text.strip()  # Clean up any extra whitespace or newline
 
-    # Create journal entries for the next 89 days
-    for day in range(89):
-        entry_date = today + timedelta(days=day)
-        daily_prompt = prompts.filter(date=entry_date).first()
-
-        if not daily_prompt:
-            print(f"Skipping {entry_date}: No prompt found.")
-            continue
+        # Creates a new Prompt entry in the database
+        Prompt.objects.create(date=prompt_date, prompt=prompt_text)
+    
+    print(f"Successfully populated {len(prompts)} prompts.")
+            
+            
+def populate_entries():
+    users = User.objects.all()
+    prompts = Prompt.objects.all()
 
     for user in users:
-        # Check if the journal entry already exists for the user on this date
-        existing_entry = JournalEntry.objects.filter(userID=user, date=entry_date).first()
+        for prompt in prompts:  # Generate an entry for each prompt
+            # Check if an entry already exists for this user on the given date
+            if not JournalEntry.objects.filter(userID=user, date=prompt.date).exists():
+                # Choose a random city to assign
+                _, (lat, lon) = random.choice(list(capital_cities.items()))
 
-        if existing_entry:
-            print(f"Skipping entry for {user.username} on {entry_date}: Entry already exists.")
-            continue  # Skip creating a new entry if one already exists
-        
-        location = random.choice(capital_cities)
-        num_likes = min(randint(0, 50), len(users))  # Ensure it’s not greater than the number of users
-        liked_users = random.sample(users, num_likes)  # Pick random users who liked the post
+                # Define location using lat and lon
+                location = {"latitude": lat, "longitude": lon}
 
-        journal_entry = JournalEntry.objects.create(
-            userID=user,
-            date=entry_date,
-            entry=f"{user.username}'s thoughts on '{daily_prompt.prompt}'.",
-            isReported=False,
-            latitude=location["latitude"],
-            longitude=location["longitude"],
-            prompt=daily_prompt,
-        )
+                # Define liked_users
+                num_likes = min(random.randint(0, 50), len(users))  # Ensure it’s not greater than the number of users
+                liked_users = random.sample(list(users), num_likes)  # Pick random users who liked the entry
 
-        # Add liked users to the entry
-        journal_entry.liked_by.set(liked_users)
-        journal_entry.save()
+                # Create the journal entry
+                journal_entry = JournalEntry.objects.create(
+                    userID=user,
+                    date=prompt.date,
+                    entry=f"I have such amazing insightful thoughts on '{prompt.prompt}'.",
+                    isReported=False,
+                    latitude=location["latitude"],
+                    longitude=location["longitude"],
+                    prompt=prompt,
+                )
 
-        print(f"Created entry for {user.username} on {entry_date}")
+                # Add liked users to the entry (many-to-many relationship)
+                journal_entry.liked_by.set(liked_users)
+
+                # Save the entry to commit changes to the database
+                journal_entry.save()
+                
+    print(f"Successfully added journal entries for {len(users)} users and {len(prompts)} prompts.")
             
-populate()
+populate_users()
+populate_prompts()
+populate_entries()

@@ -20,26 +20,26 @@ function setupMap() {
         console.log("Map has been resized");
     }, 500);
 
-   // Add markers for each entry that has location data
-if (typeof entries !== 'undefined' && entries.length > 0) {
-    entries.forEach(entry => {
-        const isSameUser = entry.userID !== authenticatedUserId;  // Only show report button if it's not the signed-in user's entry
-        if (entry.latitude && entry.longitude) {
-            console.log('Adding marker for entry:', entry);
-            addMarkerWithPopup(entry.latitude, entry.longitude, `
-                <b>${entry.date}</b><br>
-                ${entry.entry}<br>
-                <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
-                <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like</p>
-                <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
-                <p><span id="report-status-${entry.id}">${entry.isReported ? "This entry has been reported" : ""}</span></p>
-                ${isSameUser && !entry.isReported ? `<button onclick="reportEntry(${entry.id})" class="report-button" id="report-button-${entry.id}">Report</button>` : ''}
-            `);
-        }
-    });
-} else {
-    console.warn("Entries array is empty.");
-}
+    // Add markers for each entry that has location data
+    if (typeof entries !== 'undefined' && entries.length > 0) {
+        entries.forEach(entry => {
+            const isSameUser = entry.userID === authenticatedUserId;  // Only show report button if it's not the signed-in user's entry
+            if (entry.latitude && entry.longitude) {
+                console.log('Adding marker for entry:', entry);
+                addMarkerWithPopup(entry.latitude, entry.longitude, `
+                    <b>${entry.date}</b><br>
+                    ${entry.entry}<br>
+                    <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
+                    <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like or report entries</p>
+                    <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
+                    <p><span id="report-status-${entry.id}">${entry.isReported ? "This entry has been reported" : ""}</span></p>
+                    ${!isSameUser && authenticated && !entry.isReported ? `<button onclick="reportEntry(${entry.id})" class="report-button" id="report-button-${entry.id}">Report</button>` : ''}
+                `);
+            }
+        });
+    } else {
+        console.warn("Entries array is empty.");
+    }
 }
 
 
@@ -142,14 +142,21 @@ function reportEntry(entryId) {
             entry.isLiked = response["is_liked"];
             entry.likes = response["likes"]
         
-            // Try to get the report element
+            // Try to get the report elements
             const reportButton = document.getElementById(`report-button-${entryId}`);
+            const reportStatus = document.getElementById(`report-status-${entryId}`);
             
             // Check if the element exists before trying to access its properties
             if (reportButton) {
                 reportButton.style.display = 'none';
             } else {
                 console.error("Report entry button not found for entryId:", entryId);
+            }
+
+            if (reportStatus) {
+                reportStatus.innerText = "This entry has been reported";
+            } else {
+                console.error("Failed to find report status element for entry ID ", entryId);
             }
         },
         error: function(error) {
@@ -166,6 +173,8 @@ function reportEntry(entryId) {
                 console.error('Error reporting entry:', error.responseJSON);
                 if (reportStatus) {
                     reportStatus.innerText = "Failed to report entry";
+                } else {
+                    console.error("Failed to find report status element for entry ID ", entryId);
                 }
             }
         }
