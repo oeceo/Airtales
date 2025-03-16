@@ -26,14 +26,14 @@
     </div>
     <div id="map"></div>
     <div class="lower-page-container explore-alignment">
-        <button id="login-status-btn" class="btn btn btn-primary px-4">
+        <a id="login-status-btn" class="btn btn btn-primary px-4" href="{% if user.is_authenticated %}/profile/{% else %}/login/{% endif %}">
             {% if user.is_authenticated %}
                 share your tale today
             {% else %}
                 login or sign up to share your tale
             {% endif %}
-        </a>
         <h2 class="white-text">Today's word is: <span class="pink-text">{{ prompt_text }}</span></h2>
+        </a>
     </div>
 
     <!-- CSRF token for JavaScript -->
