@@ -4,6 +4,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Giga&display=swap'); /* Medium heading font */
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Exa&display=swap'); /* Narrowest heading font */
 
+.content-wrapper {
+    overflow: visible;
+}
+
 /* Styling for page background - place on line 3 of page with {% block body_class %}home-bg{% endblock %} */
 
 .default-bg {
@@ -40,6 +44,10 @@ h4, h5, h6 {
     font-family: 'Lexend Exa', sans-serif;
 }
 
+h5 {
+    text-align: center;
+}
+
 .pink-text {
     color:#EFA8B8
 }
@@ -60,8 +68,15 @@ h4, h5, h6 {
     font-size: 80px;
     word-wrap: break-word;
     max-width: 90%;
-    margin: 20px 0px;
+    margin: 10px 0px;
+    letter-spacing: 0.2em;
+    font-family: 'Lugrasimo', cursive;
+    font-weight: bold;
+    color: #ffffff;
+}
 
+.centered-text {
+    text-align: center;
 }
 
 /* Containers */
@@ -71,6 +86,11 @@ h4, h5, h6 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.explore-alignment{
+    width: 90%;
+    margin: auto;
     text-align: center;
 }
 
@@ -80,6 +100,37 @@ h4, h5, h6 {
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-wrap: wrap;
+}
+
+.btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    width: 100%;
+    margin: 15px 0px;
+}
+
+.journal-entry-select {
+    margin: 0px 10px;
+    width: auto;
+}
+
+#journal-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.journal-container {
+    width: 90%;
+    margin: auto;
+}
+
+.journal-select {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 .left-container {
@@ -128,52 +179,19 @@ h4, h5, h6 {
 }
 
 #nav-top {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 #nav-bottom {
-    margin-top: 40px;
-
+    margin-top: 20px;
 }
 
 .navbar-logo {
     padding-left: 25px;  
 }
 
-.greeting {
-    color: #ffffff;
-    font-size: 50px !important;
-    /* font-family: 'Lohit Devanagari', 'sans-serif' !important; */
-    max-width: 1200px;
-}
-.profile_journal_submitted{
-    /* font-family: 'Lexend Zetta', sans-serif;
-    font-size: 36px;
-    text-wrap: wrap;
-    text-align: center; */
-    background-color: #EFA8B8;
-    border-color:#EFA8B8;
-    border-radius: 15px;
-    border-style: solid;
-    border-width: thick;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 50px;
-    max-width: 800px; /* Set a max width */
-    padding: 30px;
-    /* margin: 40px 60px; */
-    margin: 20px auto;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* align-items: center; */
-    color: #3e2a35;
-    word-wrap: break-word;
-    /* text-align: center; */
-}
 .profile-carousel-content {
     background-color: #035E7B;
-    /* border-color:#3F7CAC; */
     border-color:#035E7B;
     border-radius: 15px;
     border-style: solid;
@@ -196,12 +214,6 @@ h4, h5, h6 {
 .hidden {
     display: none;
 }
-.central-prompt{
-    font-family: 'Lexend Zetta', sans-serif;
-    font-size: 36px;
-    text-wrap: wrap;
-    text-align: center;
-}
 
 /* Styling for prompt */
 
@@ -219,16 +231,9 @@ h4, h5, h6 {
 
 .text-link {
     color: #ffffff;
-
-    font-weight: bold;
-    font-size: 35px !important;
-    max-width: 800px;
     text-align: left;
-    font-family: 'Lohit Devanagari', 'sans-serif' !important;
-
     text-decoration: none;
     margin: 0px 10px;
-
 }
 
 .text-link:hover {
@@ -245,6 +250,10 @@ h4, h5, h6 {
     font-family: 'Lexend Exa', sans-serif;
 }
 
+.full-width {
+    width: 100%;
+}
+
 .btn.btn-primary {
     color: #ffffff;
     font-weight: bold;
@@ -253,6 +262,17 @@ h4, h5, h6 {
     padding: 10px 20px;
     background-color: #EFA8B8;
     border-color: #EFA8B8;
+}
+
+.btn.btn-primary.dark {
+    background-color: #e08592;
+    border-color: #e08592;
+}
+
+.btn.btn-primary.dark:hover {
+    border-color: #EFA8B8;
+    color: #EFA8B8;
+    background-color: #035E7B;
 }
 
 .btn.btn-secondary {
@@ -320,8 +340,8 @@ h4, h5, h6 {
     flex-direction: column;
     word-wrap: break-word;
     text-align: left;
-    max-width: 95%;
-    margin: 40px;
+    max-width: 90%;
+    margin: 30px;
 }
 
 .prompt-text {
@@ -332,16 +352,19 @@ h4, h5, h6 {
     letter-spacing: 0.2em; 
     font-family: 'Lugrasimo', cursive;
 }
+
 /* Styling for Profile */
 
 .profile {
     width: 90%;
+    padding: 15px;
 }
 
 .welcome-textbox {
-    font-family: 'Lexend Exa', sans-serif;
-    color: #ffffff;
     margin: 5px;
+    background-color: #EFA8B8;
+    border-radius: 50px;
+    padding: 5px;
     text-align: center;
 }
 
@@ -349,12 +372,6 @@ h4, h5, h6 {
     font-family: 'Lexend Exa', sans-serif;
     font-size: 26px;
     padding-bottom: 10px;
-}
-
-#welcome {
-    background-color: #EFA8B8;
-    border-radius: 50px;
-    padding: 5px;
 }
 
 #journal-entry {
@@ -372,6 +389,7 @@ h4, h5, h6 {
 
 .login {
     color: white;
+    text-align: center;
 }
 
 .card {
@@ -396,18 +414,13 @@ a.btn-link:hover {
 }
 
 /* Styling for Explore */ 
-#explore-head {
-    text-align: center; 
-    color: white;
-}
 
 #map {
     height: 35rem;
     min-width: 200px;
     max-width: 1600px;
+    margin: auto;
     width: 90%;
-    margin-bottom: 20px;
-    margin: 0 auto 20px;
     border: 2px solid #077498;
     border-radius: 30px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
@@ -471,29 +484,16 @@ a.btn-link:hover {
     opacity: 0.4;
 }
 
-.login-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;    
-    justify-content: center; 
-    text-align: center;      
-}
-
 #login-status-btn {
     margin-bottom: 10px; 
 }
 
-#daily-prompt h2{
-    margin: 0; 
+#daily-prompt{
+    margin: 0;
 }
 
-.prompt-explore {
-    color: #e08592; 
-}
-
-.prompt-text-container {
-    display: flex;
-    justify-content: center;
+#map-prompt{
+    min-height: 220px;
 }
 
 /* Styling for Index */
@@ -563,6 +563,8 @@ a.btn-link:hover {
 
 #index-introduction {
     margin: 30px 0px;
+    font-family: 'Lexend Exa', sans-serif;
+    margin-right: 10px;
 }
 
 #index-signup {

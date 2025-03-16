@@ -21,12 +21,11 @@ from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth import authenticate, login
 
-
 User = get_user_model()
 
 def index(request):
     date = selected_date(0)
-    prompt_text = get_current_prompt() # Today's prompt
+    prompt_text = get_current_prompt()
     return render(request, 'index.html', {'date': date, 'prompt_text': prompt_text})
 
 def about(request):
@@ -38,13 +37,8 @@ def topposts(request):
 @ensure_csrf_cookie
 def explore(request):
     prompt_text = get_current_prompt()
-    today = selected_date(0)
-    prompt_text = get_prompt(today)
-    # Get all entries from today that have a location attached
     entries = JournalEntry.objects.filter(latitude__isnull=False, longitude__isnull=False, date=now().date())
-    
-    # Pass the entries to the template to load on map
-    return render(request, 'explore.html', context)
+    return render(request, 'explore.html', {'entires': entries, 'prompt_text': prompt_text})
 
 def user_login(request):
     if request.method == 'POST':
@@ -97,20 +91,6 @@ def signup(request):
                 'registered': registered
                 })
 
-@login_required
-def profile(request):
-
-    today = selected_date(0)
-    prompt_text = get_prompt(today) # Returns the prompt
-    prior_entry = JournalEntry.objects.filter(userID=request.user, date=today).exists() # Checks if entry already made today
-    previous_entries = JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date') # Gets previous entries
-    context = {
-        'prompt_text': prompt_text,
-        'prior_entry':prior_entry,  
-        'journal_entries':previous_entries
-    }
-    return render(request, 'profile.html', context)
-
 def save_entry(request): 
     if request.method == "POST":
         entry_text = request.POST.get("entry_text")
@@ -130,7 +110,6 @@ def save_entry(request):
 @login_required
 def profile(request):
     today = selected_date(0)
-    # this returns the prompt to the profile
     prompt_text = get_prompt(today)
 
     #this checks if the user has already made a journal entry
@@ -141,20 +120,9 @@ def profile(request):
         todays_entry = "No entry yet."
     #gets the previous journal entries
     previous_entries = list(JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3])
-    # prompt_text_1 = get_prompt(yesterday)
     previous_entry_1, previous_entry_2, previous_entry_3 = "No previous entry.", "No previous entry.", "No previous entry."
     prompt_text_1, prompt_text_2, prompt_text_3 = "No prompt available.", "No prompt available.", "No prompt available."
     previous_1, previous_2, previous_3 = None, None, None
-
-    # prompt_text_1 = get_prompt(previous_entries[0].date)
-    # prompt_text_2 = get_prompt(previous_entries[1].date)
-    # prompt_text_3 = get_prompt(previous_entries[2].date)
-    # previous_entry_1 = previous_entries[0].entry
-    # previous_entry_2 = previous_entries[1].entry
-    # previous_entry_3 = previous_entries[2].entry
-    # previous_1 = previous_entries[0].date
-    # previous_2 = previous_entries[1].date
-    # previous_3 = previous_entries[2].date
 
     if len(previous_entries) > 0:
         previous_entry_1 = previous_entries[0].entry
@@ -243,6 +211,44 @@ def get_prompt(set_date): # Returns prompt based on date param
         pass
     return prompt_text
 
+def get_entry(date, userID):
+    #this returns the prompt of the passed date
+    # Filter by date based on date param
+    entry_text = "entry does not exist"
+    #prompt_text = "no prompt available..."  # default if there is no prompt
+    try:
+        entry = JournalEntry.objects.get(userID=userID,date=date)
+        entry_text = entry.entry
+
+        # prompt = Prompt.objects.get(date=date) # Gets the prompt for the day
+        # prompt_text = prompt.prompt  
+    except JournalEntry.DoesNotExist:
+        pass
+    return entry_text
+
+
+@csrf_exempt
+@login_required
+def report_entry(request, entry_id):
+    try:
+        entry = JournalEntry.objects.get(id=entry_id)
+
+        # Ensure the signed-in user is not the one who created the entry 
+        if entry.userID == request.user:
+            return JsonResponse({"error": "You cannot report your own entry."}, status=403)
+
+        # Toggle the 'isReported' field to True
+        entry.isReported = True
+        entry.save()
+
+        return JsonResponse({
+            "success": True,
+            "is_reported": entry.isReported
+        })
+
+    except JournalEntry.DoesNotExist:
+        return JsonResponse({"error": "Entry not found."}, status=404)
+
 def get_current_prompt():
     prompt_text = get_prompt(now().date())
     return prompt_text
@@ -270,24 +276,20 @@ def top_entry(request):
     try:
         offset_str = request.GET.get('offset', '0') # Get the offset number as a string
         offset = int(offset_str) if offset_str.isdigit() else 0 # Cast as an int for use in the methods
-
         set_date = selected_date(offset)
         entry_data = get_top_entry(set_date)
 
         if not isinstance(entry_data, dict):
             return JsonResponse({"error": f"Unexpected return type {type(entry_data)} from get_top_entry_data"}, status=500)
-
+        
         return JsonResponse({
             "prompt_text": get_prompt(set_date),
             "entry_text": entry_data.get("entry_text", "No entries available"),
             "entry_likes": entry_data.get("entry_likes", 0),
             "total_entries": entry_data.get("total_entries", 0),
         })
-
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-
-
 
 # def register(request):
 #     registered = False
@@ -337,9 +339,6 @@ def user_logout(request):
     logout(request)
     return redirect("airtalesapp:login")  # Redirect to login page
 
-
-# JOURNAL ENTRY PAGE
-
 @login_required
 def journal_entries(request):
     # Get the current year and month from the request parameters or use default values
@@ -374,7 +373,6 @@ def journal_entries(request):
     }
     
     return render(request, 'userjournal.html', context)
-
 
 @login_required
 def delete_entry(request, entry_id):

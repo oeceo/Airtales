@@ -3,7 +3,7 @@
 {% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
 {% block content %}
-    <div class="centred-container white-text">
+    <div class="centred-container white-text centered-text">
         <h1>This past week on Airtales</h1> 
         <h3 class="pink-text">Look back on the most-liked responses from the past week</h3>
     </div>
@@ -24,7 +24,7 @@
 
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <div class="carousel-content">
+          <div class="carousel-content" id="carousel-content-index">
             <h4 class="pink-text" id="carousel_prompt"> {{ prompt_text }} </h4>
             <p id="top_entry"></p>
             <p>1 of <span id="total_entries"></span> entries</p>

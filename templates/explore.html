@@ -42,10 +42,11 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-        <h1 id="explore-head">explore the world in words!</h1> </div>
+    <div class="centred-container explore-alignment">
+        <h1 class="white-text">explore the world in words!</h1> 
+    </div>
     <div id="map"></div>
-    <div class="login-container">
+    <div class="centred-container explore-alignment" id="map-prompt">
         <button id="login-status-btn" class="btn btn btn-primary px-4">
             {% if user.is_authenticated %}
                 share your tale today
@@ -53,10 +54,7 @@
                 login or sign up to share your tale
             {% endif %}
         </button>
-    
-        <div id="daily-prompt">
-            <h2>Today's word is: <span class="prompt-explore">{{ prompt_text }}</span></h2>
-        </div>
+        <h2 class="white-text">Today's word is: <span class="pink-text">{{ prompt_text }}</span></h2>
     </div>
 
     <!-- CSRF token for JavaScript -->
