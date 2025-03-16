@@ -3,55 +3,61 @@
 {% block body_class %}pink-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
 {% block content %}
-<div class="go-back-button">
-    <a href="{% url 'airtalesapp:profile' %}" class="btn btn-secondary">Go Back to Profile</a>
-</div>
-<div class="container mt-4">
-    <h2 class="text-center">Your Journal Entries</h2>
+
+<div class="journal-container">
+    <h1 class="blue-text">Your Journal Entries</h1>
 
     <!-- Filter Form -->
-    <form method="GET" class="mb-4">
-        <div class="d-flex justify-content-center">
-            <select name="year" class="form-select w-auto mx-2">
-                {% for year in available_years %}
-                    <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
-                {% endfor %}
-            </select>
-            <select name="month" class="form-select w-auto mx-2">
-                {% for month in available_months %}
-                    <option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>{{ month }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="btn btn-primary">search</button>
+   <form method="GET" class="mb-4">
+        <div id="journal-nav">
+            <a href="{% url 'airtalesapp:profile' %}" class="btn btn-secondary journal-btn" aria-label="Back to profile">Back to profile</a>
+            
+            <div class="journal-select">
+                <div class="centred-container">
+                    <h6>Year</h6>
+                    <select name="year" class="form-select journal-entry-select" aria-label="Select year">
+                        {% for year in available_years %}
+                            <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="centred-container">
+                    <h6>Month</h6>
+                    <select name="month" class="form-select journal-entry-select" aria-label="Select month">
+                        {% for month in available_months %}
+                            <option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>{{ month }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-secondary journal-btn" aria-label="Submit">search</button>
+            </div>
         </div>
     </form>
 
-
-
-
 <!-- Journal Entries List -->
-<div class="list-group">
-    {% if journal_entries %}
-        {% for entry in journal_entries %}
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <h5>
-                        {{ entry.date|date:"F j, Y" }} 
-                        - <span class="text-muted">{{ entry.prompt_text }}</span>
-                    </h5>
-                    <p>{{ entry.entry }}</p>
-                    <form method="POST" action="{% url 'airtalesapp:delete_entry' entry.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</button>
-                    </form>
+    <div class="list-group">
+        {% if journal_entries %}
+            {% for entry in journal_entries %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6>
+                            {{ entry.date|date:"F j, Y" }} 
+                            - <span class="text-muted">{{ entry.prompt_text }}</span>
+                        </h6>
+                        <p>{{ entry.entry }}</p>
+                        <form method="POST" action="{% url 'airtalesapp:delete_entry' entry.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</button>
+                        </form>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2 text-muted">❤️ {{ entry.liked_by.count }}</span> 
+                    </div>
                 </div>
-                <div class="d-flex align-items-center">
-                    <span class="me-2 text-muted">❤️ {{ entry.liked_by.count }}</span> 
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p id="no-entry">No entries found for this month.</p>
-    {% endif %}
+            {% endfor %}
+        {% else %}
+            <p id="no-entry">No entries found for this month.</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
