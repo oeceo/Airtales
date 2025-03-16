@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <p>You have been successfully logged out.</p>
+    <a class="btn btn-primary" href="{% url 'airtalesapp:index' %}">return home</a>
+</div>
+{% endblock %}

@@ -20,23 +20,26 @@ function setupMap() {
         console.log("Map has been resized");
     }, 500);
 
-    // Add markers for each entry that has location data
-    if (typeof entries !== 'undefined' && entries.length > 0) {
-        entries.forEach(entry => {
-            if (entry.latitude && entry.longitude) {
-                addMarkerWithPopup(entry.latitude, entry.longitude, `
-                    <b>${entry.date}</b><br>
-                    ${entry.entry}<br>
-                    <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
-                    <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like</p>
-                    <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
-                `);
-                
-            }
-        });
-    } else {
-        console.warn("Entries array is empty.");
-    }
+   // Add markers for each entry that has location data
+if (typeof entries !== 'undefined' && entries.length > 0) {
+    entries.forEach(entry => {
+        const showReportButton = entry.userID !== authenticatedUserId;  // Only show report button if it's not the signed-in user's entry
+    
+        if (entry.latitude && entry.longitude) {
+            console.log('Adding marker for entry:', entry);
+            addMarkerWithPopup(entry.latitude, entry.longitude, `
+                <b>${entry.date}</b><br>
+                ${entry.entry}<br>
+                <button onclick="toggleLike(${entry.id})" id="like-button-${entry.id}" class="like-button ${authenticated ? "" : "d-none"}">${entry.isLiked ? "Unlike" : "Like"}</button>
+                <p id="login-alert-${entry.id}" class="${authenticated ? "d-none" : ""}">You need to be signed in to like</p>
+                <p>Likes: <span id="like-count-${entry.id}">${entry.likes}</span></p>
+                ${showReportButton ? `<button onclick="reportEntry(${entry.id})" class="report-button" id="report-button-${entry.id}">Report</button>` : ''}
+            `);
+        }
+    });
+} else {
+    console.warn("Entries array is empty.");
+}
 }
 
 function addMarkerWithPopup(lat, long, text) {
