@@ -15,5 +15,6 @@ urlpatterns = [
     path('entry/<int:entry_id>/', views.view_entry, name='view_entry'),
     path('like-entry/<int:entry_id>/', views.toggle_like, name='like_entry'),
     path('terms/', views.terms, name='terms'),
-    
+    path('top-entry/', views.top_entry, name='top-entry'),
+    path('pastprompts/', views.pastprompts, name='pastprompts'),
 ]

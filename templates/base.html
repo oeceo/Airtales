@@ -37,6 +37,9 @@
                         <a class="btn btn-primary nav-bar mx-2" href="{% url 'airtalesapp:explore' %}">Explore</a>
                     </li>
                     <li class="nav-item">
+                        <a class="btn btn-primary nav-bar mx-2" href="{% url 'airtalesapp:pastprompts' %}">Top posts</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="btn btn-primary nav-bar mx-2" href="{% url 'airtalesapp:login' %}">Sign In</a>
                     </li>
                 </ul>
@@ -45,16 +48,14 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+    {% block content %}{% endblock %}
 
     <nav class="navbar fixed-bottom navbar-dark" id="nav-bottom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" id="nav-prompt">Today's prompt: {{ prompt_text_0 }}</a>
             <div class="nav-links">
-                <a class="bottom-nav-link" href="{% url 'airtalesapp:about' %}">About</a>
-                <a class="bottom-nav-link" href="{% url 'airtalesapp:terms' %}">T&Cs</a>
+                <a class="text-link" href="{% url 'airtalesapp:about' %}">About</a>
+                <a class="text-link" href="{% url 'airtalesapp:terms' %}">T&Cs</a>
+                <span class="pink-text" id="copyright">Copyright Airtales 2025</span>
             </div>
         </div>
     </nav>
