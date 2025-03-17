@@ -25,15 +25,18 @@
         <h1 class="white-text">explore the world in words!</h1> 
     </div>
     <div id="map"></div>
-    <div class="lower-page-container explore-alignment">
+    <div class="centred-container">
         <a id="login-status-btn" class="btn btn btn-primary px-4" href="{% if user.is_authenticated %}/profile/{% else %}/login/{% endif %}">
             {% if user.is_authenticated %}
                 share your tale today
             {% else %}
                 login or sign up to share your tale
             {% endif %}
-        <h2 class="white-text">Today's word is: <span class="pink-text">{{ prompt_text }}</span></h2>
         </a>
+    </div>
+
+    <div class="lower-page-container explore-alignment">
+        <h2 class="white-text">Today's word is: <span class="pink-text">{{ prompt_text }}</span></h2>
     </div>
 
     <!-- CSRF token for JavaScript -->
