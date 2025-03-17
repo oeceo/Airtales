@@ -8,7 +8,7 @@
 
 {% block content %}
 
-      <div class="container centred-container">
+    <div class="container centred-container">
       <!-- working area -->
 
       <div class="container profile welcome-textbox">                
@@ -36,41 +36,100 @@
         </div> 
       {%else%}
         <div class="blue-rounded-container profile">
-          <div class="container profile white-text">             
-            <p>{{ todays_entry }}</p>
-            <h5> journal entry submitted for today </h5>  
+          <div class="container profile white-text">  
+            <h5> journal entry submitted for today </h5>                         
+            <!-- <h5>{{ todays_entry }}</h5> -->
+
           </div>
         </div>
       {%endif%}
       </div>
 
-            <div class="carousel-item">
-              <div class="profile-carousel-content">
-                <p class = "carousel-prompt"> {{ day_before}}:  {{ prompt_text_2 }}</p>  
-                <!-- <p class="carousel-prompt"> {{ prompt_text_2 }} </p> -->
-                <p class="carousel-entry"> {{ previous_entry_2 }} </p>
-                <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
-                <!-- <p> {{ top_entry_1 }} </p> -->
+      <br>
+      <br>
+      <!-- <div class="index-carousel"> -->
+        <div class="index-carousel">
+
+          <div id="index-car-indicators" class="carousel slide" data-bs-ride="carousel">
+            <!-- <div class="carousel-indicators">
+              {% for i in "0123456" %}
+                <button type="button"
+                  data-bs-target="#index-car-indicators" 
+                  data-bs-slide-to="{{ forloop.counter0 }}" 
+                  class="{% if forloop.first %} active {% endif %}" 
+                  aria-label="Slide {{ forloop.counter }}">
+                </button>
+              {% endfor %}
+            </div> -->
+
+            <div class="carousel-inner">
+            {% if prior_entry%}
+              <div class="carousel-item active">
+                <div class="carousel-content" id="carousel-content-index">
+                  <p class="carousel-prompt"> {{ prompt_text }} </p>
+                  <p class="carousel-entry"> {{ todays_entry }}
+                </div>
               </div>
-            </div>
-            <div class="carousel-item">
-              <div class="profile-carousel-content">
-                <p class = "carousel-prompt"> {{ two_days_ago}}:    {{ prompt_text_3 }} </p>  
-                <!-- <p class="carousel-prompt"> {{ prompt_text_3 }} </p> -->
-                <p class="carousel-entry"> {{ previous_entry_3 }} </p>
-                <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
-                <!-- <p> {{ top_entry_2 }} </p> -->
+              <div class="carousel-item">
+                <div class="carousel-content" id="carousel-content-index">
+                  <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_2 }}
+                </div>
               </div>
-            </div>
+
+                <div class="carousel-item">
+                <div class="carousel-content" id="carousel-content-index">
+                  <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_3 }}
+                </div>
+              </div>
+          <!-- </div> -->
+          {%else%}    
+              <div class="carousel-item active">
+                <div class="carousel-content" id="carousel-content-index">
+                  <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_2 }}
+                </div>
+              </div>
+
+                <div class="carousel-item">
+                  <div class="carousel-content" id="carousel-content-index">
+                    <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
+                    <p class="carousel-entry"> {{ previous_entry_3 }}
+                  </div>
+                </div>
+            {%endif%}
+
+        </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#index-car-indicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+<!-- 
+            <button class="carousel-control-prev" type="button" id="prev-day-btn">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" id="next-day-btn">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button> -->
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
+        </div>
+
+          <!-- <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
           <button class="carousel-control-next" type="button" data-bs-target="#index-car-indicators" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-          </button>
+          </button> -->
         </div>
       </div>
   
@@ -78,3 +137,17 @@
         <a href="{% url 'airtalesapp:userjournal' %}" class="btn btn-primary btn-lg">View All Entries</a>
     </div>
 {% endblock %}
+
+
+
+
+            <!-- </div> -->
+                  <!-- <div class="carousel-item">
+              <div class="profile-carousel-content">
+                <p class = "carousel-prompt"> {{ day_before}}:  {{ prompt_text_2 }}</p>   -->
+                <!-- <p class="carousel-prompt"> {{ prompt_text_2 }} </p> -->
+                <!-- <p class="carousel-entry"> {{ previous_entry_2 }} </p> -->
+                <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
+                <!-- <p> {{ top_entry_1 }} </p> -->
+              <!-- </div>
+            </div>
