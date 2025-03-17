@@ -154,7 +154,11 @@ def profile(request):
     else:
         todays_entry = "No entry yet"
     #gets the previous journal entries
-    previous_entries = list(JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3])
+    # previous_entries = list(JournalEntry.objects.filter(userID=request.user).exclude(date=today).order_by('-date')[:3])
+    previous_entries = list(
+    JournalEntry.objects.filter(userID=request.user, date__lt=today)  
+    .order_by('-date')[:3]  
+)
     previous_entry_1, previous_entry_2, previous_entry_3 = "No previous entry.", "No previous entry.", "No previous entry."
     prompt_text_1, prompt_text_2, prompt_text_3 = "No prompt available.", "No prompt available.", "No prompt available."
     previous_1, previous_2, previous_3 = None, None, None

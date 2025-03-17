@@ -47,27 +47,23 @@
 
       <br>
       <br>
-      <!-- <div class="index-carousel"> -->
         <div class="index-carousel">
-
-          <div id="index-car-indicators" class="carousel slide" data-bs-ride="carousel">
-            <!-- <div class="carousel-indicators">
-              {% for i in "0123456" %}
-                <button type="button"
-                  data-bs-target="#index-car-indicators" 
-                  data-bs-slide-to="{{ forloop.counter0 }}" 
-                  class="{% if forloop.first %} active {% endif %}" 
-                  aria-label="Slide {{ forloop.counter }}">
-                </button>
-              {% endfor %}
-            </div> -->
+          <div id="index-car-indicators" class="carousel slide">
 
             <div class="carousel-inner">
             {% if prior_entry%}
               <div class="carousel-item active">
                 <div class="carousel-content" id="carousel-content-index">
-                  <p class="carousel-prompt"> {{ prompt_text }} </p>
+                  <p class="carousel-prompt">{{ today }}  </p>
+                  <p class="carousel-prompt"> {{ prompt_text }}  </p>
                   <p class="carousel-entry"> {{ todays_entry }}
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="carousel-content" id="carousel-content-index">
+                  <p class="carousel-prompt">{{ yesterday }}  </p>
+                  <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_1 }}
                 </div>
               </div>
               <div class="carousel-item">
@@ -86,6 +82,12 @@
           <!-- </div> -->
           {%else%}    
               <div class="carousel-item active">
+                <div class="carousel-content" id="carousel-content-index">
+                  <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_1 }}
+                </div>
+              </div>
+              <div class="carousel-item">
                 <div class="carousel-content" id="carousel-content-index">
                   <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
                   <p class="carousel-entry"> {{ previous_entry_2 }}
