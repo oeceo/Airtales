@@ -38,6 +38,9 @@ def about(request):
 def topposts(request):
     return render(request, 'topposts.html')
 
+def error(request):
+    return render(request, 'error.html')
+
 @ensure_csrf_cookie
 def explore(request):
     # Get all entries from today that have a location attached

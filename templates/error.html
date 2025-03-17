@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_class %}pink-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
+
+{% block content %}
+
+<div class="error-container">
+    <h1 class="blue-text centred-text">Uh oh... something went wrong!</h1>
+    <h2 class="blue-text centred-text">Let's get you <a class="text-link" href="{% url 'airtalesapp:index' %}">home</a></h2>
+
+    <div class="error-container">
+        <p class="large-error-text">Not your first time seeing this?</p>
+        <p class="large-error-text">Please report any issues to us by email</p>
+        <a href="mailto:contact@airtales.app" class="btn btn-secondary" aria-label="Report a technical issue by email">Report a technical issue</a>
+    </div>
+
+</div>
+
+{% endblock %}

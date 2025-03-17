@@ -16,7 +16,7 @@ urlpatterns = [
     path('like-entry/<int:entry_id>/', views.toggle_like, name='like_entry'),
     path('report-entry/<int:entry_id>/', views.report_entry, name='report_entry'),
     path('entries/', views.all_entries, name='all_entries'),
-
+    path('error/', views.error, name='error'),
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path('terms/', views.terms, name='terms'),
