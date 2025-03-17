@@ -55,27 +55,28 @@ def explore(request):
     # Pass the entries to the template to load on map
     return render(request, 'explore.html', context)
 
-def user_login(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        User = get_user_model()        
-        user = authenticate(username=email, password=password)
-        # try:
-        #     user = User.objects.get(email=email)
-        # except User.DoesNotExist:
-        #     return HttpResponse("Invalid login details.")
-        if user is not None:
-            # if user.is_active:
-                login(request, user)
-                return redirect('airtalesapp:profile')
-            # else:
-                # return HttpResponse("Invalid Login.")
-        else:
-            # print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
-    return render(request, 'login.html')
-    # return render(request, 'login.html')
+# def user_login(request):
+#     if request.method == 'POST':
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         User = get_user_model()        
+#         # user = authenticate(username=email, password=password)
+#         user = authenticate(request, email=email, password=password)
+#         # try:
+#         #     user = User.objects.get(email=email)
+#         # except User.DoesNotExist:
+#         #     return HttpResponse("Invalid login details.")
+#         if user is not None:
+#             # if user.is_active:
+#                 login(request, user)
+#                 return redirect('airtalesapp:profile')
+#             # else:
+#                 # return HttpResponse("Invalid Login.")
+#         else:
+#             # print(f"Invalid login details: {username}, {password}")
+#             return HttpResponse("Invalid login details supplied.")
+#     return render(request, 'login.html')
+#     # return render(request, 'login.html')
 
 def terms(request):
     return render(request, 'terms.html')
@@ -87,13 +88,19 @@ def signup(request):
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
-            user.set_password(user.password)
+            raw_password = user_form.cleaned_data.get('password1')
+            user.set_password(raw_password)
             user.save()
             profile = profile_form.save(commit=False)
             profile.userID = user 
             profile.save()
-            registered = True
-            return redirect('airtalesapp:login')
+            login_user = authenticate(email=user.email, password=raw_password)
+
+            if login_user:
+                login(request, login_user)
+                return redirect('airtalesapp:profile')
+            else:
+                return redirect('airtalesapp:login')
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -105,6 +112,19 @@ def signup(request):
                 'profile_form': profile_form,
                 'registered': registered
                 })
+    #         registered = True
+    #         return redirect('airtalesapp:login')
+    #     else:
+    #         print(user_form.errors, profile_form.errors)
+    # else:
+    #     user_form = UserForm()
+    #     profile_form = ProfileForm()
+
+    # return render(request,'signup.html', {
+    #             'user_form': user_form,
+    #             'profile_form': profile_form,
+    #             'registered': registered
+    #             })
 
 def save_entry(request): 
     if request.method == "POST":
@@ -179,24 +199,49 @@ def userjournal(request):
     return render(request, 'userjournal.html')
 
 # login page 
-def login_view(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+# def login_view(request):
+#     if request.method == "POST":
+#         username = request.POST['username']
+#         password = request.POST['password']
         
-        # Authenticate the user
-        user = authenticate(request, username=username, password=password)
+#         # Authenticate the user
+#         user = authenticate(request, username=username, password=password)
         
-        if user is not None:
-            print("User authenticated:", user)
-            login(request, user)
-            messages.success(request, "You have successfully logged in!")
-            return redirect('airtalesapp:profile')  # Redirect to users homepage
-        else:
-            print("User NOT authenticated:", user)
-            messages.error(request, "Invalid email or password. Please try again.")
+#         if user is not None:
+#             print("User authenticated:", user)
+#             login(request, user)
+#             messages.success(request, "You have successfully logged in!")
+#             return redirect('airtalesapp:profile')  # Redirect to users homepage
+#         else:
+#             print("User NOT authenticated:", user)
+#             messages.error(request, "Invalid email or password. Please try again.")
 
+#     return render(request, 'login.html')
+
+
+def user_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        User = get_user_model()        
+        # user = authenticate(username=email, password=password)
+        user = authenticate(request, email=email, password=password)
+        # try:
+        #     user = User.objects.get(email=email)
+        # except User.DoesNotExist:
+        #     return HttpResponse("Invalid login details.")
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('airtalesapp:profile')
+            else:
+                return HttpResponse("Invalid Login.")
+        else:
+            # print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
     return render(request, 'login.html')
+    # return render(request, 'login.html')
+
 
 @login_required
 def toggle_like(request, entry_id):

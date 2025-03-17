@@ -15,6 +15,22 @@ class UserManager(BaseUserManager):
         if not password:
             raise ValueError("Users must provide a password")
 
+
+        # try:
+        #     user = self.get(email=self.normalize_email(email))
+        #     created = False
+        #     print("User already exists")
+        # except User.DoesNotExist:
+        #     # If the user doesn't exist, create one
+        #     user = self.model(email=self.normalize_email(email), username=username)
+        #     print("Raw password:", user.password)
+        #     user.set_password(password)  # Hash the password
+        #     print("Password hashed:", user.password)
+        #     # user.save(using=self._db)
+        #     user.save()
+        #     created = True
+
+
         user, created = self.get_or_create(
             email=self.normalize_email(email),
             defaults={"username": username}
@@ -22,10 +38,12 @@ class UserManager(BaseUserManager):
         if created:
             user.set_password(password)  # Hashes the password
             user.save(using=self._db)
+            print("password set and user saved")
+            Profile.objects.get_or_create(userID=user)
 
         # Create profile only if a new user was created
-        if created:
-            Profile.objects.get_or_create(userID=user)
+        # if created:
+        #     Profile.objects.get_or_create(userID=user)
 
         return user
 
@@ -50,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-
+    #REQUIRED_FIELDS = []
     def __str__(self):
         return self.username
 
