@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: django-app
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn Airtales.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        value: "sqlite:///db.sqlite3"
