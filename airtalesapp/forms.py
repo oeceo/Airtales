@@ -21,7 +21,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User, Profile
-import uuid
 
 class UserForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
