@@ -88,6 +88,29 @@ h5 {
     justify-content: center;
 }
 
+.centred-text {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+    max-width: 80%;
+    margin: auto;
+    margin-top: 75px;
+}
+
+.large-error-text {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-family: 'Lexend Exa', sans-serif;
+    color:#035E7B;
+}
+
 .explore-alignment{
     width: 90%;
     margin: auto;
@@ -238,7 +261,7 @@ h5 {
 }
 
 .text-link:hover {
-    color: #EFA8B8;
+    color:#e08592;
 }
 
 #copyright {
@@ -328,6 +351,7 @@ h5 {
 
 .custom-link {
     color: #035E7B;
+    text-decoration: none;
 }
 
 .custom-link:hover {
@@ -598,8 +622,8 @@ a.btn-link:hover {
 }
 
 #no-entry {
-    color: black;
-    font-size: 5em;
+    color:#035E7B;
+    font-size: 3em;
 }
 
 
