@@ -17,48 +17,32 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js" 
     integrity="sha256-WCzAhd2P6gRJF9Hv3oOOd+hFJi/QJbv+Azn4CGB8gfY=" 
     crossorigin=""></script>
-
-    <script>
-        const authenticated = "{{ user.is_authenticated }}" === "True";
-        const entries = [
-        {% for entry in entries %}
-        {
-            "id": {{entry.id}},
-            "date": "{{ entry.date }}",
-            "entry": "{{ entry.entry|escapejs }}",
-            "latitude": {{ entry.latitude }},
-            "longitude": {{ entry.longitude }},
-            "likes": {{ entry.liked_by.count }},
-            "isLiked": {% if user in entry.liked_by.all %} true {% else %} false {% endif %}
-        },
-        {% endfor %}
-    ];
-        console.log("Entries from server:", entries);
-    </script>
     <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-    <div>
-        <h1 id="explore-head">explore the world in words!</h1> </div>
+    <div class="centred-container explore-alignment">
+        <h1 class="white-text">explore the world in words!</h1> 
+    </div>
     <div id="map"></div>
-    <div class="inline-container">
-        <button id="login-status-btn" class="btn btn btn-primary px-4">
+    <div class="centred-container">
+        <a id="login-status-btn" class="btn btn btn-primary px-4" href="{% if user.is_authenticated %}/profile/{% else %}/login/{% endif %}">
             {% if user.is_authenticated %}
                 share your tale today
             {% else %}
                 login or sign up to share your tale
             {% endif %}
-        </button>
-        <div id="daily-prompt">
-            <h2>Today's word is:</h2>
-            <p class="prompt-text-pink">{{ prompt_text }}</p>
-        </div>
+        </a>
+    </div>
+
+    <div class="lower-page-container explore-alignment">
+        <h2 class="white-text">Today's word is: <span class="pink-text">{{ prompt_text }}</span></h2>
     </div>
 
     <!-- CSRF token for JavaScript -->
     <form id="csrf-form">
     {% csrf_token %}
     </form>
+    <span class="d-none" id="current-user">{{ user_id }}</span>
 
 {% endblock %}
