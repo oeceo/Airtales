@@ -70,7 +70,7 @@ function loadEntriesFromServer() {
 function addMarkerWithPopup(lat, long, text) {
     // create a custom icon for the map pins
     const customIcon = L.icon({
-        iconUrl: "/static/images/mapPin.png",  // make this not hard coded but {static wont work for some reason}
+        iconUrl: "/static/images/mapPin.png",  
         iconSize: [32, 32], 
         iconAnchor: [16, 32], 
         popupAnchor: [0, -32], 
