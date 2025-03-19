@@ -8,133 +8,102 @@
 
 {% block content %}
 
-  <div class="container centred-container">
+  <div class="container centred-container partial-width">
 
-      <div class="container profile welcome-textbox">                
-        <h3 class="text-white"> welcome back {{ request.user.username }} </h3>
-      </div>
-      <div class="prompt">                  
-        <h2 class="pink-text"> start today's prompt:</h2>
-        <h3 class="prompt-text">{{ prompt_text }}</h3> 
-      </div>
-
-      {% if not prior_entry%}
-        <div class="blue-rounded-container profile">
-          <form method="POST" action="{% url 'airtalesapp:save_entry' %}" id="journalForm">
-            {% csrf_token %}
-            <div id="journal-entry">
-              <label for="journal-entry-text" class="form-label" id="tell-us">tell us everything...</label>
-              <textarea class="form-control" id="journal-entry-text" name="entry_text" rows="3" ></textarea>
-              <input hidden type="text" name="latitude" id="latitude" value=""/>
-              <input hidden type="text" name="longitude" id="longitude" value=""/>
-              <button type="submit" class="btn btn-primary" id="journal-entry-button">Submit</button>
-            </div>
-          </form>
-        </div> 
-      {%else%}
-        <div class="blue-rounded-container profile">
-          <div class="container profile white-text">  
-            <h5> journal entry submitted for today </h5>                         
-          </div>
-        </div>
-      {%endif%}
+    <div class="container welcome-textbox full-width">                
+      <h3 class="text-white py-2" id="welcome"> welcome back {{ request.user.username }} </h3>
+    </div>
+    <div class="prompt">                  
+      <h2 class="pink-text py-3"> start today's prompt:</h2>
+      <h3 class="prompt-text centred-text py-2">{{ prompt_text }}</h3> 
     </div>
 
-      <br>
-      <br>
-      <div class="profile-carousel">
-        <div id="index-car-indicators" class="carousel slide">
+    {% if not prior_entry%}
+      <div class="blue-rounded-container full-width">
+        <form method="POST" action="{% url 'airtalesapp:save_entry' %}" id="journalForm">
+          {% csrf_token %}
+          <div id="journal-entry">
+            <label for="journal-entry-text" class="form-label" id="tell-us">tell us everything...</label>
+            <textarea class="form-control my-2" id="journal-entry-text" name="entry_text" rows="3" ></textarea>
+            <input hidden type="text" name="latitude" id="latitude" value=""/>
+            <input hidden type="text" name="longitude" id="longitude" value=""/>
+            <button type="submit" class="btn btn-primary mt-3" id="journal-entry-button">Submit</button>
+          </div>
+        </form>
+      </div> 
+    {%else%}
+      <div class="welcome-textbox full-width" id="journal-entry-container">
+        <div class="container white-text">  
+          <h5 class="text-center p-2"> journal entry submitted for today </h5>                         
+        </div>
+      </div>
+    {%endif%}
+  </div>
 
-          <div class="carousel-inner">
-          {% if prior_entry%}
-            <div class="carousel-item active">
-              <div class="profile-carousel-content" id="carousel-content-index">
-                <p class="carousel-prompt">{{ today }}  </p>
-                <p class="carousel-prompt"> {{ prompt_text }}  </p>
-                <p class="carousel-entry"> {{ todays_entry }}
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="profile-carousel-content" id="carousel-content-index">
-                <p class="carousel-prompt">{{ yesterday }}  </p>
-                <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
-                <p class="carousel-entry"> {{ previous_entry_1 }}
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="profile-carousel-content" id="carousel-content-index">
-                <p class="carousel-prompt">{{ day_before }}  </p>
-                <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
-                <p class="carousel-entry"> {{ previous_entry_2 }}
-              </div>
-            </div>
+  <div class="carousel-spacing my-4">
+    <div id="index-car-indicators" class="carousel slide">
 
+            <div class="carousel-inner">
+            {% if prior_entry%}
+              <div class="carousel-item active">
+                <div class="carousel-content">
+                  <p class="carousel-prompt">{{ today }} </p>
+                  <p class="carousel-prompt"> {{ prompt_text }} </p>
+                  <p class="carousel-entry"> {{ todays_entry }} </p>
+                </div>
+              </div>
               <div class="carousel-item">
-              <div class="profile-carousel-content" id="carousel-content-index">
-                <p class="carousel-prompt">{{ two_days_ago }}  </p>
+                <div class="carousel-content">
+                  <p class="carousel-prompt">{{ yesterday }} </p>
+                  <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_1 }} </p>
+                </div>
+              </div>
+              <div class="carousel-item">
+              <div class="carousel-content">
+                <p class="carousel-prompt">{{ two_days_ago }} </p>
                 <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
-                <p class="carousel-entry"> {{ previous_entry_3 }}
+                <p class="carousel-entry"> {{ previous_entry_3 }} </p>
               </div>
             </div>
-        <!-- </div> -->
         {%else%}    
             <div class="carousel-item active">
-              <div class="profile-carousel-content" id="carousel-content-index">
-                <p class="carousel-prompt">{{ yesterday }}  </p>
+              <div class="carousel-content">
+                <p class="carousel-prompt">{{ yesterday }} </p>
                 <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
-                <p class="carousel-entry"> {{ previous_entry_1 }}
+                <p class="carousel-entry"> {{ previous_entry_1 }} </p>
               </div>
             </div>
             <div class="carousel-item">
-              <div class="profile-carousel-content" id="carousel-content-index">
+              <div class="carousel-content">
                 <p class="carousel-prompt">{{ day_before }}  </p>
                 <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
-                <p class="carousel-entry"> {{ previous_entry_2 }}
+                <p class="carousel-entry"> {{ previous_entry_2 }} </p>
               </div>
             </div>
 
               <div class="carousel-item">
-                <div class="profile-carousel-content" id="carousel-content-index">
+                <div class="carousel-content">
                   <p class="carousel-prompt">{{ two_days_ago }}  </p>
                   <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
-                  <p class="carousel-entry"> {{ previous_entry_3 }}
+                  <p class="carousel-entry"> {{ previous_entry_3 }} </p>
                 </div>
               </div>
           {%endif%}
 
       </div>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#index-car-indicators" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+    <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#index-car-indicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 
-          </div>
-        </div>
-
-
-        </div>
-      </div>
-  
-    <div class="lower-page-container explore-alignment journal-container">
-        <a href="{% url 'airtalesapp:userjournal' %}" class="btn btn-primary btn-lg">View All Entries</a>
-    </div>
+  <div class="lower-page-container centred-text">
+    <a href="{% url 'airtalesapp:userjournal' %}" class="btn btn-primary">View All Entries</a>
+  </div>
 {% endblock %}
-
-
-
-
-            <!-- </div> -->
-                  <!-- <div class="carousel-item">
-              <div class="profile-carousel-content">
-                <p class = "carousel-prompt"> {{ day_before}}:  {{ prompt_text_2 }}</p>   -->
-                <!-- <p class="carousel-prompt"> {{ prompt_text_2 }} </p> -->
-                <!-- <p class="carousel-entry"> {{ previous_entry_2 }} </p> -->
-                <!-- <button class="btn btn-outline-dark entry-btn" data-entry="entry-day-before">View Entry</button> -->
-                <!-- <p> {{ top_entry_1 }} </p> -->
-              <!-- </div>
-            </div>

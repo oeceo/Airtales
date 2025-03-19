@@ -5,7 +5,7 @@
 
 <div class="container centred-container">
 
-    <h1 class="login">Create an account</h1>
+    <h1 class="login py-3">Create an account</h1>
 
     <div class="card">
         <form method="POST" enctype="multipart/form-data">
@@ -47,12 +47,12 @@
                 {% endif %}
             </div>
 
-            <button type="submit" class="btn btn-primary dark full-width">Sign Up</button>
+            <button type="submit" class="btn btn-primary-dark full-width">Sign Up</button>
         </form>
 
         <!-- Login link -->
         <div class="centred-container mt-4">
-            <p>Have an account? <a class="custom-link" href="{% url 'airtalesapp:login' %}">Log in</a></p>
+            <p class="account-text">Have an account? <a class="lnk-secondary" href="{% url 'airtalesapp:login' %}">Log in</a></p>
         </div>
     </div>
 
