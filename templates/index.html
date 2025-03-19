@@ -6,20 +6,20 @@
 
     <!-- Show today's prompt -->
 
-    <div class="container prompt">
-      <h2 class="main-prompt"> {{ prompt_text }} </h2> 
+    <div class="container prompt-container">
+      <h2 class="prompt-text main-prompt mt-4"> {{ prompt_text }} </h2> 
       {% if prompt_text_0 == "no prompt yet..." %}
-      <h6 class="pink-text"> check back soon!</h6>
+      <h3 class="pink-text py-2"> check back soon!</h3>
       {% else %}
-      <h3 class="pink-text"> is the word of today</h3>
+      <h3 class="pink-text py-2"> is the word of today</h3>
       {% endif %}
       <p class="pink-text" id="index-introduction">
         Practice journalling with a short post inspired by the daily prompt and explore the anonymous musings of global community.
       </p>
-      <a class="btn btn-primary my-2" id="index-signup" href="{% url 'airtalesapp:signup' %}">Sign up to get started</a>
+      <a class="btn btn-primary" id="index-signup" href="{% url 'airtalesapp:signup' %}">Sign up to get started</a>
     </div>
 
-  <div class="container left-container">
-    <h3 class="blue-text" id="index-tagline">one word, one thought, everyday... </h3>
+  <div class="container tagline-container">
+    <h3 class="blue-text my-2 mx-3" id="index-tagline">one word, one thought, everyday... </h3>
   </div>
 {% endblock %}

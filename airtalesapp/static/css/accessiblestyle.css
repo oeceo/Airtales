@@ -1,0 +1,156 @@
+/* Theme colours */
+
+.accessible {
+    --medium-blue: #035E7B;
+    --dark-blue: #034F68;
+    --darkest-blue: #034054;
+    --light-pink: #FADCE3;
+    --pink: #F2B5C4;
+    --dark-pink: #671328;
+    --white: #ffffff;
+    --plum: #3E2A35;
+}
+
+body.accessible .pink-text {
+    color: var(--light-pink);
+}
+
+body.accessible {
+    background-color: var(--dark-blue);
+    color: var(--white);
+    font-family: Arial, sans-serif;
+}
+
+body.accessible a {
+    color: var(--light-pink);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+body.accessible #welcome {
+    color: var(--plum) !important;
+}
+  
+.accessible a:hover {
+    color: var(--pink);
+    text-decoration: underline;
+  }
+  
+.accessible button {
+    background-color: var(--light-pink);
+    color: var(--plum);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+body.accessible .btn.btn-primary {
+    background-color: var(--light-pink);
+    color: var(--plum);
+    text-decoration: underline;
+}
+  
+body.accessible input, body.accessible textarea {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    color: #4c4c4c !important;
+}
+  
+body.accessible input:focus, body.accessible textarea:focus {
+    outline: 3px solid --dark-pink !important;
+}
+
+body.accessible nav {
+    background-color: var(--medium-blue) !important;
+    font-size: 18px;
+}
+
+body.accessible .btn-primary:hover, 
+body.accessible .btn.btn-primary:active,
+body.accessible .btn-secondary:hover,
+body.accessible .btn-secondary:active {
+    background-color: var(--pink);
+    border-color: var(--dark-pink);
+    color: var(--dark-pink);
+    text-decoration: underline;
+}
+
+ 
+body.accessible .card {
+    background-color: var(--darkest-blue);
+}
+
+.accessible, .form-label {
+    color: white;
+    font-size: 18px;
+}
+
+body.accessible .btn-primary-dark {
+    color: var(--dark-blue);
+    background-color: var(--light-pink);
+}
+
+body.accessible .btn-secondary,
+body.accessible .btn-primary-dark:hover {
+    color: var(--dark-blue);
+    background-color: var(--light-pink);
+    border-color: var(--light-pink);
+    text-decoration: underline;
+}
+
+footer.accessible .lnk-primary, lnk-secondary {
+    color: var(--light-pink);
+    text-decoration: underline;
+}
+
+.accessible #access-button {
+    color: var(--light-pink);
+    text-decoration: underline;
+}
+
+.accessible #access-button:hover, #access-button:active {
+    color: var(--pink);
+    text-decoration: underline;
+}
+
+footer.accessible .lnk-primary:hover, .accessible.lnk-primary:hover {
+    color: var(--dark-pink);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+body.accessible .carousel-content{
+    background-color: var(--darkest-blue);
+}
+
+body.accessible .blue-rounded-container, #journal-entry-container {
+    background-color: var(--darkest-blue);
+}
+
+@media (max-width: 991px) {
+
+    body.accessible .nav-bar {
+        background-color: var(--medium-blue) !important;
+        color: var(--light-pink) !important;
+    }
+    body.accessible .nav-bar:hover {
+        color: var(--pink) !important;
+        background-color: var(--medium-blue) !important;
+    }
+}
+
+.leaflet-popup {
+    background-color: var(--dark-blue) !important;
+    border: 5px solid var(--pink);
+    font-size: 18px;
+}
+
+.like-button {
+    background-color: var(--pink); 
+    color: --plum; 
+    font-size: 18px;
+}
+
+.like-button:hover {
+    background-color: #cb8f97; 
+}
+
