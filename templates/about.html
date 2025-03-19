@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
+{% block body_class %}default-bg{% endblock %}
 
 {% block content %}
 
-<div class="container">
-    <div class="about-terms">
-        <h1>About airtales</h1>
-    </div>
-    <div class="blue-rounded-container about-terms about-terms-text">
+<div class="container large-buffer">
+    <h1 class="about-terms py-3">About airtales</h1>
+    <div class="blue-rounded-container about-terms p-4">
         <p>Airtales is a daily journal platform designed to spark creativity, encourage reflection, and connect people through shared storytelling. Every day, users around the world receive a single word prompt, inviting them to share experiences, express themselves, and capture a moment in time through writing. No two interpretations are ever the same, making each day a unique and personal journey.</p>
+        <h3 class="py-2">What makes Airtales different?</h3>
+        <p> To keep the focus on the writing and to remove some of the barriers to sharing openly and creatively online, the identity of each author is hidden from other users. 
+            Posts are only shared with a location to appear on the explore map, which allows our community to see how the prompt has been interpreted in different places.
+            Users can show their appreciation by liking posts and can report posts that don't align with our community's terms, but beyond that we let the writing do the talking.
+        </p>
     </div>
 </div>
 

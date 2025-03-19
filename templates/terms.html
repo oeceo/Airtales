@@ -1,30 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
+{% block body_class %}default-bg{% endblock %}
 
 {% block content %}
 
-<div class="container" id="terms-page">
-
-    <div class="about-terms" id="terms">
-        <h1>Terms & Conditions</h1>
-    </div>
-    <div class="blue-rounded-container about-terms about-terms-text">
-        <h3>1. Introduction</h3>
+<div class="container mb-3">
+    <h1 class="about-terms py-3">Terms & Conditions</h1>
+    <div class="blue-rounded-container about-terms p-4">
+        <h3 class="py-2">1. Introduction</h3>
         <p>
             Welcome to Airtales ("the Website"), developed by Aiden, Chelsea, and Grace as part of the MSc Software Development program at the University of Glasgow. 
             By accessing or using our Website, you agree to comply with and be bound by these Terms & Conditions.
         </p>
-        <h3>2. Purpose</h3>
+        <h3 class="py-2">2. Purpose</h3>
         <p>
             Airtales is an experimental platform created for our Internet Technology class. It allows users to practice journalling by responding to the daily prompt with a short entry. 
             All posts are shared publicly along with a location pin but no username, encouraging users to focus on the writing and exploring how the prompt has been interpreted around the world.
         </p>
-        <h3>3. Eligibility</h3>
+        <h3 class="py-2">3. Eligibility</h3>
         <p>
             Users must be at least 16 years old to register and use the Website.
         </p>
-        <h3>4. User Conduct</h3>
+        <h3 class="py-2">4. User Conduct</h3>
         <p>
             Users agree not to:
             1. Post content that is unlawful, harmful, threatening, abusive, defamatory, or otherwise objectionable.
@@ -33,53 +30,53 @@
 
             Users can be report posts, which may be removed from public view.
         </p>
-        <h3>5. Liability Disclaimer</h3>
+        <h3 class="py-2">5. Liability Disclaimer</h3>
         <p>
             Airtales is an experimental platform for educational purposes and is not intended for permanent or professional use. 
             We do not guarantee the accuracy, reliability, or availability of the Website and disclaim liability for any loss or damage arising from its use.
         </p>
-        <h3>6. Termination</h3>
+        <h3 class="py-2">6. Termination</h3>
         <p>
             We reserve the right to suspend or terminate user accounts that violate these Terms & Conditions.
         </p>
-        <h3>7. Governing Law</h3>
+        <h3 class="py-2">7. Governing Law</h3>
         <p>
             These Terms & Conditions are governed by the laws of Scotland. Any disputes will be subject to the exclusive jurisdiction of the Scottish courts.
         </p>
-        <h3>8. Contact Information</h3>
+        <h3 class="py-2">8. Contact Information</h3>
         <p>
-            For inquiries, please contact us at: <a href="mailto:contact@airtales.app"class="text-link">contact@airtales.app</a>
+            For inquiries, please contact us at: <a href="mailto:contact@airtales.app"class="lnk-primary-reverse">contact@airtales.app</a>
         </p>
-
     </div>
+</div>
 
-    <div class="about-terms" id="privacy">
-        <h1>Privacy Notice</h1>
-    </div>
-    <div class="blue-rounded-container about-terms about-terms-text">
-        <h3>1. Introduction</h3>
+<div class="container large-buffer">
+    <h1 class="about-terms py-3">Privacy Notice</h1>
+    <div class="blue-rounded-container about-terms p-4">
+        <h3 class="py-2">1. Introduction</h3>
         <p>
             This Privacy Notice outlines how Airtales ("we," "our," "us") collects, uses, and protects your personal data in compliance with the UK General Data Protection Regulation (GDPR).
         </p>
-        <h3>2. Data Collection</h3>
+        <h3 class="py-2">2. Data Collection</h3>
         <p>
             We collect the following personal data:
             Name, email address, cookies, location data, journal entries.
         </p>
-        <h3>3. Data Usage</h3>
+        <h3 class="py-2">3. Data Usage</h3>
         <p>
             Your personal data is used to:
             Provide and maintain the Website; send daily prompts and relevant communications; analyse usage to improve our services.
         </p>
-        <h3>4. Data Sharing</h3>
+        <h3 class="py-2">4. Data Sharing</h3>
         <p>
             We use third-party services, including PythonAnywhere for hosting. 
             These services may process your data but are contractually obligated to protect it in compliance with GDPR. 
-            For more information, please refer to PythonAnywhere's <a href="https://eu.pythonanywhere.com" class="text-link">Terms and Conditions</a> and <a href="https://pythonanywhere.com" class="text-link">Privacy Policy</a>.
+            For more information, please refer to PythonAnywhere's <a href="https://eu.pythonanywhere.com" class="lnk-primary-reverse">Terms and Conditions</a> 
+            and <a href="https://pythonanywhere.com" class="lnk-primary-reverse">Privacy Policy</a>.
         </p>
-        <h3>5. Data Retention</h3>
+        <h3 class="py-2">5. Data Retention</h3>
         <p>Your data will be retained for the duration of the project and deleted upon its conclusion or upon your request.</p>
-        <h3>6. Your Rights</h3>
+        <h3 class="py-2">6. Your Rights</h3>
         <p>
             Under GDPR, you have the right to:
             - Access your data.
@@ -87,21 +84,20 @@
             - Request deletion of your data.
             - Object to or restrict processing.
 
-            To exercise these rights, contact us at: <a href="mailto:contact@airtales.app"class="text-link">contact@airtales.app</a>
+            To exercise these rights, contact us at: <a href="mailto:contact@airtales.app"class="lnk-primary-reverse">contact@airtales.app</a>
         </p>
-        <h3>7. Data Security</h3>
+        <h3 class="py-2">7. Data Security</h3>
         <p>
             We implement appropriate measures to protect your data against unauthorised access, alteration, or destruction.
         </p>
-        <h3>8. Changes to this Notice</h3>
+        <h3 class="py-2">8. Changes to this Notice</h3>
         <p>
             We may update this Privacy Notice as necessary. Changes will be posted on this page with an updated revision date.
         </p>
-        <h3>9. Contact Information</h3>
+        <h3 class="py-2">9. Contact Information</h3>
         <p>
-            For privacy-related inquiries, please contact us at: <a href="mailto:contact@airtales.app"class="text-link">contact@airtales.app</a>
+            For privacy-related inquiries, please contact us at: <a href="mailto:contact@airtales.app"class="lnk-primary-reverse">contact@airtales.app</a>
         </p>
-
     </div>
 </div>
 

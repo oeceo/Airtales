@@ -6,7 +6,7 @@
 
 <div class="container centred-container">
 
-    <h1 class="login">Login to share</h1>
+    <h1 class="login py-3">Login to share</h1>
 
     {% if messages %}
         <div class="alert alert-danger" role="alert">
@@ -32,11 +32,11 @@
             </div>
 
             <div class="btn-container">
-                <button type="submit" class="btn btn-primary dark full-width">Login</button>
+                <button type="submit" class="btn btn-primary-dark full-width">Login</button>
             </div>
         </form>
         <div class="centred-container mt-3">
-            <p>Don't have an account? <a class="custom-link" href="{% url 'airtalesapp:signup' %}">Sign Up</a></p>
+            <p class="account-text">Don't have an account? <a class="lnk-secondary" href="{% url 'airtalesapp:signup' %}">Sign Up</a></p>
         </div>
     </div>
 
