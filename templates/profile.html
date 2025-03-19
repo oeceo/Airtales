@@ -8,7 +8,7 @@
 
 {% block content %}
 
-  <div class="container centred-container">
+  <div class="container centred-container partial-width">
 
     <div class="container welcome-textbox full-width">                
       <h3 class="text-white py-2" id="welcome"> welcome back {{ request.user.username }} </h3>
@@ -60,7 +60,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-              <div class="profile-carousel-content">
+              <div class="carousel-content">
                 <p class="carousel-prompt">{{ two_days_ago }} </p>
                 <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
                 <p class="carousel-entry"> {{ previous_entry_3 }} </p>
@@ -68,22 +68,22 @@
             </div>
         {%else%}    
             <div class="carousel-item active">
-              <div class="profile-carousel-content">
+              <div class="carousel-content">
                 <p class="carousel-prompt">{{ yesterday }} </p>
                 <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
                 <p class="carousel-entry"> {{ previous_entry_1 }} </p>
               </div>
             </div>
             <div class="carousel-item">
-              <div class="profile-carousel-content">
+              <div class="carousel-content">
                 <p class="carousel-prompt">{{ day_before }}  </p>
                 <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
-                <p class="carousel-entry"> {{ previous_entry_2 }}
+                <p class="carousel-entry"> {{ previous_entry_2 }} </p>
               </div>
             </div>
 
               <div class="carousel-item">
-                <div class="profile-carousel-content">
+                <div class="carousel-content">
                   <p class="carousel-prompt">{{ two_days_ago }}  </p>
                   <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
                   <p class="carousel-entry"> {{ previous_entry_3 }} </p>
