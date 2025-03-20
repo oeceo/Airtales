@@ -17,48 +17,6 @@ body.accessible {
     font-family: Arial, sans-serif;
 }
 
-body.accessible a {
-    color: var(--light-pink);
-    text-decoration: underline;
-    font-size: 18px;
-}
-
-body.accessible p { 
-    color: var(--white);
-}
-
-body.accessible #welcome {
-    color: var(--plum) !important;
-}
-  
-.accessible a:hover {
-    color: var(--pink);
-    text-decoration: underline;
-} 
-
-.accessible button {
-    background-color: var(--light-pink);
-    color: var(--plum);
-    text-decoration: underline;
-    font-size: 18px;
-}
-
-body.accessible .btn.btn-primary {
-    background-color: var(--light-pink);
-    color: var(--plum);
-    text-decoration: underline;
-}
-
-body.accessible input, body.accessible textarea {
-    background: white !important;
-    border: 1px solid #ccc !important;
-    color: #4c4c4c !important;
-}
-  
-body.accessible input:focus, body.accessible textarea:focus {
-    outline: 3px solid --dark-pink !important;
-} 
-
 /* Nav */
 
 body.accessible nav {
@@ -76,11 +34,38 @@ body.accessible .account-text {
     color: var(--white);
 }
 
+body.accessible .blue-text {
+    color: var(--white);
+}
+
+body.accessible #index-tagline {
+    color: var(--darkest-blue);
+}
+
+body.accessible #welcome {
+    color: var(--plum) !important;
+}
+
+body.accessible p { 
+    color: var(--white);
+}
+
 body.accessible #welcome {
     color: var(--plum) !important;
 }
 
 /* Links */
+
+.accessible a:hover {
+    color: var(--pink);
+    text-decoration: underline;
+} 
+
+body.accessible a {
+    color: var(--light-pink);
+    text-decoration: underline;
+    font-size: 18px;
+}
 
 .accessible .lnk-primary:hover, 
 .accessible .lnk-primary:hover {
@@ -106,6 +91,19 @@ footer.accessible .lnk-primary {
 }
 
 /* Buttons */
+
+.accessible button {
+    background-color: var(--light-pink);
+    color: var(--plum);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+body.accessible .btn.btn-primary {
+    background-color: var(--light-pink);
+    color: var(--plum);
+    text-decoration: underline;
+}
 
 .accessible button {
     background-color: var(--light-pink);
@@ -194,6 +192,16 @@ body.accessible .form-label {
     color: white;
     font-size: 18px;
 }
+
+body.accessible input, body.accessible textarea {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    color: #4c4c4c !important;
+}
+  
+body.accessible input:focus, body.accessible textarea:focus {
+    outline: 3px solid --dark-pink !important;
+} 
 
 /* Login */
 
