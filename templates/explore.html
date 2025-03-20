@@ -21,11 +21,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="centred-container centred-text">
+    <div class="centred-text full-width">
         <h1 class="white-text py-3">explore the world in words!</h1> 
-    </div>
-    <div id="map"></div>
-    <div class="centred-container">
+        <div id="map"></div>
         <a id="login-status-btn" class="btn btn-primary px-4 mt-4 mb-2" href="{% if user.is_authenticated %}/profile/{% else %}/login/{% endif %}">
             {% if user.is_authenticated %}
                 share your tale today
@@ -33,9 +31,6 @@
                 login or sign up to share your tale
             {% endif %}
         </a>
-    </div>
-
-    <div class="lower-page-container centred-text">
         <h2 class="white-text py-3">Today's word is: <span class="pink-text">{{ prompt_text }}</span></h2>
     </div>
 

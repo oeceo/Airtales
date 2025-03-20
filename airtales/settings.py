@@ -30,7 +30,7 @@ LOGOUT_REDIRECT_URL = '/'
 SECRET_KEY = 'django-insecure-3b3d@0#x*95@y%^4ur)9c+j#-ax8s%u_=j4zcl*390zovo8u)%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['www.airtales.app']
