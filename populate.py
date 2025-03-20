@@ -87,7 +87,7 @@ def populate_prompts():
     
     # Add each prompt for the next 89 days
     for i, prompt_text in enumerate(prompts):
-        prompt_date = now() + timedelta(days=i)
+        prompt_date = now() + timedelta(days=i)-timedelta(days=4)
         prompt_text = prompt_text.strip()  # Clean up any extra whitespace or newline
 
         # Creates a new Prompt entry in the database

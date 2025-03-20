@@ -3,12 +3,12 @@
 {% block body_class %}default-bg{% endblock %} <!-- Can change to pink-bg, dark-blue-bg, turqouise-bg -->
 
 {% block extra_js %}
-<script src="{% static 'js/location.js' %}"></script>
+  <script src="{% static 'js/location.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-  <div class="container centred-container">
+  <div class="container centred-container partial-width">
 
     <div class="container welcome-textbox full-width">                
       <h3 class="text-white py-2" id="welcome"> welcome back {{ request.user.username }} </h3>
@@ -43,58 +43,55 @@
   <div class="carousel-spacing my-4">
     <div id="index-car-indicators" class="carousel slide">
 
-      <div class="carousel-inner">
-      {% if prior_entry%}
-        <div class="carousel-item active">
-          <div class="carousel-content">
-            <p class="carousel-prompt">{{ today }}  </p>
-            <p class="carousel-prompt"> {{ prompt_text }}  </p>
-            <p class="carousel-entry"> {{ todays_entry }}
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="carousel-content">
-            <p class="carousel-prompt">{{ yesterday }}  </p>
-            <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
-            <p class="carousel-entry"> {{ previous_entry_1 }}
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
-            <p class="carousel-entry"> {{ previous_entry_2 }}
-          </div>
-        </div>
+            <div class="carousel-inner">
+            {% if prior_entry%}
+              <div class="carousel-item active">
+                <div class="carousel-content">
+                  <p class="carousel-prompt">{{ today }} </p>
+                  <p class="carousel-prompt"> {{ prompt_text }} </p>
+                  <p class="carousel-entry"> {{ todays_entry }} </p>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="carousel-content">
+                  <p class="carousel-prompt">{{ yesterday }} </p>
+                  <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_1 }} </p>
+                </div>
+              </div>
+              <div class="carousel-item">
+              <div class="carousel-content">
+                <p class="carousel-prompt">{{ two_days_ago }} </p>
+                <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
+                <p class="carousel-entry"> {{ previous_entry_3 }} </p>
+              </div>
+            </div>
+        {%else%}    
+            <div class="carousel-item active">
+              <div class="carousel-content">
+                <p class="carousel-prompt">{{ yesterday }} </p>
+                <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
+                <p class="carousel-entry"> {{ previous_entry_1 }} </p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="carousel-content">
+                <p class="carousel-prompt">{{ day_before }}  </p>
+                <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
+                <p class="carousel-entry"> {{ previous_entry_2 }} </p>
+              </div>
+            </div>
 
-        <div class="carousel-item">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
-            <p class="carousel-entry"> {{ previous_entry_3 }}
-          </div>
-        </div>
-      {%else%}    
-        <div class="carousel-item active">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_1 }} </p>
-            <p class="carousel-entry"> {{ previous_entry_1 }}
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_2 }} </p>
-            <p class="carousel-entry"> {{ previous_entry_2 }}
-          </div>
-        </div>
+              <div class="carousel-item">
+                <div class="carousel-content">
+                  <p class="carousel-prompt">{{ two_days_ago }}  </p>
+                  <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
+                  <p class="carousel-entry"> {{ previous_entry_3 }} </p>
+                </div>
+              </div>
+          {%endif%}
 
-        <div class="carousel-item">
-          <div class="carousel-content">
-            <p class="carousel-prompt"> {{ prompt_text_3 }} </p>
-            <p class="carousel-entry"> {{ previous_entry_3 }}
-          </div>
-        </div>
-      {%endif%}
-
-    </div>
+      </div>
 
     <button class="carousel-control-prev" type="button" data-bs-target="#index-car-indicators" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>

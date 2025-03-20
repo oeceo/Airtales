@@ -11,10 +11,6 @@
     --plum: #3E2A35;
 }
 
-body.accessible .pink-text {
-    color: var(--light-pink);
-}
-
 body.accessible {
     background-color: var(--dark-blue);
     color: var(--white);
@@ -27,7 +23,7 @@ body.accessible a {
     font-size: 18px;
 }
 
-body.accessible p {
+body.accessible p { 
     color: var(--white);
 }
 
@@ -38,8 +34,8 @@ body.accessible #welcome {
 .accessible a:hover {
     color: var(--pink);
     text-decoration: underline;
-  }
-  
+} 
+
 .accessible button {
     background-color: var(--light-pink);
     color: var(--plum);
@@ -52,7 +48,7 @@ body.accessible .btn.btn-primary {
     color: var(--plum);
     text-decoration: underline;
 }
-  
+
 body.accessible input, body.accessible textarea {
     background: white !important;
     border: 1px solid #ccc !important;
@@ -61,22 +57,78 @@ body.accessible input, body.accessible textarea {
   
 body.accessible input:focus, body.accessible textarea:focus {
     outline: 3px solid --dark-pink !important;
-}
+} 
+
+/* Nav */
 
 body.accessible nav {
     background-color: var(--medium-blue) !important;
     font-size: 18px;
 }
 
+/* Text */
+
+body.accessible .pink-text {
+    color: var(--light-pink);
+}
+
+body.accessible .account-text {
+    color: var(--white);
+}
+
+body.accessible #welcome {
+    color: var(--plum) !important;
+}
+
+/* Links */
+
+.accessible .lnk-primary:hover, 
+.accessible .lnk-primary:hover {
+    color: var(--dark-pink);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+body.accessible a {
+    color: var(--light-pink);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+.accessible a:hover {
+    color: var(--pink);
+    text-decoration: underline;
+}
+
+footer.accessible .lnk-primary {
+    color: var(--light-pink);
+    text-decoration: underline;
+}
+
+/* Buttons */
+
+.accessible button {
+    background-color: var(--light-pink);
+    color: var(--plum);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+body.accessible .btn.btn-primary {
+    background-color: var(--light-pink);
+    color: var(--plum);
+    text-decoration: underline;
+}
+
 body.accessible .btn.btn-primary:hover, 
-body.accessible .btn.btn-primary:active {
+body.accessible .btn.btn-primary:active { 
     background-color: var(--pink);
     border-color: var(--dark-pink);
     color: var(--dark-pink);
     text-decoration: underline;
 }
 
-body.accessible .btn-secondary:hover,
+body.accessible .btn-secondary:hover, 
 body.accessible .btn-secondary:active {
     background-color: var(--pink);
     border-color: var(--darkest-blue);
@@ -84,32 +136,28 @@ body.accessible .btn-secondary:active {
     text-decoration: underline;
 }
 
- 
-body.accessible .card {
-    background-color: var(--darkest-blue);
-}
-
-body.accessible .form-label {
-    color: white;
-    font-size: 18px;
-}
-
 body.accessible .btn-primary-dark {
     color: var(--darkest-blue);
     background-color: var(--pink);
 }
 
-body.accessible .btn-secondary,
-body.accessible .btn-primary-dark:hover {
+body.accessible .btn-secondary, 
+body.accessible .btn-primary-dark:hover { 
     color: var(--dark-blue);
     background-color: var(--light-pink);
     border-color: var(--light-pink);
     text-decoration: underline;
 }
 
-.accessible .lnk-primary, 
-.accessible .lnk-secondary {
-    color: var(--light-pink);
+body.accessible .btn-primary-dark { 
+    color: var(--dark-blue);
+    background-color: var(--light-pink);
+}
+
+body.accessible .btn-secondary {
+    color: var(--dark-blue);
+    background-color: var(--light-pink);
+    border-color: var(--light-pink); 
     text-decoration: underline;
 }
 
@@ -122,28 +170,52 @@ body.accessible .btn-primary-dark:hover {
 .accessible .access-button:hover, .access-button:active {
     color: var(--dark-pink);
     text-decoration: underline;
-    background: transparent;
+    background: transparent; 
 }
 
-.accessible .lnk-primary:hover, 
-.accessible .lnk-primary:hover {
-    color: var(--dark-pink);
-    text-decoration: underline;
+/* Forms */
+  
+body.accessible input, body.accessible textarea {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    color: #4c4c4c !important;
+}
+  
+body.accessible input:focus, body.accessible textarea:focus {
+    outline: 3px solid --dark-pink !important;
+}
+
+.accessible, .form-label {
+    color: white;
     font-size: 18px;
 }
+
+body.accessible .form-label {
+    color: white;
+    font-size: 18px;
+}
+
+/* Login */
+
+body.accessible .card {
+    background-color: var(--darkest-blue);
+}
+
+/* Carousel */
 
 body.accessible .carousel-content{
     background-color: var(--darkest-blue);
 }
 
-body.accessible .blue-rounded-container, #journal-entry-container {
+body.accessible .blue-rounded-container,
+body.accessible #journal-entry-container {
     background-color: var(--darkest-blue);
 }
 
 @media (max-width: 991px) {
 
     body.accessible .nav-bar.btn {
-        background: transparent;
+        background: transparent; 
         color: var(--light-pink) !important;
     }
     body.accessible .nav-bar:hover.btn {
@@ -169,6 +241,8 @@ body.accessible .blue-rounded-container, #journal-entry-container {
         opacity: 0;
     }
 }
+
+/* Pop up */ 
 
 body.accessible .leaflet-popup {
     background-color: var(--dark-blue) !important;

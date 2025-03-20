@@ -82,6 +82,7 @@
     <nav class="navbar fixed-bottom navbar-dark mt-3" id="nav-bottom">
         <div class="container-fluid">
             <div class="full-width">
+
                 <!-- Text links for larger screens -->
                 <a class="lnk-primary nav-text" href="{% url 'airtalesapp:about' %}">About</a>
                 <a class="lnk-primary nav-text" href="{% url 'airtalesapp:terms' %}">T&Cs</a>
@@ -99,7 +100,6 @@
                 <button class="nav-icon access-button" aria-label="Toggle accessibility mode">
                     <img src="{% static 'images/accessibility-pink.svg' %}" class="default-icon" alt="Accessibility icon">
                     <img src="{% static 'images/accessibility-light-pink.svg' %}" class="hover-icon" alt="Accessibility icon">
-
                 </button>
             </div>
             <span class="pink-text" id="copyright">© Airtales 2025</span>
