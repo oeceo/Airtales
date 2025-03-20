@@ -75,9 +75,6 @@ h4, h5, h6 { font-family: 'Lexend Exa', sans-serif }
 }
 
 .body {
-    overflow: scroll !important;
-    padding-bottom: 60px;
-    margin-bottom: 50px;
     line-height: 1.7;
 }
 
@@ -103,6 +100,11 @@ nav {
     z-index: 999;
 }
 
+#navbar-logo {
+    max-width: 350px;
+    height: auto;
+}
+
 .navbar-toggler {
     border-color: white;
     margin-right: 5px;
@@ -114,6 +116,32 @@ nav {
 
 #copyright {
     float: right;
+}
+
+#nav-bottom {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    width: 100%;
+    min-height: 30px;
+    padding: 0;
+    box-sizing: border-box;  
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .nav-bar {
+        box-shadow: none;
+        background-color: var(--blue);
+        border: none;
+        width: 100%;
+        margin: auto;
+    }
+    .nav-bar:hover {
+        color: var(--pink);
+        background-color: var(--blue);
+    }
 }
 
 /* Buttons & Links */
@@ -147,21 +175,6 @@ nav {
     border-color: var(--pink);
     color: var(--pink);
     background-color: var(--dark-blue);
-}
-
-@media (max-width: 991px) {
-
-    .nav-bar {
-        box-shadow: none;
-        background-color: var(--blue);
-        border: none;
-        width: 100%;
-        margin: auto;
-    }
-    .nav-bar:hover {
-        color: var(--pink);
-        background-color: var(--blue);
-    }
 }
 
 #access-button {

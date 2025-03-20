@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const isAccessible = localStorage.getItem("accessible") === "true";
     if(isAccessible){
         body.classList.add("accessible");
-        toggleAccessibility.textContent = "Disable accessible mode";
+        toggleAccessibility.textContent = "Disable A11Y+";
     } else {
-        toggleAccessibility.textContent = "Enable accessible mode";
+        toggleAccessibility.textContent = "Enable A11Y+";
     }
 
     toggleAccessibility.addEventListener("click", () => {
@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("accessible", isCurrentlyAccessible);
 
         if(isCurrentlyAccessible){
-            toggleAccessibility.textContent = "Disable accessible mode";
+            toggleAccessibility.textContent = "Disable A11Y+";
         } else {
-            toggleAccessibility.textContent = "Enable accessible mode";
+            toggleAccessibility.textContent = "Enable A11Y+";
         }
 
     });
