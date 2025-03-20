@@ -27,6 +27,10 @@ body.accessible a {
     font-size: 18px;
 }
 
+body.accessible p {
+    color: var(--white);
+}
+
 body.accessible #welcome {
     color: var(--plum) !important;
 }
@@ -64,13 +68,19 @@ body.accessible nav {
     font-size: 18px;
 }
 
-body.accessible .btn-primary:hover, 
-body.accessible .btn.btn-primary:active,
-body.accessible .btn-secondary:hover,
-body.accessible .btn-secondary:active {
+body.accessible .btn.btn-primary:hover, 
+body.accessible .btn.btn-primary:active {
     background-color: var(--pink);
     border-color: var(--dark-pink);
     color: var(--dark-pink);
+    text-decoration: underline;
+}
+
+body.accessible .btn-secondary:hover,
+body.accessible .btn-secondary:active {
+    background-color: var(--pink);
+    border-color: var(--darkest-blue);
+    color: var(--darkest-blue);
     text-decoration: underline;
 }
 
@@ -79,14 +89,14 @@ body.accessible .card {
     background-color: var(--darkest-blue);
 }
 
-.accessible, .form-label {
+body.accessible .form-label {
     color: white;
     font-size: 18px;
 }
 
 body.accessible .btn-primary-dark {
-    color: var(--dark-blue);
-    background-color: var(--light-pink);
+    color: var(--darkest-blue);
+    background-color: var(--pink);
 }
 
 body.accessible .btn-secondary,
@@ -97,22 +107,26 @@ body.accessible .btn-primary-dark:hover {
     text-decoration: underline;
 }
 
-footer.accessible .lnk-primary, lnk-secondary {
+.accessible .lnk-primary, 
+.accessible .lnk-secondary {
     color: var(--light-pink);
     text-decoration: underline;
 }
 
-.accessible #access-button {
+.accessible .access-button {
     color: var(--light-pink);
     text-decoration: underline;
+    background:transparent;
 }
 
-.accessible #access-button:hover, #access-button:active {
-    color: var(--pink);
+.accessible .access-button:hover, .access-button:active {
+    color: var(--dark-pink);
     text-decoration: underline;
+    background: transparent;
 }
 
-footer.accessible .lnk-primary:hover, .accessible.lnk-primary:hover {
+.accessible .lnk-primary:hover, 
+.accessible .lnk-primary:hover {
     color: var(--dark-pink);
     text-decoration: underline;
     font-size: 18px;
@@ -128,29 +142,51 @@ body.accessible .blue-rounded-container, #journal-entry-container {
 
 @media (max-width: 991px) {
 
-    body.accessible .nav-bar {
-        background-color: var(--medium-blue) !important;
+    body.accessible .nav-bar.btn {
+        background: transparent;
         color: var(--light-pink) !important;
     }
-    body.accessible .nav-bar:hover {
+    body.accessible .nav-bar:hover.btn {
+        background: transparent;
         color: var(--pink) !important;
-        background-color: var(--medium-blue) !important;
+    }
+
+    .accessible .default-icon {
+        opacity: 0;
+        z-index: 2;
+    }
+    
+    .accessible .hover-icon {
+        opacity: 1;
+        z-index: 1;
+    }
+    
+    .accessible .nav-icon:hover .default-icon {
+        opacity: 1;
+    }
+    
+    .accessible .nav-icon:hover .hover-icon {
+        opacity: 0;
     }
 }
 
-.leaflet-popup {
+body.accessible .leaflet-popup {
     background-color: var(--dark-blue) !important;
     border: 5px solid var(--pink);
     font-size: 18px;
 }
 
-.like-button {
+body.accessible .like-button {
     background-color: var(--pink); 
     color: --plum; 
     font-size: 18px;
 }
 
-.like-button:hover {
+body.accessible .like-button:hover {
     background-color: #cb8f97; 
+}
+
+body.accessible .tagline-container {
+    background-color: var(--light-pink);
 }
 
