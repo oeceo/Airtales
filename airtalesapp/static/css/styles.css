@@ -79,7 +79,7 @@ body {
     display: flex;
     flex-direction: column;
     border: 0;
-    margin: 0; 
+    margin: 0;
     padding: 0;
     width: 100%;
     padding-bottom: 50px;
@@ -141,12 +141,15 @@ nav {
     transition: all 0.3s ease;
     width: 30px;
     height: 30px;
-    position: absolute; 
+    position: absolute;
     margin-top: 7px;
 }
 
 @media (max-width: 900px) {
-
+    #navbar-logo {
+        max-width: 250px;
+        height: auto;
+    }
     .nav-bar.btn {
         box-shadow: none;
         background-color: transparent;
@@ -173,23 +176,23 @@ nav {
         border: none;
         background: transparent !important;
         cursor: pointer;
-        overflow: hidden;      
+        overflow: hidden;
     }
 
     .default-icon {
         opacity: 1;
         z-index: 1;
     }
-    
+
     .hover-icon {
         opacity: 0;
         z-index: 2;
     }
-    
+
     .nav-icon:hover .default-icon {
         opacity: 0;
     }
-    
+
     .nav-icon:hover .hover-icon {
         opacity: 1;
     }
@@ -200,8 +203,8 @@ nav {
 .btn {
     font-family: 'Lexend Exa', sans-serif;
     font-weight: bold;
-    border-radius: 50px;  
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
     margin: 0px 7px;
 }
@@ -212,8 +215,8 @@ nav {
     border-color:var(--pink);
 }
 
-.btn-primary-dark, 
-.btn-primary:hover, 
+.btn-primary-dark,
+.btn-primary:hover,
 .btn.btn-primary:active,
 .btn-secondary:hover,
 .btn-secondary:active {
@@ -282,7 +285,7 @@ a.lnk-secondary:hover, a.link-secondary:active {
     color: white;
     font-size: 5rem;
     font-weight: bold;
-    letter-spacing: 0.1em; 
+    letter-spacing: 0.1em;
     font-family: 'Charm', cursive;
     margin-bottom: 15px;
 }
@@ -391,25 +394,25 @@ body #journal-entry-container {
 }
 
 .go-back-button {
-    position: fixed; 
-    top: 12%; 
-    left: 20px; 
-    z-index: 1000; 
+    position: fixed;
+    top: 12%;
+    left: 20px;
+    z-index: 1000;
 }
 
 .go-back-button {
-    display: inline-block; 
-    padding: 10px 20px; 
-    border: 0px none var(--plum); 
+    display: inline-block;
+    padding: 10px 20px;
+    border: 0px none var(--plum);
     font-size: 1.2rem;
     background: white;
     color: var(--plum);
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .go-back-button:hover {
     background-color:var(--dark-blue);
-    color: white; 
+    color: white;
 }
 
 #no-entry {
@@ -418,18 +421,18 @@ body #journal-entry-container {
 }
 
 .like-button {
-    background-color: #EFA8B1; 
-    color: white; 
-    border: none; 
-    padding: 10px; 
+    background-color: #EFA8B1;
+    color: white;
+    border: none;
+    padding: 10px;
     margin-top: 10px;
-    border-radius: 5px; 
-    cursor: pointer; 
+    border-radius: 5px;
+    cursor: pointer;
     font-weight: bold;
 }
 
 .like-button:hover {
-    background-color: #cb8f97; 
+    background-color: #cb8f97;
 }
 
 .report-button {
@@ -465,12 +468,12 @@ body #journal-entry-container {
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px; 
-    width: 100%; 
+    max-width: 400px;
+    width: 100%;
     border-radius: 15px;
 }
 
-/* Explore */ 
+/* Explore */
 
 #map {
     height: 35rem;
@@ -479,8 +482,8 @@ body #journal-entry-container {
     margin: auto;
     width: 90%;
     border: 2px solid var(--medium-blue);
-    border-radius: 30px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Pop up */
@@ -493,15 +496,15 @@ body #journal-entry-container {
 }
 
 .leaflet-popup-content {
-    padding: 5px; 
-    margin: 0; 
-    border: none !important; 
-    color: white;  
+    padding: 5px;
+    margin: 0;
+    border: none !important;
+    color: white;
 }
 
 .leaflet-popup-content-wrapper {
     border: none !important;
-    background-color: transparent !important; 
+    background-color: transparent !important;
 }
 
 /* Styling for Index */
