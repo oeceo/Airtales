@@ -1,29 +1,18 @@
 import json
 from django.forms import BooleanField
-from django.shortcuts import get_object_or_404, render
-from django.shortcuts import render, redirect
-from .models import JournalEntry, Reported
+from django.shortcuts import get_object_or_404, render, redirect
+from .models import JournalEntry, Reported, Prompt
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-from django.utils.timezone import now
-from django.utils.timezone import timedelta
-from django.views.decorators.csrf import csrf_exempt
-from .models import Prompt 
+from django.utils.timezone import now, timedelta
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q, ExpressionWrapper
 from airtalesapp.forms import UserForm, ProfileForm
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import logout
-from django.urls import reverse
-from django.contrib.auth import get_user_model
 from django.contrib import messages
 from datetime import datetime
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.core import serializers
-
 
 User = get_user_model()
 

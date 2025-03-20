@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Airtales{% endblock %}</title>
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FONTS --> 
@@ -19,11 +22,12 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body class="{% block body_class %} default-bg {% endblock %}">
-        <!-- Navbar Section -->
+    
+    <!-- Navbar Section -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a id="navbar-logo" class="ps-4" href="{% url 'airtalesapp:index' %}"> 
-                <img src="{% static 'images/logo.png' %}" alt="Airtales logo" width="350" height="70">
+            <a class="ps-4" href="{% url 'airtalesapp:index' %}"> 
+                <img id="navbar-logo" src="{% static 'images/logo.png' %}" alt="Airtales logo">
             </a>
             
             <!-- Hamburger button for condensed navbar -->
@@ -60,8 +64,11 @@
             </ul>
         </div>
     </nav>
-        <!-- Page Content -->
+    
+    <!-- Page Content -->
+     <div id="body-container">
         {% block content %}{% endblock %}
+     </div>
     
     {% block extra_js %}{% endblock %}
 
@@ -72,14 +79,30 @@
 
 </body>
 <footer>
-    <nav class="navbar fixed-bottom navbar-dark mt-4" id="nav-bottom">
+    <nav class="navbar fixed-bottom navbar-dark mt-3" id="nav-bottom">
         <div class="container-fluid">
             <div class="full-width">
-                <a class="lnk-primary" href="{% url 'airtalesapp:about' %}">About</a>
-                <a class="lnk-primary" href="{% url 'airtalesapp:terms' %}">T&Cs</a>
-                <button class="accessible-toggle" id="access-button" aria-label="Toggle accessible mode">Accessible</button>
-                <span class="pink-text" id="copyright">© Airtales 2025</span>
+
+                <!-- Text links for larger screens -->
+                <a class="lnk-primary nav-text" href="{% url 'airtalesapp:about' %}">About</a>
+                <a class="lnk-primary nav-text" href="{% url 'airtalesapp:terms' %}">T&Cs</a>
+                <button class="access-button nav-text" id="access-text" aria-label="Toggle accessiblity mode">A11Y+</button>
+            
+                <!-- Icons for smaller screens. Two icons of differing colours are layered and the opacity toggled in stylesheet for hover -->
+                <a href="{% url 'airtalesapp:about' %}" class="nav-icon" aria-label="About">
+                    <img src="{% static 'images/info-pink.svg' %}" class="default-icon" alt="About icon">
+                    <img src="{% static 'images/info-light-pink.svg' %}" class="hover-icon" alt="About icon">
+                </a>
+                <a href="{% url 'airtalesapp:terms' %}" class="nav-icon" aria-label="T&Cs">
+                    <img src="{% static 'images/terms-pink.svg' %}" class="default-icon" alt="T&Cs icon">
+                    <img src="{% static 'images/terms-light-pink.svg' %}" class="hover-icon" alt="T&Cs icon">
+                </a>
+                <button class="nav-icon access-button" aria-label="Toggle accessibility mode">
+                    <img src="{% static 'images/accessibility-pink.svg' %}" class="default-icon" alt="Accessibility icon">
+                    <img src="{% static 'images/accessibility-light-pink.svg' %}" class="hover-icon" alt="Accessibility icon">
+                </button>
             </div>
+            <span class="pink-text" id="copyright">© Airtales 2025</span>
         </div>
     </nav>
 </footer>
